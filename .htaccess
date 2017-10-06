@@ -1,0 +1,16 @@
+#<IfModule mod_rewrite.c>
+#          RewriteEngine On
+#          RewriteBase /Project_Web-Mobile/WP1/
+#          RewriteCond %{REQUEST_FILENAME} !-f
+#          RewriteCond %{REQUEST_FILENAME} !-d
+#          RewriteRule ^(.*)$ api.php [L]
+#</IfModule>
+#
+#<IfModule !mod_rewrite.c>
+#          ErrorDocument 404 /api.php
+#</IfModule>
+
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . WP1/api.php [L]
