@@ -4,88 +4,57 @@ namespace model;
 
 class Status implements \JsonSerializable
 {
-    private $Id;
-    private $LocatieId;
-    private $Status;
-    private $Datum;
+    private $id;
+    private $locationId;
+    private $status;
+    private $date;
 
-    /**
-     * Status constructor.
-     * @param $Id
-     * @param $LocatieId
-     * @param $Status
-     * @param $Datum
-     */
-    public function __construct($Id, $LocatieId, $Status, $Datum)
+    public function __construct($id, $locationId, $status, $date)
     {
-        $this->Id = $Id;
-        $this->LocatieId = $LocatieId;
-        $this->Status = $Status;
-        $this->Datum = $Datum;
+        $this->id = $id;
+        $this->locationId = $locationId;
+        $this->status = $status;
+        $this->date = $date;
     }
 
-    /**
-     * @return mixed
-     */
     public function getId()
     {
-        return $this->Id;
+        return $this->id;
     }
 
-    /**
-     * @param mixed $Id
-     */
-    public function setId($Id)
+    public function setId($id)
     {
-        $this->Id = $Id;
+        $this->id = $id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLocatieId()
+    public function getLocationId()
     {
-        return $this->LocatieId;
+        return $this->locationId;
     }
 
-    /**
-     * @param mixed $LocatieId
-     */
-    public function setLocatieId($LocatieId)
+    public function setLocationId($locationId)
     {
-        $this->LocatieId = $LocatieId;
+        $this->locationId = $locationId;
     }
 
-    /**
-     * @return mixed
-     */
     public function getStatus()
     {
-        return $this->Status;
+        return $this->status;
     }
 
-    /**
-     * @param mixed $Status
-     */
-    public function setStatus($Status)
+    public function setStatus($status)
     {
-        $this->Status = $Status;
+        $this->status = $status;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDatum()
+    public function getDate()
     {
-        return $this->Datum;
+        return $this->date;
     }
 
-    /**
-     * @param mixed $Datum
-     */
-    public function setDatum($Datum)
+    public function setDate($date)
     {
-        $this->Datum = $Datum;
+        $this->date = $date;
     }
 
     function jsonSerialize()

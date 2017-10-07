@@ -1,8 +1,8 @@
 <?php
 require_once "vendor/autoload.php";
 
-use \controller\LocatieController;
-use \controller\LocatieRepositoryPDO;
+use controller\LocationController;
+use model\LocationRepositoryPDO;
 
 $user = 'root';
 $password = 'user';
@@ -11,19 +11,19 @@ $hostname = '127.0.0.1';
 $pdo = null;
 
 try {
-    $pdo = new PDO("mysql:host=$hostname;dbname=$database", $user, $password); //;charset=utf8mb4
+    $pdo = new PDO("mysql:host=$hostname;dbname=$database", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-    $locatieRepositoryPPDO = new LocatieRepositoryPDO($pdo);
-    $locatieController = new LocatieController($locatieRepositoryPPDO);
+    $locationRepositoryPDO = new LocationRepositoryPDO($pdo);
+    $locationController = new LocationController($locationRepositoryPDO);
 
     $router = new AltoRouter();
 
     $router->setBasePath('/api/');
 
-    $router->map('GET','locatie',
-        function() use ($locatieController) {
+    $router->map('GET','location',
+        function() use ($locationController) {
             header("Content-Type: application/json");
-            $locatieController->handleGetLocaties();
+            $locationController->handleGetLocations();
         }
     );
 

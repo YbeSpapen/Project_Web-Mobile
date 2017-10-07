@@ -2,11 +2,15 @@
   "require": {
     "altorouter/altorouter": "1.1"
   },
+  "require-dev": {
+  "phpunit/phpunit": "6.0.*",
+  "phpunit/php-code-coverage": "^5.2"
+},
   "autoload": {
     "psr-4": {
-      "src\\model\\": "src/model/",
-      "src\\controller\\": "src/controller/",
-      "src\\view\\": "src/view/"
+      "model\\": "model/",
+      "controller\\": "controller/",
+      "view\\": "view/"
     }
   }
 }
