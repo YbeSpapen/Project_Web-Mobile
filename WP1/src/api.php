@@ -2,7 +2,11 @@
 require_once "vendor/autoload.php";
 
 use controller\LocationController;
+use controller\StatusController;
+use controller\IssueController;
 use model\LocationRepositoryPDO;
+use model\StatusRepositoryPDO;
+use model\IssueRepositoryPDO;
 
 $user = 'root';
 $password = 'user';
@@ -15,6 +19,10 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
     $locationRepositoryPDO = new LocationRepositoryPDO($pdo);
     $locationController = new LocationController($locationRepositoryPDO);
+    $statusRepositoryPDO = new StatusRepositoryPDO($pdo);
+    $statusController = new StatusController($statusRepositoryPDO);
+    $issueRepositoryPDO = new IssueRepositoryPDO($pdo);
+    $issueController = new IssueController($issueRepositoryPDO);
 
     $router = new AltoRouter();
 
@@ -24,6 +32,38 @@ try {
         function() use ($locationController) {
             header("Content-Type: application/json");
             $locationController->handleGetLocations();
+        }
+    );
+
+    //id = id of location
+    $router->map('GET','status/location/[i:id]',
+        function($locationId) use ($statusController) {
+            header("Content-Type: application/json");
+            $statusController->handlegetStatusesByLocationId($locationId);
+        }
+    );
+
+    //id = id of location
+    $router->map('GET','issue/location/[i:id]',
+        function($locationId) use ($issueController) {
+            header("Content-Type: application/json");
+            $issueController->handlegetIssuesByLocationId($locationId);
+        }
+    );
+
+    //id = id of issue
+    $router->map('GET','issue/[i:id]',
+        function($id) use ($issueController) {
+            header("Content-Type: application/json");
+            $issueController->handleGetIssueById($id);
+        }
+    );
+
+    //id = id of technician
+    $router->map('GET','issue/technician/[i:id]',
+        function($technicianId) use ($issueController) {
+            header("Content-Type: application/json");
+            $issueController->handleGetIssueByTechnicianId($technicianId);
         }
     );
 
