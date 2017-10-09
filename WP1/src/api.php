@@ -4,9 +4,12 @@ require_once "vendor/autoload.php";
 use controller\LocationController;
 use controller\StatusController;
 use controller\IssueController;
+
 use model\LocationRepositoryPDO;
 use model\StatusRepositoryPDO;
 use model\IssueRepositoryPDO;
+
+use model\Status;
 
 $user = 'root';
 $password = 'user';
@@ -64,6 +67,20 @@ try {
         function($technicianId) use ($issueController) {
             header("Content-Type: application/json");
             $issueController->handleGetIssueByTechnicianId($technicianId);
+        }
+    );
+
+    $router->map('POST','status/add',
+        function() use ($statusController) {
+            header("Content-Type: application/json");
+            $statusController->handleAddStatus($_POST["id"], $_POST["locationId"], $_POST["status"], $_POST["date"]);
+        }
+    );
+
+    $router->map('POST','issue/add',
+        function() use ($issueController) {
+            header("Content-Type: application/json");
+            $issueController->handleAddIssue($_POST["id"], $_POST["locationId"], $_POST["problem"], $_POST["date"], $_POST["handled"], $_POST["technicianId"]);
         }
     );
 

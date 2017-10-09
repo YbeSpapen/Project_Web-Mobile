@@ -69,6 +69,7 @@ class StatusRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $actualStatuses = $pdoRepository->getStatusesByLocationId(24);
         $this->assertEquals($actualStatuses, '');
     }
+
     public function testFindStatusesByLocationId_exeptionThrownFromPDO_Null()
     {
         $this->mockPDOStatement->expects($this->atLeastOnce())

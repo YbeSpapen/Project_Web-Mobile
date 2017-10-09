@@ -19,6 +19,10 @@ class StatusController
     public function handleGetStatusesByLocationId($locationId) {
         $statuses = $this->statusRepository->getStatusesByLocationId($locationId);
         $this->statusView->showStatuses($statuses);
+    }
 
+    public function handleAddStatus($id, $locationId, $status, $date) {
+        $returnCode = $this->statusRepository->addStatus($id, $locationId, $status, $date);
+        $this->statusView->showStatuses($returnCode);
     }
 }

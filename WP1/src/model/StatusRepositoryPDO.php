@@ -35,4 +35,18 @@ class StatusRepositoryPDO implements StatusRepository
             return $exception->getMessage();
         }
     }
+
+    public function addStatus($id, $locationId, $status, $date)
+    {
+        try {
+            $statement = $this->connection->prepare('INSERT INTO status (id, locationId, status, date) VALUES(?, ?, ?, ?)');
+            $statement->bindParam(1, $id, \PDO::PARAM_INT);
+            $statement->bindParam(2, $locationId, \PDO::PARAM_INT);
+            $statement->bindParam(3, $status, \PDO::PARAM_STR);
+            $statement->bindParam(4, $date, \PDO::PARAM_STR);
+            return $statement->execute();
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
 }
