@@ -75,12 +75,12 @@ try {
             header("Content-Type: application/json");
             $statusController->handleAddStatus($_POST["id"], $_POST["locationId"], $_POST["status"], $_POST["date"]);
         }
-    );
+);
 
     $router->map('POST','issue/add',
         function() use ($issueController) {
             header("Content-Type: application/json");
-            $issueController->handleAddIssue($_POST["id"], $_POST["locationId"], $_POST["problem"], $_POST["date"], $_POST["handled"], $_POST["technicianId"]);
+            $issueController->handleAddIssueWithoutTechnicianId($_POST["id"], $_POST["locationId"], $_POST["problem"], $_POST["date"], $_POST["handled"], $_POST["technicianId"]);
         }
     );
 

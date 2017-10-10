@@ -80,7 +80,7 @@ class IssueRepositoryPDO implements IssueRepository
         }
     }
 
-    public function addIssue($id, $locationId, $problem, $date, $handled, $technicianId)
+    public function addIssueWithoutTechnicianId($id, $locationId, $problem, $date, $handled, $technicianId)
     {
         try {
             $statement = $this->connection->prepare('INSERT INTO issue (id, locationId, problem, date, handled, technicianId) VALUES(?, ?, ?, ?, ?, ?)');

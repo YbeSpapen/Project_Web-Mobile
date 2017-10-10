@@ -31,8 +31,8 @@ class IssueController
         $this->issueView->showIssues($issues);
     }
 
-    public function handleAddIssue($id, $locationId, $problem, $date, $handled, $technicianId) {
-        $returnCode = $this->issueRepository->addIssue($id, $locationId, $problem, $date, $handled, $technicianId);
+    public function handleAddIssueWithoutTechnicianId($id, $locationId, $problem, $date, $handled, $technicianId) {
+        $returnCode = $this->issueRepository->addIssueWithoutTechnicianId($id, $locationId, $problem, $date, $handled, $technicianId);
         $this->issueView->showIssues($returnCode);
     }
 }
