@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+
+{% block navbarItems %}
+    <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+        </li>
+    </ul>
+{% endblock %}
+{% block body %}
+
+    <div class="container-fluid">
+        <h1>Geef de status van dit lokaal</h1>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+                <a href="/handleStatus?locatieId={{ app.request.query.get("locatieId") }}&status=1"><img
+                            class="img-responsive center-block" src="{{ asset('bundles/images/green-smiley.png') }}"
+                            border="0"></a>
+
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+                <a href="/handleStatus?locatieId={{ app.request.query.get("locatieId") }}&status=2"><img
+                            class="img-responsive center-block" src="{{ asset('bundles/images/lightred-smiley.png') }}"
+                            border="0"></a>
+
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+                <a href="/handleStatus?locatieId={{ app.request.query.get("locatieId") }}&status=3"><img
+                            class="img-responsive center-block" src="{{ asset('bundles/images/red-smiley.png') }}"
+                            border="0"></a>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

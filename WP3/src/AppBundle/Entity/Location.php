@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Locatie
+ * Location
  *
- * @ORM\Table(name="Locatie")
+ * @ORM\Table(name="Location")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\LocatieRepository")
  */
-class Locatie
+class Location
 {
     /**
      * @var int
@@ -18,23 +18,23 @@ class Locatie
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\StatusMelding", mappedBy="locatieId")
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProbleemStelling", mappedBy="locatieId")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Status", mappedBy="locatieId")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Issue", mappedBy="locatieId")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Naam", type="string", length=100)
+     * @ORM\Column(name="name", type="string", length=100)
      */
-    private $naam;
+    private $name;
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -42,27 +42,26 @@ class Locatie
     }
 
     /**
-     * Set naam
+     * Set name
      *
-     * @param string $naam
+     * @param string $name
      *
-     * @return Locatie
+     * @return Location
      */
-    public function setNaam($naam)
+    public function setName($name)
     {
-        $this->naam = $naam;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get naam
+     * Get name
      *
      * @return string
      */
-    public function getNaam()
+    public function getName()
     {
-        return $this->naam;
+        return $this->name;
     }
 }
-

@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * StatusMelding
+ * Status
  *
- * @ORM\Table(name="StatusMelding")
+ * @ORM\Table(name="Status")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\StatusMeldingRepository")
  */
-class StatusMelding
+class Status
 {
     /**
      * @var int
@@ -24,30 +24,30 @@ class StatusMelding
     /**
      * @var int
      *
-     * @ORM\Column(name="LocatieId", type="integer")
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Locatie", inversedBy="id")
+     * @ORM\Column(name="locationId", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Location", inversedBy="id")
      */
-    private $locatieId;
+    private $locationId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Status", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255)
      */
     private $status;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="Datum", type="datetime")
+     * @ORM\Column(name="date", type="datetime")
      */
-    private $datum;
+    private $date;
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -55,27 +55,27 @@ class StatusMelding
     }
 
     /**
-     * Set locatieId
+     * Set locationId
      *
-     * @param integer $locatieId
+     * @param integer $locationId
      *
-     * @return StatusMelding
+     * @return Status
      */
-    public function setLocatieId($locatieId)
+    public function setLocationId($locationId)
     {
-        $this->locatieId = $locatieId;
+        $this->locationId = $locationId;
 
         return $this;
     }
 
     /**
-     * Get locatieId
+     * Get locationId
      *
-     * @return int
+     * @return integer
      */
-    public function getLocatieId()
+    public function getLocationId()
     {
-        return $this->locatieId;
+        return $this->locationId;
     }
 
     /**
@@ -83,7 +83,7 @@ class StatusMelding
      *
      * @param string $status
      *
-     * @return StatusMelding
+     * @return Status
      */
     public function setStatus($status)
     {
@@ -103,27 +103,26 @@ class StatusMelding
     }
 
     /**
-     * Set datum
+     * Set date
      *
-     * @param \DateTime $datum
+     * @param \DateTime $date
      *
-     * @return StatusMelding
+     * @return Status
      */
-    public function setDatum($datum)
+    public function setDate($date)
     {
-        $this->datum = $datum;
+        $this->date = $date;
 
         return $this;
     }
 
     /**
-     * Get datum
+     * Get date
      *
      * @return \DateTime
      */
-    public function getDatum()
+    public function getDate()
     {
-        return $this->datum;
+        return $this->date;
     }
 }
-
