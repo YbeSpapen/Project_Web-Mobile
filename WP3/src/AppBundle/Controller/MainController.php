@@ -24,7 +24,7 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/status", name="status")
+     * @Route("/giveStatus", name="status")
      */
     public function giveStatus()
     {
@@ -32,14 +32,17 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/issue", name="issue")
+     * @Route("/giveIssue", name="issue")
      */
     public function giveIssue(Request $request)
     {
+        $locationId = $request->get('locatieId');
+
         $issue = new Issue();
         $issue->setHandled(false);
         $issue->setDate(new Datetime());
-        $issue->setLocationId($request->get('locatieId'));
+        $location = $this->getDoctrine()->getRepository('AppBundle:Location')->find($locationId);
+        $issue->setLocation($location);
 
         $form = $this->createFormBuilder($issue)
             ->add('problem', TextareaType::class)
@@ -69,7 +72,8 @@ class MainController extends Controller
 
         $status = new Status();
         $status->setDate(new DateTime());
-        $status->setLocationId($locationId);
+        $location = $this->getDoctrine()->getRepository('AppBundle:Location')->find($locationId);
+        $status->setLocation($location);
         $status->setStatus($this->getStatus($statusCode));
 
         $em = $this->getDoctrine()->getManager();
@@ -88,5 +92,89 @@ class MainController extends Controller
         } else {
             return "MAD";
         }
+    }
+
+    /**
+     * @Route("/overview", name="overview")
+     */
+    public function overviewLocation(Request $request)
+    {
+        $locationId = $request->get('locatieId');
+        $location = $this->getDoctrine()->getRepository('AppBundle:Location')->find($locationId);
+
+        $statuses = $this->getDoctrine()->getRepository('AppBundle:Status')->findBy(
+            array('location' => $location));
+        $issues = $this->getDoctrine()->getRepository('AppBundle:Issue')->findBy(
+            array('location' => $location));
+
+        return $this->render('default/overview.html.twig', array('issues' => $issues, 'statuses' => $statuses));
+    }
+
+    /**
+     * @Route("/getTechnicians", name="getTechnicians")
+     */
+    public function getTechnicians(Request $request)
+    {
+        $issueId = $request->get('issueId');
+        $technicians = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN'));
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
+
+        return $this->render('default/technicians.html.twig', array('technicians' => $technicians, 'issue' => $issue));
+    }
+
+    /**
+     * @Route("/setTechnician", name="setTechnician")
+     */
+    public function setTechnician(Request $request)
+    {
+        $issueId = $request->get('issueId');
+        $technicianId = $request->get('technicianId');
+        $assign = $request->get('assign');
+
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
+        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->find($technicianId);
+
+        if ($assign == 1) {
+            $issue->setTechnician($technician);
+        } else {
+            $issue->setTechnician(null);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('getTechnicians', array('issueId' => $issueId));
+    }
+
+    /**
+     * @Route("/assignedProblems", name="assignedProblems")
+     */
+    public function assignedProblems(Request $request)
+    {
+        $user = $user = $this->get('security.token_storage')->getToken()->getUser();
+        $issues = $this->getDoctrine()->getRepository('AppBundle:Issue')->findBy(array('technician' => $user));
+
+        return $this->render('default/technician_issues.html.twig', array('issues' => $issues));
+    }
+
+    /**
+     * @Route("/setHandled", name="setHandled")
+     */
+    public function setHandled(Request $request)
+    {
+        $issueId = $request->get('issueId');
+        $handled = $request->get('handled');
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
+        if ($handled == 1) {
+            $issue->setHandled(true);
+        } else {
+            $issue->setHandled(false);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('assignedProblems');
+
     }
 }

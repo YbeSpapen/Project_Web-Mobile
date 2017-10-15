@@ -22,12 +22,10 @@ class Issue
     private $id;
 
     /**
-     * @var int
+     * @ORM\ManyToOne(targetEntity="Location", inversedBy="issues")
      *
-     * @ORM\Column(name="locationId", type="integer")
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Location", inversedBy="id")
      */
-    private $locationId;
+    private $location;
 
     /**
      * @var string
@@ -51,12 +49,10 @@ class Issue
     private $handled;
 
     /**
-     * @var int
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="issues")
      *
-     * @ORM\Column(name="technicianId", type="integer", nullable=true)
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Technicus", inversedBy="id")
      */
-    private $technicianId;
+    private $technician;
 
     /**
      * Get id
@@ -66,30 +62,6 @@ class Issue
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set locationId
-     *
-     * @param integer $locationId
-     *
-     * @return Issue
-     */
-    public function setLocationId($locationId)
-    {
-        $this->locationId = $locationId;
-
-        return $this;
-    }
-
-    /**
-     * Get locationId
-     *
-     * @return integer
-     */
-    public function getLocationId()
-    {
-        return $this->locationId;
     }
 
     /**
@@ -165,26 +137,50 @@ class Issue
     }
 
     /**
-     * Set technicianId
+     * Set location
      *
-     * @param integer $technicianId
+     * @param \AppBundle\Entity\Location $location
      *
      * @return Issue
      */
-    public function setTechnicianId($technicianId)
+    public function setLocation(\AppBundle\Entity\Location $location = null)
     {
-        $this->technicianId = $technicianId;
+        $this->location = $location;
 
         return $this;
     }
 
     /**
-     * Get technicianId
+     * Get location
      *
-     * @return integer
+     * @return \AppBundle\Entity\Location
      */
-    public function getTechnicianId()
+    public function getLocation()
     {
-        return $this->technicianId;
+        return $this->location;
+    }
+
+    /**
+     * Set technician
+     *
+     * @param \AppBundle\Entity\User $technician
+     *
+     * @return Issue
+     */
+    public function setTechnician(\AppBundle\Entity\User $technician = null)
+    {
+        $this->technician = $technician;
+
+        return $this;
+    }
+
+    /**
+     * Get technician
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getTechnician()
+    {
+        return $this->technician;
     }
 }

@@ -6,6 +6,11 @@
         <li class="nav-item active">
             <a href="/" class="nav-link">Home</a>
         </li>
+        {% if app.user != null and app.user.getRole() == 'ROLE_TECHNICIAN' %}
+            <li class="nav-item">
+                <a href="/assignedProblems" class="nav-link">My assigned problems</a>
+            </li>
+        {% endif %}
     </ul>
 {% endblock %}
 {% block body %}
@@ -19,7 +24,7 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Locatie</th>
+                <th>Location</th>
             </tr>
             </thead>
             <tbody>
@@ -27,10 +32,16 @@
                 <tr>
                     <th scope="row">{{ location.getId() }}</th>
                     <td>{{ location.getName() }}</td>
-                    <td><a href="/status?locatieId={{ location.getId }}" class="btn btn-primary pull-right"
-                           role="button">Geef status</a></td>
-                    <td><a href="/issue?locatieId={{ location.getId }}" class="btn btn-primary pull-right"
-                           role="button">Beoordeel</a></td>
+                    <td class="pull-right">
+                        <div>
+                            <a href="/giveStatus?locatieId={{ location.getId }}"
+                               class="btn btn-sm btn-space btn-primary" role="button">Give status</a>
+                            <a href="/giveIssue?locatieId={{ location.getId }}" class="btn btn-space btn-sm btn-primary"
+                               role="button">Rate</a>
+                            <a href="/overview?locatieId={{ location.getId }}" class="btn btn-space btn-sm btn-primary"
+                               role="button">Overview</a>
+                        </div>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -37,15 +37,13 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Encode the new users password
             $encoder = $this->get('security.password_encoder');
             $password = $encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
-            // Set their role
-            $user->setRole('ROLE_USER');
 
-            // Save
+            $user->setRole('ROLE_MANAGER');
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();

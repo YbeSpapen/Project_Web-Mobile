@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="container-fluid">
+        <h1>Technicians</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for technician in technicians %}
+                <tr>
+                    <th scope="row">{{ technician.getId() }}</th>
+                    <td>{{ technician.getName() }}</td>
+                    <td>{{ technician.getEmail() }}</td>
+                    <td>
+                        {% if issue.getTechnician() != null and issue.getTechnician().getId() == technician.getId() %}
+                            <a href="/setTechnician?issueId={{ app.request.query.get("issueId") }}&technicianId={{ technician.getId() }}&assign=0"
+                               class="btn btn-sm btn-space btn-danger pull-right" role="button">Unset</a>
+                        {% else %}
+                            <a href="/setTechnician?issueId={{ app.request.query.get("issueId") }}&technicianId={{ technician.getId() }}&assign=1"
+                               class="btn btn-sm btn-space btn-success pull-right" role="button">Set</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

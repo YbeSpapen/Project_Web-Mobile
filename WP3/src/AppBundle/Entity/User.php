@@ -45,6 +45,17 @@ class User implements UserInterface
      */
     protected $password;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Issue", mappedBy="technician")
+     *
+     */
+    private $issues;
+
+    public function __construct()
+    {
+        $this->issues = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     public function eraseCredentials()
     {
         return null;
@@ -118,5 +129,39 @@ class User implements UserInterface
     public function getSalt()
     {
         return null;
+    }
+
+    /**
+     * Add issue
+     *
+     * @param \AppBundle\Entity\Issue $issue
+     *
+     * @return User
+     */
+    public function addIssue(\AppBundle\Entity\Issue $issue)
+    {
+        $this->issues[] = $issue;
+
+        return $this;
+    }
+
+    /**
+     * Remove issue
+     *
+     * @param \AppBundle\Entity\Issue $issue
+     */
+    public function removeIssue(\AppBundle\Entity\Issue $issue)
+    {
+        $this->issues->removeElement($issue);
+    }
+
+    /**
+     * Get issues
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIssues()
+    {
+        return $this->issues;
     }
 }

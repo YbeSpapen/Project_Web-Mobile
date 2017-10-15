@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="container-fluid">
+        <h1>Statuses</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for status in statuses %}
+                <tr>
+                    <th scope="row">{{ status.getId() }}</th>
+                    <td>{{ status.getStatus() }}</td>
+                    <td>{{ status.getDate()|date('Y-m-d') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <h1>Issues</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Problem</th>
+                <th>Date</th>
+                <th>Handled</th>
+                <th>Technician</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for issue in issues %}
+                <tr>
+                    <th scope="row">{{ issue.getId() }}</th>
+                    <td>{{ issue.getProblem() }}</td>
+                    <td>{{ issue.getDate()|date('Y-m-d') }}</td>
+                    <td>{% if issue.getHandled() == true %}
+                            Yes
+                        {% else %}
+                            No
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ issue.getTechnician().getName() | default("Not assigned") }}
+                    </td>
+                    {% if app.user != null and app.user.getRole() == 'ROLE_MANAGER' %}
+                        <td>
+                            <a href="/getTechnicians?issueId={{ issue.getId }}"
+                               class="btn btn-sm btn-space btn-primary pull-right" role="button">Set technician</a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

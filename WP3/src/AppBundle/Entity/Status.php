@@ -22,12 +22,10 @@ class Status
     private $id;
 
     /**
-     * @var int
+     * @ORM\ManyToOne(targetEntity="Location", inversedBy="statuses")
      *
-     * @ORM\Column(name="locationId", type="integer")
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Location", inversedBy="id")
      */
-    private $locationId;
+    private $location;
 
     /**
      * @var string
@@ -43,7 +41,6 @@ class Status
      */
     private $date;
 
-
     /**
      * Get id
      *
@@ -52,30 +49,6 @@ class Status
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set locationId
-     *
-     * @param integer $locationId
-     *
-     * @return Status
-     */
-    public function setLocationId($locationId)
-    {
-        $this->locationId = $locationId;
-
-        return $this;
-    }
-
-    /**
-     * Get locationId
-     *
-     * @return integer
-     */
-    public function getLocationId()
-    {
-        return $this->locationId;
     }
 
     /**
@@ -124,5 +97,29 @@ class Status
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Set location
+     *
+     * @param \AppBundle\Entity\Location $location
+     *
+     * @return Status
+     */
+    public function setLocation(\AppBundle\Entity\Location $location = null)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return \AppBundle\Entity\Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }

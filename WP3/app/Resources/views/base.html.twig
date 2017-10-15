@@ -6,7 +6,7 @@
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="{{ asset('bundles/css/style.css') }}">
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
@@ -22,7 +22,18 @@
             </button>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            {% block navbarItems %}{% endblock %}
+            {% block navbarItems %}
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">Home</a>
+                    </li>
+                    {% if app.user != null and app.user.getRole() == 'ROLE_TECHNICIAN' %}
+                        <li class="nav-item">
+                            <a href="/assignedProblems" class="nav-link">My assigned problems</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endblock %}
             <ul class="nav navbar-nav pull-right">
                 <li class="nav-item">
                     {% if app.user != null %}
@@ -31,6 +42,7 @@
                         <a href="/login" class="nav-link">Login</a>
                     {% endif %}
                 </li>
+
             </ul>
         </div>
     </div>

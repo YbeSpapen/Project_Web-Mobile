@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+
+{% block navbarItems %}
+    <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+        </li>
+        {% if app.user != null and app.user.getRole() == 'ROLE_TECHNICIAN' %}
+            <li class="nav-item active">
+                <a href="/assignedProblems" class="nav-link">My assigned problems</a>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <h1>Issues</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Problem</th>
+                <th>Date</th>
+                <th>Location</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for issue in issues %}
+                <tr>
+                    <th scope="row">{{ issue.getId() }}</th>
+                    <td>{{ issue.getProblem() }}</td>
+                    <td>{{ issue.getDate()|date('Y-m-d') }}</td>
+                    <td>{{ issue.getLocation().getName() }}</td>
+                    <td>{% if issue.getHandled() == true %}
+                            <a href="/setHandled?issueId={{ issue.getId() }}&handled=0"
+                               class="btn btn-sm btn-space btn-danger pull-right" role="button">Set unhandled</a>
+                        {% else %}
+                            <a href="/setHandled?issueId={{ issue.getId() }}&handled=1"
+                               class="btn btn-sm btn-space btn-success pull-right" role="button">Set handled</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

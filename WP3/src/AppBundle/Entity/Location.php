@@ -18,8 +18,6 @@ class Location
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Status", mappedBy="locatieId")
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Issue", mappedBy="locatieId")
      */
     private $id;
 
@@ -30,6 +28,23 @@ class Location
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Issue",
+     *                        mappedBy="location")
+     */
+    private $issues;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Status",
+     *                        mappedBy="location")
+     */
+    private $statuses;
+
+    public function __construct()
+    {
+        $this->issues = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->statuses = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -63,5 +78,73 @@ class Location
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add issue
+     *
+     * @param \AppBundle\Entity\Issue $issue
+     *
+     * @return Location
+     */
+    public function addIssue(\AppBundle\Entity\Issue $issue)
+    {
+        $this->issues[] = $issue;
+
+        return $this;
+    }
+
+    /**
+     * Remove issue
+     *
+     * @param \AppBundle\Entity\Issue $issue
+     */
+    public function removeIssue(\AppBundle\Entity\Issue $issue)
+    {
+        $this->issues->removeElement($issue);
+    }
+
+    /**
+     * Get issues
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIssues()
+    {
+        return $this->issues;
+    }
+
+    /**
+     * Add status
+     *
+     * @param \AppBundle\Entity\Status $status
+     *
+     * @return Location
+     */
+    public function addStatus(\AppBundle\Entity\Status $status)
+    {
+        $this->statuses[] = $status;
+
+        return $this;
+    }
+
+    /**
+     * Remove status
+     *
+     * @param \AppBundle\Entity\Status $status
+     */
+    public function removeStatus(\AppBundle\Entity\Status $status)
+    {
+        $this->statuses->removeElement($status);
+    }
+
+    /**
+     * Get statuses
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStatuses()
+    {
+        return $this->statuses;
     }
 }
