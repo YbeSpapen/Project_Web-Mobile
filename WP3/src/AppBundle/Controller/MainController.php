@@ -123,30 +123,6 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/setTechnician", name="setTechnician")
-     */
-    public function setTechnician(Request $request)
-    {
-        $issueId = $request->get('issueId');
-        $technicianId = $request->get('technicianId');
-        $assign = $request->get('assign');
-
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
-        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->find($technicianId);
-
-        if ($assign == 1) {
-            $issue->setTechnician($technician);
-        } else {
-            $issue->setTechnician(null);
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $em->flush();
-
-        return $this->redirectToRoute('getTechnicians', array('issueId' => $issueId));
-    }
-
-    /**
      * @Route("/assignedProblems", name="assignedProblems")
      */
     public function assignedProblems(Request $request)
@@ -196,5 +172,82 @@ class MainController extends Controller
         $locations = $this->getDoctrine()->getRepository('AppBundle:Location')->findAll();
         return $this->render('default/index.html.twig', array('locations' => $locations));
     }
+
+    /**
+     * @Route("/setTechnician", name="setTechnician")
+     */
+    public function setTechnician(Request $request)
+    {
+        $issueId = $request->get('issueId');
+        $technicianId = $request->get('technicianId');
+        $assign = $request->get('assign');
+
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
+        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->find($technicianId);
+
+        if ($assign == 1) {
+            $issue->setTechnician($technician);
+        } else {
+            $issue->setTechnician(null);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
+        return $this->redirectToRoute('getTechnicians', array('issueId' => $issueId));
+    }
+
+    /**
+     * @Route("/getTechniciansAdmin", name="getTechniciansAdmin")
+     */
+    public function getTechniciansAdmin(Request $request)
+    {
+        $technicians = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN'));
+
+        return $this->render('default/technicians_admin.html.twig', array('technicians' => $technicians));
+    }
+
+    /**
+     * @Route("/editTechnician", name="editTechnician")
+     */
+    public function editTechnician(Request $request)
+    {
+        $technicianId = $request->get('technicianId');
+        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN', 'id' => $technicianId));
+
+        $form = $this->createForm(UserType::class, $technician);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $encoder = $this->get('security.password_encoder');
+            $password = $encoder->encodePassword($technician, $technician->getPlainPassword());
+            $technician->setPassword($password);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+
+            return $this->redirectToRoute('getTechniciansAdmin');
+        }
+
+        return $this->render('default/techn', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/removeTechnician", name="removeTechnician")
+     */
+    public function removeTechnician(Request $request)
+    {
+        $technicianId = $request->get('technicianId');
+        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN', 'id' => $technicianId));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($technician);
+
+        return $this->redirect($request->getUri());
+    }
+
+
 
 }
