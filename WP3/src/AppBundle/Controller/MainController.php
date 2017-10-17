@@ -10,6 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Form\UserType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 
 class MainController extends Controller
 {
@@ -83,17 +86,6 @@ class MainController extends Controller
         return $this->redirectToRoute('welcome');
     }
 
-    function getStatus($code)
-    {
-        if ($code == 1) {
-            return "HAPPY";
-        } else if ($code == 2) {
-            return "MEDIUM";
-        } else {
-            return "MAD";
-        }
-    }
-
     /**
      * @Route("/overview", name="overview")
      */
@@ -111,19 +103,8 @@ class MainController extends Controller
     }
 
     /**
-     * @Route("/getTechnicians", name="getTechnicians")
-     */
-    public function getTechnicians(Request $request)
-    {
-        $issueId = $request->get('issueId');
-        $technicians = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN'));
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
-
-        return $this->render('default/technicians.html.twig', array('technicians' => $technicians, 'issue' => $issue));
-    }
-
-    /**
      * @Route("/assignedProblems", name="assignedProblems")
+     * @Security("has_role('ROLE_TECHNICIAN')")
      */
     public function assignedProblems(Request $request)
     {
@@ -135,6 +116,7 @@ class MainController extends Controller
 
     /**
      * @Route("/setHandled", name="setHandled")
+     * @Security("has_role('ROLE_TECHNICIAN')")
      */
     public function setHandled(Request $request)
     {
@@ -153,8 +135,10 @@ class MainController extends Controller
         return $this->redirectToRoute('assignedProblems');
 
     }
+
     /**
      * @Route("/setTechnicianIssue", name="setTechnicianToIssue")
+     * @Security("has_role('ROLE_TECHNICIAN')")
      */
     public function setTechnicianIssue(Request $request)
     {
@@ -175,6 +159,7 @@ class MainController extends Controller
 
     /**
      * @Route("/setTechnician", name="setTechnician")
+     * @Security("has_role('ROLE_MANAGER')")
      */
     public function setTechnician(Request $request)
     {
@@ -198,7 +183,21 @@ class MainController extends Controller
     }
 
     /**
+     * @Route("/getTechnicians", name="getTechnicians")
+     * @Security("has_role('ROLE_MANAGER')")
+     */
+    public function getTechnicians(Request $request)
+    {
+        $issueId = $request->get('issueId');
+        $technicians = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN'));
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
+
+        return $this->render('default/technicians.html.twig', array('technicians' => $technicians, 'issue' => $issue));
+    }
+
+    /**
      * @Route("/getTechniciansAdmin", name="getTechniciansAdmin")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function getTechniciansAdmin(Request $request)
     {
@@ -209,11 +208,13 @@ class MainController extends Controller
 
     /**
      * @Route("/editTechnician", name="editTechnician")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editTechnician(Request $request)
     {
         $technicianId = $request->get('technicianId');
-        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN', 'id' => $technicianId));
+        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('role' => 'ROLE_TECHNICIAN', 'id' => $technicianId));
+
 
         $form = $this->createForm(UserType::class, $technician);
         $form->handleRequest($request);
@@ -229,25 +230,36 @@ class MainController extends Controller
             return $this->redirectToRoute('getTechniciansAdmin');
         }
 
-        return $this->render('default/techn', [
+        return $this->render('default/technician_edit_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/removeTechnician", name="removeTechnician")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function removeTechnician(Request $request)
     {
         $technicianId = $request->get('technicianId');
-        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN', 'id' => $technicianId));
+        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('role' => 'ROLE_TECHNICIAN', 'id' => $technicianId));
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($technician);
+        $em->flush();
 
-        return $this->redirect($request->getUri());
+        return $this->redirectToRoute('getTechniciansAdmin');
     }
 
-
+    private function getStatus($code)
+    {
+        if ($code == 1) {
+            return "HAPPY";
+        } else if ($code == 2) {
+            return "MEDIUM";
+        } else {
+            return "MAD";
+        }
+    }
 
 }
