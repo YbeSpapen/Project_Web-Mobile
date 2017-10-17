@@ -46,7 +46,17 @@
                         {% endif %}
                     </td>
                     <td>
-                        {{ issue.getTechnician().getName() | default("Not assigned") }}
+	                    {% if app.user != null and app.user.getRole() == 'ROLE_TECHNICIAN' %}
+		                    {% if not issue.technician %}
+                                <a href="/setTechnicianIssue?issueId={{ issue.id}}&technicianId={{ app.user.getId() }}&assign={{1}}"
+                                   class="btn btn-space btn-sm btn-primary" role="button">Set</a>
+		                    {% else %}
+			                    {{ issue.getTechnician().getName()}}
+		                    {% endif %}
+                        {% else %}
+	                        {{ issue.getTechnician().getName() | default("Not assigned") }}
+	                    {% endif %}
+
                     </td>
                     {% if app.user != null and app.user.getRole() == 'ROLE_MANAGER' %}
                         <td>

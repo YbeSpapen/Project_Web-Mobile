@@ -34,12 +34,18 @@
                     <td>{{ location.getName() }}</td>
                     <td class="pull-right">
                         <div>
-                            <a href="/giveStatus?locatieId={{ location.getId }}"
-                               class="btn btn-sm btn-space btn-primary" role="button">Give status</a>
-                            <a href="/giveIssue?locatieId={{ location.getId }}" class="btn btn-space btn-sm btn-primary"
-                               role="button">Rate</a>
-                            <a href="/overview?locatieId={{ location.getId }}" class="btn btn-space btn-sm btn-primary"
-                               role="button">Overview</a>
+	                        {% if app.user != null and app.user.getRole() == 'ROLE_TECHNICIAN' %}
+                                <a href="/overview?locatieId={{ location.getId }}" class="btn btn-space btn-sm btn-primary"
+                                   role="button">Overview</a>
+                            {% else %}
+                                <a href="/giveStatus?locatieId={{ location.getId }}"
+                                   class="btn btn-sm btn-space btn-primary" role="button">Give status</a>
+                                <a href="/giveIssue?locatieId={{ location.getId }}" class="btn btn-space btn-sm btn-primary"
+                                   role="button">Rate</a>
+                                <a href="/overview?locatieId={{ location.getId }}" class="btn btn-space btn-sm btn-primary"
+                                   role="button">Overview</a>
+	                        {% endif %}
+
                         </div>
                     </td>
                 </tr>

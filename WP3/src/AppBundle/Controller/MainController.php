@@ -177,4 +177,24 @@ class MainController extends Controller
         return $this->redirectToRoute('assignedProblems');
 
     }
+    /**
+     * @Route("/setTechnicianIssue", name="setTechnicianToIssue")
+     */
+    public function setTechnicianIssue(Request $request)
+    {
+        $issueId = $request->get('issueId');
+        $technicianId = $request->get('technicianId');
+        $assign = $request->get('assign');
+
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
+        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->find($technicianId);
+
+        $issue->setTechnician($technician);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        $locations = $this->getDoctrine()->getRepository('AppBundle:Location')->findAll();
+        return $this->render('default/index.html.twig', array('locations' => $locations));
+    }
+
 }
