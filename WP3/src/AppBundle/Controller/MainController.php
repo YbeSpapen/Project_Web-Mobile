@@ -243,8 +243,13 @@ class MainController extends Controller
     {
         $technicianId = $request->get('technicianId');
         $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('role' => 'ROLE_TECHNICIAN', 'id' => $technicianId));
+        $issues = $this->getDoctrine()->getRepository('AppBundle:Issue')->findBy(array('technician' => $technicianId));
 
         $em = $this->getDoctrine()->getManager();
+        foreach ($issues as $issue )
+        {
+            $issue->setTechnician();
+        }
         $em->remove($technician);
         $em->flush();
 
