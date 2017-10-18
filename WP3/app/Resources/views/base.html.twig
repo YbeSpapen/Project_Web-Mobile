@@ -22,11 +22,14 @@
             </button>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            okok
             {% block navbarItems %}
+                iets
                 <ul class="nav navbar-nav mr-auto">
                     <li class="nav-item">
                         <a href="/" class="nav-link">Home</a>
                     </li>
+
                     {% if app.user != null and app.user.getRole() == 'ROLE_TECHNICIAN' %}
                         <li class="nav-item">
                             <a href="/assignedProblems" class="nav-link">My assigned problems</a>
