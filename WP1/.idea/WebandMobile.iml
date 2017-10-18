@@ -4,5 +4,27 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="PHARS">
+        <CLASSES>
+          <root url="phar://$MODULE_DIR$/test/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
+        </CLASSES>
+        <SOURCES>
+          <root url="phar://$MODULE_DIR$/test/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="PHP" type="php">
+        <CLASSES>
+          <root url="file://$APPLICATION_HOME_DIR$/bin" />
+          <root url="file:///usr/share/php" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file://$APPLICATION_HOME_DIR$/bin" />
+          <root url="file:///usr/share/php" />
+        </SOURCES>
+      </library>
+    </orderEntry>
   </component>
 </module>

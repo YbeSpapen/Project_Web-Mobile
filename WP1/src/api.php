@@ -12,7 +12,7 @@ use model\IssueRepositoryPDO;
 use model\Status;
 
 $user = 'root';
-$password = 'user';
+$password = 'root';
 $database = 'WebAndMobile';
 $hostname = '127.0.0.1';
 $pdo = null;
