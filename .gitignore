@@ -8,7 +8,7 @@
 .idea/dictionaries
 
 #ignore htacces file
-WP1/src/.htaccess
+/WP1/src/.htaccess
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
