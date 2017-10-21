@@ -16,13 +16,13 @@ class StatusController
         $this->statusView = new StatusView();
     }
 
-    public function handleGetStatusesByLocationId($locationId) {
-        $statuses = $this->statusRepository->getStatusesByLocationId($locationId);
+    public function handleGetStatusesByLocationId($location_id) {
+        $statuses = $this->statusRepository->getStatusesByLocationId($location_id);
         $this->statusView->showStatuses($statuses);
     }
 
-    public function handleAddStatus($id, $locationId, $status, $date) {
-        $returnCode = $this->statusRepository->addStatus($id, $locationId, $status, $date);
+    public function handleAddStatus($id, $location_id, $status, $date) {
+        $returnCode = $this->statusRepository->addStatus($id, $location_id, $status, $date);
         $this->statusView->showStatuses($returnCode);
     }
 }

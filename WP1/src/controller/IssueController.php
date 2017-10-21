@@ -16,8 +16,8 @@ class IssueController
         $this->issueView = new IssueView();
     }
 
-    public function handleGetIssuesByLocationId($locationId) {
-        $issues = $this->issueRepository->getIssuesByLocationId($locationId);
+    public function handleGetIssuesByLocationId($location_id) {
+        $issues = $this->issueRepository->getIssuesByLocationId($location_id);
         $this->issueView->showIssues($issues);
     }
 
@@ -26,13 +26,13 @@ class IssueController
         $this->issueView->showIssues($issue);
     }
 
-    public function handleGetIssueByTechnicianId($technicianId){
-        $issues = $this->issueRepository->getIssuesBytechnicianId($technicianId);
+    public function handleGetIssueByTechnicianId($technician_id){
+        $issues = $this->issueRepository->getIssuesBytechnicianId($technician_id);
         $this->issueView->showIssues($issues);
     }
 
-    public function handleAddIssue($id, $locationId, $problem, $date, $handled, $technicianId) {
-        $returnCode = $this->issueRepository->addIssue($id, $locationId, $problem, $date, $handled, $technicianId);
+    public function handleAddIssue($id, $location_id, $problem, $date, $handled, $technician_id) {
+        $returnCode = $this->issueRepository->addIssue($id, $location_id, $problem, $date, $handled, $technician_id);
         $this->issueView->showIssues($returnCode);
     }
 }

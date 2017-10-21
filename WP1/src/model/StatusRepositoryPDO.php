@@ -13,18 +13,18 @@ class StatusRepositoryPDO implements StatusRepository
         $this->connection = $connection;
     }
 
-    public function getStatusesByLocationId($locationId)
+    public function getStatusesByLocationId($location_id)
     {
         try {
-            $statement = $this->connection->prepare('SELECT * FROM status WHERE locationId = ?');
-            $statement->bindParam(1, $locationId, \PDO::PARAM_INT);
+            $statement = $this->connection->prepare('SELECT * FROM status WHERE location_id = ?');
+            $statement->bindParam(1, $location_id, \PDO::PARAM_INT);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
             $arrayResults = array();
 
             if (count($results) > 0) {
                 foreach ($results as $status) {
-                    $stat = new Status($status['id'], $status['locationId'], $status['status'], $status['date']);
+                    $stat = new Status($status['id'], $status['location_id'], $status['status'], $status['date']);
                     array_push($arrayResults, $stat);
                 }
                 return $arrayResults;
@@ -36,12 +36,12 @@ class StatusRepositoryPDO implements StatusRepository
         }
     }
 
-    public function addStatus($id, $locationId, $status, $date)
+    public function addStatus($id, $location_id, $status, $date)
     {
         try {
-            $statement = $this->connection->prepare('INSERT INTO status (id, locationId, status, date) VALUES(?, ?, ?, ?)');
+            $statement = $this->connection->prepare('INSERT INTO status (id, location_id, status, date) VALUES(?, ?, ?, ?)');
             $statement->bindParam(1, $id, \PDO::PARAM_INT);
-            $statement->bindParam(2, $locationId, \PDO::PARAM_INT);
+            $statement->bindParam(2, $location_id, \PDO::PARAM_INT);
             $statement->bindParam(3, $status, \PDO::PARAM_STR);
             $statement->bindParam(4, $date, \PDO::PARAM_STR);
             return $statement->execute();

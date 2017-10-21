@@ -5,14 +5,14 @@ namespace model;
 class Status implements \JsonSerializable
 {
     private $id;
-    private $locationId;
+    private $location_id;
     private $status;
     private $date;
 
-    public function __construct($id, $locationId, $status, $date)
+    public function __construct($id, $location_id, $status, $date)
     {
         $this->id = $id;
-        $this->locationId = $locationId;
+        $this->location_id = $location_id;
         $this->status = $status;
         $this->date = $date;
     }
@@ -29,12 +29,12 @@ class Status implements \JsonSerializable
 
     public function getLocationId()
     {
-        return $this->locationId;
+        return $this->location_id;
     }
 
-    public function setLocationId($locationId)
+    public function setLocationId($location_id)
     {
-        $this->locationId = $locationId;
+        $this->location_id = $location_id;
     }
 
     public function getStatus()

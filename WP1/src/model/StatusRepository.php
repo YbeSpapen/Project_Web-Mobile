@@ -5,6 +5,6 @@ namespace model;
 
 interface StatusRepository
 {
-    public function getStatusesByLocationId($locationId);
-    public function addStatus($id, $locationId, $status, $date);
+    public function getStatusesByLocationId($location_id);
+    public function addStatus($id, $location_id, $status, $date);
 }

@@ -13,18 +13,18 @@ class IssueRepositoryPDO implements IssueRepository
         $this->connection = $connection;
     }
 
-    public function getIssuesByLocationId($locationId)
+    public function getIssuesByLocationId($location_id)
     {
         try {
-            $statement = $this->connection->prepare('SELECT * FROM issue WHERE locationId = ?');
-            $statement->bindParam(1, $locationId, \PDO::PARAM_INT);
+            $statement = $this->connection->prepare('SELECT * FROM issue WHERE location_id = ?');
+            $statement->bindParam(1, $location_id, \PDO::PARAM_INT);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
             $arrayResults = array();
 
             if (count($results) > 0) {
                 foreach ($results as $issue) {
-                    $iss = new Issue($issue['id'], $issue['locationId'], $issue['problem'], $issue['date'], $issue['handled'], $issue['technicianId']);
+                    $iss = new Issue($issue['id'], $issue['location_id'], $issue['problem'], $issue['date'], $issue['handled'], $issue['technician_id']);
                     array_push($arrayResults, $iss);
                 }
                 return $arrayResults;
@@ -39,14 +39,14 @@ class IssueRepositoryPDO implements IssueRepository
     public function getIssueById($id)
     {
         try {
-            $statement = $this->connection->prepare('SELECT * FROM issue WHERE id = ? LIMIT 1');
+            $statement = $this->connection->prepare('SELECT * FROM issue WHERE id = ?');
             $statement->bindParam(1, $id, \PDO::PARAM_INT);
             $statement->execute();
             $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
             if (count($result) > 0) {
                 foreach ($result as $issue) {
-                    $iss = new Issue($issue['id'], $issue['locationId'], $issue['problem'], $issue['date'], $issue['handled'], $issue['technicianId']);
+                    $iss = new Issue($issue['id'], $issue['location_id'], $issue['problem'], $issue['date'], $issue['handled'], $issue['technician_id']);
                     return $iss;
                 }
             } else {
@@ -57,18 +57,18 @@ class IssueRepositoryPDO implements IssueRepository
         }
     }
 
-    public function getIssuesBytechnicianId($technicianId)
+    public function getIssuesBytechnicianId($technician_id)
     {
         try {
-            $statement = $this->connection->prepare('SELECT * FROM issue WHERE technicianId = ?');
-            $statement->bindParam(1, $technicianId, \PDO::PARAM_INT);
+            $statement = $this->connection->prepare('SELECT * FROM issue WHERE technician_id = ?');
+            $statement->bindParam(1, $technician_id, \PDO::PARAM_INT);
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
             $arrayResults = array();
 
             if (count($results) > 0) {
                 foreach ($results as $issue) {
-                    $iss = new Issue($issue['id'], $issue['locationId'], $issue['problem'], $issue['date'], $issue['handled'], $issue['technicianId']);
+                    $iss = new Issue($issue['id'], $issue['location_id'], $issue['problem'], $issue['date'], $issue['handled'], $issue['technician_id']);
                     array_push($arrayResults, $iss);
                 }
                 return $arrayResults;
@@ -80,16 +80,16 @@ class IssueRepositoryPDO implements IssueRepository
         }
     }
 
-    public function addIssue($id, $locationId, $problem, $date, $handled, $technicianId)
+    public function addIssue($id, $location_id, $problem, $date, $handled, $technician_id)
     {
         try {
-            $statement = $this->connection->prepare('INSERT INTO issue (id, locationId, problem, date, handled, technicianId) VALUES(?, ?, ?, ?, ?, ?)');
+            $statement = $this->connection->prepare('INSERT INTO issue (id, location_id, problem, date, handled, technician_id) VALUES(?, ?, ?, ?, ?, ?)');
             $statement->bindParam(1, $id, \PDO::PARAM_INT);
-            $statement->bindParam(2, $locationId, \PDO::PARAM_INT);
+            $statement->bindParam(2, $location_id, \PDO::PARAM_INT);
             $statement->bindParam(3, $problem, \PDO::PARAM_STR);
             $statement->bindParam(4, $date, \PDO::PARAM_STR);
             $statement->bindParam(5, $handled, \PDO::PARAM_INT);
-            $statement->bindParam(6, $technicianId, \PDO::PARAM_INT);
+            $statement->bindParam(6, $technician_id, \PDO::PARAM_INT);
             return $statement->execute();
         } catch (\Exception $exception) {
             return $exception->getMessage();

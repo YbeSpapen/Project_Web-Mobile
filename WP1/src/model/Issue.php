@@ -5,20 +5,20 @@ namespace model;
 class Issue implements \JsonSerializable
 {
     private $id;
-    private $locationId;
+    private $location_id;
     private $problem;
     private $date;
     private $handled;
-    private $technicianId;
+    private $technician_id;
 
-    public function __construct($id, $locationId, $problem, $date, $handled, $technicianId)
+    public function __construct($id, $location_id, $problem, $date, $handled, $technician_id)
     {
         $this->id = $id;
-        $this->locationId = $locationId;
+        $this->locationId = $location_id;
         $this->problem = $problem;
         $this->date = $date;
         $this->handled = $handled;
-        $this->technicianId = $technicianId;
+        $this->technicianId = $technician_id;
     }
 
     public function getId()
@@ -33,12 +33,12 @@ class Issue implements \JsonSerializable
 
     public function getLocationId()
     {
-        return $this->locationId;
+        return $this->location_id;
     }
 
-    public function setLocationId($locationId)
+    public function setLocationId($location_id)
     {
-        $this->locationId = $locationId;
+        $this->location_id = $location_id;
     }
 
     public function getProblem()
@@ -73,12 +73,12 @@ class Issue implements \JsonSerializable
 
     public function getTechnicianId()
     {
-        return $this->technicianId;
+        return $this->technician_id;
     }
 
-    public function setTechnicianId($technicianId)
+    public function setTechnicianId($technician_id)
     {
-        $this->technicianId = $technicianId;
+        $this->technician_id = $technician_id;
     }
 
     function jsonSerialize()
