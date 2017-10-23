@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class MainController extends Controller
@@ -274,6 +275,31 @@ class MainController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('getTechniciansAdmin');
+    }
+
+    /**
+     * Export to PDF
+     *
+     * @Route("/pdf", name="pdf")
+     */
+    public function pdfAction()
+    {
+        $user = $user = $this->get('security.token_storage')->getToken()->getUser();
+        $issues = $this->getDoctrine()->getRepository('AppBundle:Issue')->findBy(array('technician' => $user));
+
+        $html = $this->renderView('default/pdf.html.twig', array('issues' => $issues, 'user' => $user));
+
+        $filename = sprintf('list.pdf', date('Y-m-d'));
+
+
+        return new Response(
+            $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+            200,
+            [
+                'Content-Type'        => 'application/pdf',
+                'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
+            ]
+        );
     }
 
     private function getStatus($code)
