@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <h1>{{ user.getName() }}</h1>
+            <h3>Email: {{ user.getEmail() }}</h3>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <img src="{{ pathToWeb }}/uploads/technicianPhotos/{{ app.user.getPhoto }}">
+        </div>
+    </div>
+
+    <h1>Issues</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Problem</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Handled</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for issue in issues %}
+            <tr>
+                <th scope="row">{{ issue.getId() }}</th>
+                <td>{{ issue.getProblem() }}</td>
+                <td>{{ issue.getDate()|date('Y-m-d') }}</td>
+                <td>{{ issue.getLocation().getName() }}</td>
+                <td>{{ issue.getHandled()?"Yes":"No" }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

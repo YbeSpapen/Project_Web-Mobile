@@ -25,7 +25,7 @@ class LocationsPage extends Component{
         return (
             <div>
                 <LocationsTable entries={fetchedEntries}/>
-                <Link to="/overview"><RaisedButton label="Go to overview" primary={true} style={{ position: 'fixed', left: '15px', top: '450px' }}></RaisedButton></Link>
+                <Link to="/overview"><RaisedButton label="Go to overview" primary={true} style={{ margin: '10px' }}></RaisedButton></Link>
             </div>
         );
     }

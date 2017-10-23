@@ -14,8 +14,10 @@ import {
 } from 'material-ui/Table';
 
 class LocationsTable extends Component {
+
     handleRowSelection = (selectedRows) => {
-        this.setState({selected: this.props.entries[selectedRows].id});
+        const selectedRow = this.props.entries[selectedRows].id;
+        this.props.changeSelected(selectedRow);
     };
 
     render() {
@@ -33,14 +35,11 @@ class LocationsTable extends Component {
                         <TableHeaderColumn>Name</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
-                <TableBody>
+                <TableBody deselectOnClickaway={false}>
                     {rows}
                 </TableBody>
             </Table>
         )
-    }
-    componentDidMount(){
-        this.props.changeSelected(this.state.selected)
     }
 }
 

@@ -17,9 +17,8 @@ class OverviewPage extends Component {
     }
 
     componentWillMount() {
-        console.log(this.props.selectedRow);
-        //HttpService.getIssuesOfLocatiton(this.props.selectedRow.id).then(fetchedEntries => this.setState({issues: fetchedEntries}));
-        //HttpService.getStatusesOfLocation(this.props.selectedRow.id).then(fetchedEntries => this.setState({statuses: fetchedEntries}));
+        HttpService.getIssuesOfLocatiton(this.props.selectedRow).then(fetchedEntries => this.setState({issues: fetchedEntries}));
+        HttpService.getStatusesOfLocation(this.props.selectedRow).then(fetchedEntries => this.setState({statuses: fetchedEntries}));
     }
 
     render() {
