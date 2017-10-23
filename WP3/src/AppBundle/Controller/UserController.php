@@ -2,11 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\TechnicianType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 class UserController extends Controller
@@ -42,7 +44,7 @@ class UserController extends Controller
             $user->setPassword($password);
 
 
-            $user->setRole('ROLE_MANAGER');
+            $user->setRole('ROLE_ADMIN');
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -62,7 +64,7 @@ class UserController extends Controller
     public function registerTechnicanAdmin(Request $request)
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(TechnicianType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -73,11 +75,28 @@ class UserController extends Controller
 
             $user->setRole('ROLE_TECHNICIAN');
 
+            // $file stores the uploaded PDF file
+            /** @var UploadedFile $file */
+            $file = $user->getPhoto();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->getParameter('photo_directory'),
+                $fileName
+            );
+
+            // Update the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $user->setPhoto($fileName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('getTechniciansAdmin');
         }
 
         return $this->render('auth/register.html.twig', [

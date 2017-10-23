@@ -27,6 +27,12 @@ class User implements UserInterface
     protected $email;
 
     /**
+     * @ORM\Column(name="image_name",type="string",length=255,nullable=true)
+     * @Assert\File(mimeTypes={"image/png"},maxSize="10M")
+     */
+    private $photo;
+
+    /**
      * @ORM\Column(type="string", length=40)
      */
     protected $name;
@@ -165,4 +171,21 @@ class User implements UserInterface
     {
         return $this->issues;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param mixed $photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    }
+
 }

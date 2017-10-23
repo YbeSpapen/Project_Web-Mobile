@@ -5,10 +5,13 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Issue;
 use AppBundle\Entity\Status;
+use AppBundle\Form\TechnicianType;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -216,13 +219,30 @@ class MainController extends Controller
         $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('role' => 'ROLE_TECHNICIAN', 'id' => $technicianId));
 
 
-        $form = $this->createForm(UserType::class, $technician);
+        $form = $this->createForm(TechnicianType::class, $technician);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $encoder = $this->get('security.password_encoder');
             $password = $encoder->encodePassword($technician, $technician->getPlainPassword());
             $technician->setPassword($password);
+
+            // $file stores the uploaded PDF file
+            /** @var UploadedFile $file */
+            $file = $technician->getPhoto();
+
+            // Generate a unique name for the file before saving it
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->getParameter('photo_directory'),
+                $fileName
+            );
+
+            // Update the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $technician->setPhoto($fileName);
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();

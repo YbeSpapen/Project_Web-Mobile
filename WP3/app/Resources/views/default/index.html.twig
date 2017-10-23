@@ -6,7 +6,12 @@
         <h1>Welcome
             {% if app.user != null %}
                 {{ app.user.name }}
+	            {% if app.user.getRole() == 'ROLE_TECHNICIAN' %}
+                    <img src="{{ asset('uploads/technicianPhotos/'~app.user.getPhoto) }}">
+
+	            {% endif %}
             {% endif %}
+
         </h1>
         <table class="table table-striped">
             <thead>
