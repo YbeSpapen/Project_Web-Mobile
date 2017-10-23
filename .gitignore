@@ -11,6 +11,7 @@
 /WP1/src/.htaccess
 /WP2//wp2/.idea
 /WP1/.idea
+WP3/.idea/
 
 # Sensitive or high-churn files:
 .idea/**/dataSources/
