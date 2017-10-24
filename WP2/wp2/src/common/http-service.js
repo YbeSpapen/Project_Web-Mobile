@@ -17,6 +17,10 @@ class HttpService{
     getStatusesOfLocation(id){
         return axios.get(`${this.baseUrl}/status/location/${id}`).then(r => r.data);
     }
+
+    addIssueEntry($issue){
+        return axios.post(`${this.baseUrl}/issue/add`, { problem: $issue.problem, date: $issue.date, handled: $issue.handled, location_id: $issue.location_id });
+    }
 }
 
 const httpService = new HttpService();

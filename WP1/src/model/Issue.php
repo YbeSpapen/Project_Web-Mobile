@@ -14,11 +14,11 @@ class Issue implements \JsonSerializable
     public function __construct($id, $location_id, $problem, $date, $handled, $technician_id)
     {
         $this->id = $id;
-        $this->locationId = $location_id;
+        $this->location_id = $location_id;
         $this->problem = $problem;
         $this->date = $date;
         $this->handled = $handled;
-        $this->technicianId = $technician_id;
+        $this->technician_id = $technician_id;
     }
 
     public function getId()

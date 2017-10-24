@@ -8,12 +8,13 @@ import MenuItem from 'material-ui/MenuItem';
 import HomePage from './home.page';
 import LocationsPage from './locations/locations.page';
 import OverviewPage from './locations/overview.page'
+import IssueAddPage from './issues/issues-add.page';
 
 import {
     BrowserRouter as Router,
     Route,
     Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 class Layout extends Component {
     constructor() {
@@ -36,11 +37,13 @@ class Layout extends Component {
                     />
                     <Drawer open={this.state.drawerOpen}>
                         <MenuItem onClick={this.toggleState} containerElement={<Link to="/"></Link>}>Home</MenuItem>
-                        <MenuItem onClick={this.toggleState} containerElement={<Link to="/locations"></Link>}>Locations</MenuItem>
+                        <MenuItem onClick={this.toggleState}
+                                  containerElement={<Link to="/locations"></Link>}>Locations</MenuItem>
                     </Drawer>
                     <Route exact={true} path="/" component={HomePage}/>
                     <Route path="/locations" component={LocationsPage}/>
                     <Route path="/overview" component={OverviewPage}/>
+                    <Route path="/addIssue" component={IssueAddPage}/>
                 </div>
             </Router>
         );

@@ -80,16 +80,14 @@ class IssueRepositoryPDO implements IssueRepository
         }
     }
 
-    public function addIssue($id, $location_id, $problem, $date, $handled, $technician_id)
+    public function addIssue($location_id, $problem, $date, $handled)
     {
         try {
-            $statement = $this->connection->prepare('INSERT INTO issue (id, location_id, problem, date, handled, technician_id) VALUES(?, ?, ?, ?, ?, ?)');
-            $statement->bindParam(1, $id, \PDO::PARAM_INT);
-            $statement->bindParam(2, $location_id, \PDO::PARAM_INT);
-            $statement->bindParam(3, $problem, \PDO::PARAM_STR);
-            $statement->bindParam(4, $date, \PDO::PARAM_STR);
-            $statement->bindParam(5, $handled, \PDO::PARAM_INT);
-            $statement->bindParam(6, $technician_id, \PDO::PARAM_INT);
+            $statement = $this->connection->prepare('INSERT INTO issue (location_id, problem, date, handled) VALUES(?, ?, ?, ?)');
+            $statement->bindParam(1, $location_id, \PDO::PARAM_INT);
+            $statement->bindParam(2, $problem, \PDO::PARAM_STR);
+            $statement->bindParam(3, $date, \PDO::PARAM_STR);
+            $statement->bindParam(4, $handled, \PDO::PARAM_INT);
             return $statement->execute();
         } catch (\Exception $exception) {
             return $exception->getMessage();

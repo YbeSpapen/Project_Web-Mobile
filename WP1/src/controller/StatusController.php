@@ -21,8 +21,8 @@ class StatusController
         $this->statusView->showStatuses($statuses);
     }
 
-    public function handleAddStatus($id, $location_id, $status, $date) {
-        $returnCode = $this->statusRepository->addStatus($id, $location_id, $status, $date);
+    public function handleAddStatus($location_id, $status, $date) {
+        $returnCode = $this->statusRepository->addStatus($location_id, $status, $date);
         $this->statusView->showStatuses($returnCode);
     }
 }
