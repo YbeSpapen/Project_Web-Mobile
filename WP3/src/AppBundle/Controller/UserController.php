@@ -44,7 +44,7 @@ class UserController extends Controller
             $user->setPassword($password);
 
 
-            $user->setRole('ROLE_ADMIN');
+            $user->setRole('ROLE_MANAGER');
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
