@@ -12,7 +12,7 @@ use model\IssueRepositoryPDO;
 use model\Status;
 
 $user = 'root';
-$password = 'root';
+$password = 'user';
 $database = 'WebAndMobile';
 $hostname = '127.0.0.1';
 $pdo = null;
@@ -79,6 +79,7 @@ try {
         function () use ($statusController) {
             header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
+            $_POST = json_decode(file_get_contents('php://input'), true);
             $statusController->handleAddStatus($_POST["location_id"], $_POST["status"], $_POST["date"]);
         }
     );
@@ -87,16 +88,29 @@ try {
         function () use ($issueController) {
             header("Acces-Control-Allow-Origin: *");
             header("Content-Type: application/json");
+            $_POST = json_decode(file_get_contents('php://input'), true);
+
             $issueController->handleAddIssue($_POST["location_id"], $_POST["problem"], $_POST["date"], $_POST["handled"]);
         }
     );
 
     $match = $router->match();
 
-    if( $match && is_callable( $match['target'] ) ){
-        call_user_func_array( $match['target'], $match['params'] );
+
+
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']) && $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] == 'GET') {
+            header("Access-Control-Allow-Origin: http://localhost:3000");
+            header("Access-Control-Allow-Methods: GET, POST");
+            header("Access-Control-Allow-Headers: Content-Type, Authorization");
+        }
+        exit;
+    }
+
+    if ($match && is_callable($match['target'])) {
+        call_user_func_array($match['target'], $match['params']);
     } else {
-        header( $_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
+        header($_SERVER["SERVER_PROTOCOL"] . ' 404 Not Found');
     }
 
 } catch (Exception $e) {

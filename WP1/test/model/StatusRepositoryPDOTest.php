@@ -33,12 +33,12 @@ class StatusRepositoryPDOTest extends PHPUnit\Framework\TestCase
             ->will($this->returnValue(
                 [
                     [ 'id' => $status1->getId(),
-                        'locationId' => $status1->getLocationId(),
+                        'location_id' => $status1->getLocationId(),
                         'status' => $status1->getStatus(),
                         'date' => $status1->getDate()
                     ],
                     [ 'id' => $status2->getId(),
-                        'locationId' => $status2->getLocationId(),
+                        'location_id' => $status2->getLocationId(),
                         'status' => $status2->getStatus(),
                         'date' => $status2->getDate()
                     ]

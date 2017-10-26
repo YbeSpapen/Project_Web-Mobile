@@ -33,18 +33,18 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
             ->will($this->returnValue(
                 [
                     [ 'id' => $issue1->getId(),
-                        'locationId' => $issue1->getLocationId(),
+                        'location_id' => $issue1->getLocationId(),
                         'problem' => $issue1->getProblem(),
                         'date' => $issue1->getDate(),
                         'handled' => $issue1->getHandled(),
-                        'technicianId' => $issue1->getTechnicianId()
+                        'technician_id' => $issue1->getTechnicianId()
                     ],
                     [ 'id' => $issue2->getId(),
-                        'locationId' => $issue2->getLocationId(),
+                        'location_id' => $issue2->getLocationId(),
                         'problem' => $issue2->getProblem(),
                         'date' => $issue2->getDate(),
                         'handled' => $issue2->getHandled(),
-                        'technicianId' => $issue2->getTechnicianId()
+                        'technician_id' => $issue2->getTechnicianId()
                     ]
                 ]));
         $this->mockPDO->expects($this->atLeastOnce())
@@ -98,11 +98,11 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
             ->will($this->returnValue(
                 [
                     [ 'id' => $issue->getId(),
-                        'locationId' => $issue->getLocationId(),
+                        'location_id' => $issue->getLocationId(),
                         'problem' => $issue->getProblem(),
                         'date' => $issue->getDate(),
                         'handled' => $issue->getHandled(),
-                        'technicianId' => $issue->getTechnicianId()
+                        'technician_id' => $issue->getTechnicianId()
                     ]
                 ]));
         $this->mockPDO->expects($this->atLeastOnce())
@@ -158,18 +158,18 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
             ->will($this->returnValue(
                 [
                     [ 'id' => $issue1->getId(),
-                        'locationId' => $issue1->getLocationId(),
+                        'location_id' => $issue1->getLocationId(),
                         'problem' => $issue1->getProblem(),
                         'date' => $issue1->getDate(),
                         'handled' => $issue1->getHandled(),
-                        'technicianId' => $issue1->getTechnicianId()
+                        'technician_id' => $issue1->getTechnicianId()
                     ],
                     [ 'id' => $issue2->getId(),
-                        'locationId' => $issue2->getLocationId(),
+                        'location_id' => $issue2->getLocationId(),
                         'problem' => $issue2->getProblem(),
                         'date' => $issue2->getDate(),
                         'handled' => $issue2->getHandled(),
-                        'technicianId' => $issue2->getTechnicianId()
+                        'technician_id' => $issue2->getTechnicianId()
                     ]
                 ]));
         $this->mockPDO->expects($this->atLeastOnce())
