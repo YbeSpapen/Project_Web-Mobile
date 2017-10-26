@@ -21,8 +21,8 @@ class IssuesAddPage extends Component {
     save = (ev) => {
         ev.preventDefault();
         const problem = ev.target['problem'].value;
-        const date = new Date(Date.now()).toLocaleString();
-        const location_id = this.props.selectedRow;
+        const date = new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' ');
+        const location_id = parseInt(this.props.selectedRow);
         const issue = {
             "problem": problem,
             "date": date,
