@@ -8,8 +8,20 @@
 
 namespace AppBundle\Tests\Controller;
 
+use AppBundle\Controller\MainController;
+use AppBundle\Entity\Location;
+use AppBundle\Repository\LocatieRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+
+/*
+ * The Symfony docs describe functional testing like this:
+ *  Make a request;
+ * Test the response;
+ * Click on a link or submit a form;
+ * Test the response;
+ * Rinse and repeat.
+ */
 class PostControllerTest extends WebTestCase
 {
     private $client = null;
@@ -31,7 +43,6 @@ class PostControllerTest extends WebTestCase
 
     public function testButtonCountAnonymous()
     {
-        $this->client = static::createClient();
         $crawler = $this->client->request('GET','/');
 
         $this->assertEquals(3,$crawler->filterXPath('descendant::td/div/a')->count());
@@ -40,7 +51,6 @@ class PostControllerTest extends WebTestCase
 
     public function testOverviewButton()
     {
-        $this->client = static::createClient();
         $crawler = $this->client->request('GET','/');
 
         $link = $crawler->filter('a:contains("Overview")')->link();
@@ -52,7 +62,6 @@ class PostControllerTest extends WebTestCase
     }
     public function testRateButton()
     {
-        $this->client = static::createClient();
         $crawler = $this->client->request('GET','/');
 
         $link = $crawler->filter('a:contains("Rate")')->link();
@@ -64,14 +73,11 @@ class PostControllerTest extends WebTestCase
     }
     public function testStatusButton()
     {
-        $this->client = static::createClient();
         $crawler = $this->client->request('GET','/');
 
         $link = $crawler->filter('a:contains("status")')->link();
         $overViewPage = $this->client->click($link);
 
-        $this->assertEquals('http://localhost/overview?giveStatus?locatieId=1',$overViewPage->getUri());
-
-
+        $this->assertEquals('http://localhost/giveStatus?locatieId=1',$overViewPage->getUri());
     }
 }
