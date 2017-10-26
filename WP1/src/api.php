@@ -86,7 +86,7 @@ try {
 
     $router->map('POST', 'issue/add',
         function () use ($issueController) {
-            header("Acces-Control-Allow-Origin: *");
+            header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $_POST = json_decode(file_get_contents('php://input'), true);
 
