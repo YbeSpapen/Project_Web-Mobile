@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitd6725e39fc400d9583dfa28c6fe2ab91
 {
+    public static $files = array (
+        'bbf73f3db644d3dced353b837903e74c' => __DIR__ . '/..' . '/php-di/php-di/src/DI/functions.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'v' => 
         array (
@@ -18,6 +22,20 @@ class ComposerStaticInitd6725e39fc400d9583dfa28c6fe2ab91
         'c' => 
         array (
             'controller\\' => 11,
+        ),
+        'P' => 
+        array (
+            'Psr\\Container\\' => 14,
+            'PhpDocReader\\' => 13,
+        ),
+        'I' => 
+        array (
+            'Invoker\\' => 8,
+            'Interop\\Container\\' => 18,
+        ),
+        'D' => 
+        array (
+            'DI\\' => 3,
         ),
     );
 
@@ -33,6 +51,26 @@ class ComposerStaticInitd6725e39fc400d9583dfa28c6fe2ab91
         'controller\\' => 
         array (
             0 => __DIR__ . '/../..' . '/controller',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'PhpDocReader\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-di/phpdoc-reader/src/PhpDocReader',
+        ),
+        'Invoker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-di/invoker/src',
+        ),
+        'Interop\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
+        ),
+        'DI\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-di/php-di/src/DI',
         ),
     );
 

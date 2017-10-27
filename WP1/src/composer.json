@@ -1,6 +1,7 @@
 {
   "require": {
-    "altorouter/altorouter": "1.1"
+    "altorouter/altorouter": "1.1",
+    "php-di/php-di": "^5.4"
   },
   "autoload": {
     "psr-4": {

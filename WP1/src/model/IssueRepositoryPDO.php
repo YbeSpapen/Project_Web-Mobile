@@ -88,7 +88,22 @@ class IssueRepositoryPDO implements IssueRepository
             $statement->bindParam(2, $problem, \PDO::PARAM_STR);
             $statement->bindParam(3, $date, \PDO::PARAM_STR);
             $statement->bindParam(4, $handled, \PDO::PARAM_INT);
-            return $statement->execute();
+            $statement->execute();
+            $id = $this->connection->lastInsertId();
+            return new Issue($id, $location_id, $problem, $date, $handled, null);
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+
+    public function assignIssue($issue_id, $technician_id)
+    {
+        try {
+            $statement = $this->connection->prepare('UPDATE issue SET technician_id = ? WHERE id = ?');
+            $statement->bindParam(1, $technician_id, \PDO::PARAM_INT);
+            $statement->bindParam(2, $issue_id, \PDO::PARAM_INT);
+            $statement->execute();
+            return $this->getIssueById($issue_id);
         } catch (\Exception $exception) {
             return $exception->getMessage();
         }

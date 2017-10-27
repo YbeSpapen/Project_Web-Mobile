@@ -17,6 +17,7 @@ class StatusRepositoryPDOTest extends PHPUnit\Framework\TestCase
             $this->getMockBuilder('PDOStatement')
                 ->disableOriginalConstructor()
                 ->getMock();
+        $this->pdoRepository = new StatusRepositoryPDO($this->mockPDO);
     }
 
     public function testFindStatusesByLocationId_idExists_StatusObject()
@@ -46,10 +47,8 @@ class StatusRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new StatusRepositoryPDO($this->mockPDO);
         $actualStatuses =
-            $pdoRepository->getStatusesByLocationId($status1->getLocationId());
-
+            $this->pdoRepository->getStatusesByLocationId($status1->getLocationId());
         $this->assertEquals($allStatuses, $actualStatuses);
     }
 
@@ -65,8 +64,7 @@ class StatusRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new StatusRepositoryPDO($this->mockPDO);
-        $actualStatuses = $pdoRepository->getStatusesByLocationId(24);
+        $actualStatuses = $this->pdoRepository->getStatusesByLocationId(24);
         $this->assertEquals($actualStatuses, '');
     }
 
@@ -78,14 +76,29 @@ class StatusRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new StatusRepositoryPDO($this->mockPDO);
-        $actualStatuses = $pdoRepository->getStatusesByLocationId(24);
+        $actualStatuses = $this->pdoRepository->getStatusesByLocationId(24);
         $this->assertEquals($actualStatuses, '');
+    }
+
+    public function testAddStatus_StatusObjectIsCorrect_ReturnsObject()
+    {
+        $status = new Status(null ,1 ,"GOED" ,"2017-10-08 00:00:00");
+        $this->mockPDOStatement->expects($this->atLeastOnce())
+            ->method('bindParam');
+        $this->mockPDOStatement->expects($this->atLeastOnce())
+            ->method('execute')
+            ->will($this->returnValue($status));
+        $this->mockPDO->expects($this->atLeastOnce())
+            ->method('prepare')
+            ->will($this->returnValue($this->mockPDOStatement));
+        $actualStatus = $this->pdoRepository->addStatus($status->getLocationId(), $status->getStatus(), $status->getDate());
+        $this->assertEquals($status, $actualStatus);
     }
 
     public function tearDown()
     {
         $this->mockPDO = null;
         $this->mockPDOStatement = null;
+        $this->pdoRepository = null;
     }
 }

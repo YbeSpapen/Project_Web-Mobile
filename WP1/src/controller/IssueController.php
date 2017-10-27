@@ -35,4 +35,9 @@ class IssueController
         $returnCode = $this->issueRepository->addIssue($location_id, $problem, $date, $handled);
         $this->issueView->showIssues($returnCode);
     }
+
+    public function handleAssignIssue($issue_id, $technician_id) {
+        $returnCode = $this->issueRepository->assignIssue($issue_id, $technician_id);
+        $this->issueView->showIssues($returnCode);
+    }
 }

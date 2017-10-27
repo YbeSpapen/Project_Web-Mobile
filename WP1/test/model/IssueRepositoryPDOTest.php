@@ -17,6 +17,7 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
             $this->getMockBuilder('PDOStatement')
                 ->disableOriginalConstructor()
                 ->getMock();
+        $this->pdoRepository = new IssueRepositoryPDO($this->mockPDO);
     }
 
     public function testFindIssuesByLocationId_idExists_IssueObject()
@@ -50,9 +51,8 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new IssueRepositoryPDO($this->mockPDO);
         $actualIssues =
-            $pdoRepository->getIssuesByLocationId($issue1->getLocationId());
+            $this->pdoRepository->getIssuesByLocationId($issue1->getLocationId());
         $this->assertEquals($allIssues, $actualIssues);
     }
 
@@ -68,8 +68,7 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new IssueRepositoryPDO($this->mockPDO);
-        $actualIssues = $pdoRepository->getIssuesByLocationId(24);
+        $actualIssues = $this->pdoRepository->getIssuesByLocationId(24);
         $this->assertEquals($actualIssues, '');
     }
 
@@ -81,8 +80,7 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new IssueRepositoryPDO($this->mockPDO);
-        $actualIssues = $pdoRepository->getIssuesByLocationId(24);
+        $actualIssues = $this->pdoRepository->getIssuesByLocationId(24);
         $this->assertEquals($actualIssues, '');
     }
 
@@ -108,9 +106,8 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new IssueRepositoryPDO($this->mockPDO);
         $actualIssue =
-            $pdoRepository->getIssueById($issue->getId());
+            $this->pdoRepository->getIssueById($issue->getId());
         $this->assertEquals($issue, $actualIssue);
     }
 
@@ -126,8 +123,7 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new IssueRepositoryPDO($this->mockPDO);
-        $actualIssue = $pdoRepository->getIssueById(24);
+        $actualIssue = $this->pdoRepository->getIssueById(24);
         $this->assertEquals($actualIssue, '');
     }
 
@@ -139,8 +135,7 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new IssueRepositoryPDO($this->mockPDO);
-        $actualIssues = $pdoRepository->getIssueById(24);
+        $actualIssues = $this->pdoRepository->getIssueById(24);
         $this->assertEquals($actualIssues, '');
     }
 
@@ -175,9 +170,8 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new IssueRepositoryPDO($this->mockPDO);
         $actualIssues =
-            $pdoRepository->getIssuesBytechnicianId($issue1->getTechnicianId());
+            $this->pdoRepository->getIssuesBytechnicianId($issue1->getTechnicianId());
         $this->assertEquals($allIssues, $actualIssues);
     }
 
@@ -193,8 +187,7 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new IssueRepositoryPDO($this->mockPDO);
-        $actualIssues = $pdoRepository->getIssuesBytechnicianId(24);
+        $actualIssues = $this->pdoRepository->getIssuesBytechnicianId(24);
         $this->assertEquals($actualIssues, '');
     }
 
@@ -206,14 +199,45 @@ class IssueRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new IssueRepositoryPDO($this->mockPDO);
-        $actualIssues = $pdoRepository->getIssuesBytechnicianId(24);
+        $actualIssues = $this->pdoRepository->getIssuesBytechnicianId(24);
         $this->assertEquals($actualIssues, '');
     }
 
+    public function testAddIssue_IssueObjectIsCorrect_ReturnsObject()
+    {
+        $issue = new Issue(null, 1, "problem", "2017-10-08 00:00:00", 1, null);
+        $this->mockPDOStatement->expects($this->atLeastOnce())
+            ->method('bindParam');
+        $this->mockPDOStatement->expects($this->atLeastOnce())
+            ->method('execute')
+            ->will($this->returnValue($issue));
+        $this->mockPDO->expects($this->atLeastOnce())
+            ->method('prepare')
+            ->will($this->returnValue($this->mockPDOStatement));
+        $actualIssue= $this->pdoRepository->addIssue($issue->getLocationId(), $issue->getProblem(), $issue->getDate(), $issue->getHandled());
+        $this->assertEquals($issue, $actualIssue);
+    }
+/*
+    public function testAssignIssue_AllParametersAreCorrect_ReturnsUpdatedObject()
+    {
+        $issue = new Issue(null, 1, "problem", "2017-10-08 00:00:00", 1, 1);
+        $this->mockPDOStatement->expects($this->atLeastOnce())
+            ->method('bindParam');
+        $this->mockPDOStatement->expects($this->atLeastOnce())
+            ->method('execute')
+            ->will($this->returnValue($issue));
+        $this->mockPDO->expects($this->atLeastOnce())
+            ->method('prepare')
+            ->will($this->returnValue($this->mockPDOStatement));
+        $this->pdoRepository->addIssue($issue->getLocationId(), $issue->getProblem(), $issue->getDate(), $issue->getHandled());
+        $actualIssue = $this->pdoRepository->assignIssue($issue->getLocationId(), $issue->getProblem(), $issue->getDate(), $issue->getHandled());
+        $this->assertEquals($issue, $actualIssue);
+    }
+*/
     public function tearDown()
     {
         $this->mockPDO = null;
         $this->mockPDOStatement = null;
+        $this->pdoRepository = null;
     }
 }

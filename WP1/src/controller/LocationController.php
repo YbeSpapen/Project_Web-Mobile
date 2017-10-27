@@ -3,6 +3,7 @@
 namespace controller;
 
 use model\LocationRepository;
+use PHPUnit\Framework\Exception;
 use view\LocationView;
 
 class LocationController
@@ -17,8 +18,7 @@ class LocationController
     }
 
     public function handleGetLocations() {
-        $locations = $this->locationRepository->getLocations();
-        $this->locationView->showLocations($locations);
-
+            $locations = $this->locationRepository->getLocations();
+            $this->locationView->showLocations($locations);
     }
 }

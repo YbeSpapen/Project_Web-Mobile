@@ -43,9 +43,11 @@ class StatusRepositoryPDO implements StatusRepository
             $statement->bindParam(1, $location_id, \PDO::PARAM_INT);
             $statement->bindParam(2, $status, \PDO::PARAM_STR);
             $statement->bindParam(3, $date, \PDO::PARAM_STR);
-            return $statement->execute();
+            $statement->execute();
+            $id = $this->connection->lastInsertId();
+            return new Status($id, $location_id, $status, $date);
         } catch (\Exception $exception) {
-            return $exception->getMessage();
+            return $exception->getCode();
         }
     }
 }

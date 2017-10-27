@@ -17,6 +17,7 @@ class LocationRepositoryPDOTest extends PHPUnit\Framework\TestCase
             $this->getMockBuilder('PDOStatement')
                 ->disableOriginalConstructor()
                 ->getMock();
+        $this->pdoRepository = new LocationRepositoryPDO($this->mockPDO);
     }
 
     public function testFindLocations_Exists_LocationsObject()
@@ -40,10 +41,8 @@ class LocationRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new LocationRepositoryPDO($this->mockPDO);
         $actualLocations =
-            $pdoRepository->getLocations();
-
+            $this->pdoRepository->getLocations();
         $this->assertEquals($allLocations, $actualLocations);
     }
 
@@ -57,8 +56,7 @@ class LocationRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new LocationRepositoryPDO($this->mockPDO);
-        $actualEvenement = $pdoRepository->getLocations();
+        $actualEvenement = $this->pdoRepository->getLocations();
         $this->assertEquals($actualEvenement, '');
     }
 
@@ -67,8 +65,7 @@ class LocationRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->mockPDO->expects($this->atLeastOnce())
             ->method('prepare')
             ->will($this->returnValue($this->mockPDOStatement));
-        $pdoRepository = new LocationRepositoryPDO($this->mockPDO);
-        $actual£Location = $pdoRepository->getLocations();
+        $actual£Location = $this->pdoRepository->getLocations();
         $this->assertEquals($actual£Location, '');
     }
 
@@ -76,5 +73,6 @@ class LocationRepositoryPDOTest extends PHPUnit\Framework\TestCase
     {
         $this->mockPDO = null;
         $this->mockPDOStatement = null;
+        $this->pdoRepository = null;
     }
 }

@@ -1,31 +1,16 @@
 <?php
 require_once "vendor/autoload.php";
-
-use controller\LocationController;
-use controller\StatusController;
-use controller\IssueController;
-
-use model\LocationRepositoryPDO;
-use model\StatusRepositoryPDO;
-use model\IssueRepositoryPDO;
-
-use model\Status;
-
-$user = 'root';
-$password = 'user';
-$database = 'WebAndMobile';
-$hostname = '127.0.0.1';
-$pdo = null;
+require_once "phpDiConfig.php";
 
 try {
-    $pdo = new PDO("mysql:host=$hostname;dbname=$database", $user, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $locationRepositoryPDO = new LocationRepositoryPDO($pdo);
-    $locationController = new LocationController($locationRepositoryPDO);
-    $statusRepositoryPDO = new StatusRepositoryPDO($pdo);
-    $statusController = new StatusController($statusRepositoryPDO);
-    $issueRepositoryPDO = new IssueRepositoryPDO($pdo);
-    $issueController = new IssueController($issueRepositoryPDO);
+    $containerBuilder = new DI\ContainerBuilder();
+    $containerBuilder->useAutowiring(false);
+    $containerBuilder->addDefinitions('phpDiConfig.php');
+    $container = $containerBuilder->build();
+
+    $locationController = $container->get('LocationController');
+    $statusController = $container->get('StatusController');
+    $issueController = $container->get('IssueController');
 
     $router = new AltoRouter();
 
@@ -81,6 +66,13 @@ try {
         function () use ($issueController) {
             header("Content-Type: application/json");
             $issueController->handleAddIssue($_POST["location_id"], $_POST["problem"], $_POST["date"], $_POST["handled"]);
+        }
+    );
+
+    $router->map('POST', 'issue/assignTechnician',
+        function () use ($issueController) {
+            header("Content-Type: application/json");
+            $issueController->handleAssignIssue($_POST["issue_id"], $_POST["technician_id"]);
         }
     );
 
