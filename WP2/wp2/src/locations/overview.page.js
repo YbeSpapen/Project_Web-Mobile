@@ -1,17 +1,18 @@
 /**
  * Created by Spape on 21/10/2017.
  */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {connect} from "react-redux";
 import HttpService from '../common/http-service';
 import IssuesTable from '../issues/issues-table';
 import StatusesTable from '../statuses/status-table';
+import {RaisedButton} from "material-ui";
+import mapDispatchToProps from '../common/title-dispatch-to-props';
 import {
     BrowserRouter as Router,
     Route,
     Link
 } from 'react-router-dom'
-import {RaisedButton} from "material-ui";
 
 
 class OverviewPage extends Component {
@@ -37,10 +38,16 @@ class OverviewPage extends Component {
                 <IssuesTable entries={issues}/>
                 <h1>Statuses</h1>
                 <StatusesTable entries={statuses}/>
-                <Link to="/addStatus"><RaisedButton label="Add status" primary={true} style={{ margin: '10px' }}></RaisedButton></Link>
-                <Link to="/addIssue"><RaisedButton label="Add issue" primary={true} style={{ margin: '10px' }}></RaisedButton></Link>
+                <Link to="/addStatus"><RaisedButton label="Add status" primary={true}
+                                                    style={{margin: '10px'}}></RaisedButton></Link>
+                <Link to="/addIssue"><RaisedButton label="Add issue" primary={true}
+                                                   style={{margin: '10px'}}></RaisedButton></Link>
             </div>
         );
+    }
+
+    componentDidMount() {
+        this.props.setTitle('Overview');
     }
 }
 
@@ -50,4 +57,4 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-export default connect(mapStateToProps)(OverviewPage);
+export default connect(mapStateToProps, mapDispatchToProps)(OverviewPage);

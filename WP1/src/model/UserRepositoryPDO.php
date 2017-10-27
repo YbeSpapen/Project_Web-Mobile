@@ -15,14 +15,14 @@ class UserRepositoryPDO implements UserRepository
     public function getTechnicians()
     {
         try {
-            $statement = $this->connection->prepare('SELECT * FROM user WHERE role = "ROLE_TECHNICIAN"');
+            $statement = $this->connection->prepare('SELECT id, email, name FROM user WHERE role = "ROLE_TECHNICIAN"');
             $statement->execute();
             $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
             $arrayResults = array();
 
             if (count($results) > 0) {
                 foreach ($results as $technician) {
-                    $tech = new User($technician['id'], $technician['email'], $technician['name'], $technician['role'], $technician['password']);
+                    $tech = new User($technician['id'], $technician['email'], $technician['name'], null, null);
                     array_push($arrayResults, $tech);
                 }
                 return $arrayResults;

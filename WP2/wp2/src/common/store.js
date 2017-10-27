@@ -1,7 +1,7 @@
 /**
  * Created by Spape on 22/10/2017.
  */
-import { createStore } from 'redux';
+import {createStore} from 'redux';
 
 import LayoutReducer from './layout.reducer';
 

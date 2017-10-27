@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import {FlatButton, TextField} from "material-ui";
 import HttpService from '../common/http-service';
 import {connect} from "react-redux";
+import mapDispatchToProps from '../common/title-dispatch-to-props';
 
 class IssuesAddPage extends Component {
     render() {
@@ -31,6 +32,10 @@ class IssuesAddPage extends Component {
         };
         HttpService.addIssueEntry(issue);
     }
+
+    componentDidMount() {
+        this.props.setTitle('Add issue');
+    }
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -39,4 +44,4 @@ const mapStateToProps = (state, ownProps) => {
     };
 };
 
-export default connect(mapStateToProps)(IssuesAddPage)
+export default connect(mapStateToProps, mapDispatchToProps)(IssuesAddPage)

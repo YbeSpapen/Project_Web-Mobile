@@ -5,6 +5,8 @@ import React, {Component} from 'react';
 import HttpService from '../common/http-service';
 import LocationsTable from './locations-table';
 import RaisedButton from 'material-ui/RaisedButton';
+import mapDispatchToProps from '../common/title-dispatch-to-props';
+import {connect} from "react-redux";
 import {
     BrowserRouter as Router,
     Route,
@@ -29,6 +31,9 @@ class LocationsPage extends Component{
             </div>
         );
     }
+    componentDidMount() {
+        this.props.setTitle('Locations');
+    }
 }
 
-export default LocationsPage
+export default connect(undefined, mapDispatchToProps)(LocationsPage)
