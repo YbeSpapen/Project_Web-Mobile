@@ -6,9 +6,11 @@ use controller\LocationController;
 use controller\StatusController;
 use controller\IssueController;
 
+use controller\UserController;
 use model\LocationRepositoryPDO;
 use model\StatusRepositoryPDO;
 use model\IssueRepositoryPDO;
+use model\UserRepositoryPDO;
 
 $user = 'root';
 $password = 'user';
@@ -23,6 +25,9 @@ return [
         ->constructor(DI\object(PDO::class)
             ->constructor("mysql:host=$hostname;dbname=$database", $user, $password, null))),
     'IssueController' => DI\object(IssueController::class)->constructor(DI\object(IssueRepositoryPDO::class)
+        ->constructor(DI\object(PDO::class)
+            ->constructor("mysql:host=$hostname;dbname=$database", $user, $password, null))),
+    'UserController' => DI\object(UserController::class)->constructor(DI\object(UserRepositoryPDO::class)
         ->constructor(DI\object(PDO::class)
             ->constructor("mysql:host=$hostname;dbname=$database", $user, $password, null)))
 ];

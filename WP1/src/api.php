@@ -11,6 +11,7 @@ try {
     $locationController = $container->get('LocationController');
     $statusController = $container->get('StatusController');
     $issueController = $container->get('IssueController');
+    $userController = $container->get('UserController');
 
     $router = new AltoRouter();
 
@@ -81,13 +82,31 @@ try {
 
     $router->map('POST', 'issue/assignTechnician',
         function () use ($issueController) {
+            header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $issueController->handleAssignIssue($_POST["issue_id"], $_POST["technician_id"]);
         }
     );
 
-    $match = $router->match();
+    $router->map('GET', 'technicians',
+        function () use ($userController) {
+            header("Access-Control-Allow-Origin: http://localhost:3000");
+            header("Content-Type: application/json");
+            $userController->handleGetTechnicians();
+        }
+    );
 
+    $router->map('POST', 'technician/add',
+        function () use ($userController) {
+            header("Access-Control-Allow-Origin: http://localhost:3000");
+            header("Content-Type: application/json");
+            $_POST = json_decode(file_get_contents('php://input'), true);
+
+            $userController->handleAddTechnician($_POST["email"], $_POST["name"], "ROLE_TECHNICIAN", $_POST["password"]);
+        }
+    );
+
+    $match = $router->match();
 
 
     if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
