@@ -13,18 +13,18 @@ import {
     Link
 } from 'react-router-dom'
 
-class LocationsPage extends Component{
+class LocationsPage extends Component {
 
-    constructor(){
+    constructor() {
         super();
-        this.state = { entries: [],percentage : 0};
+        this.state = {entries: [], percentage: 0};
+    }
 
+    componentWillMount() {
+        HttpService.getLocations().then(fetchedEntries => this.setState({entries: fetchedEntries}));
+        HttpService.getStatusPercentage().then(percentage => this.setState({percentage: percentage}));
     }
-    componentWillMount(){
-        HttpService.getLocations().then(fetchedEntries => this.setState({entries : fetchedEntries}));
-        const per = HttpService.getStatusPercentage();
-        this.setState({percentage:per});
-    }
+
     render() {
         const fetchedEntries = this.state.entries || [];
         return (
@@ -36,6 +36,7 @@ class LocationsPage extends Component{
             </div>
         );
     }
+
     componentDidMount() {
         this.props.setTitle('Locations');
     }
