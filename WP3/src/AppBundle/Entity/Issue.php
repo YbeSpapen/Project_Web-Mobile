@@ -50,7 +50,7 @@ class Issue
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="issues")
-     *
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $technician;
 

@@ -13,7 +13,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for status in statuses %}
+            {% for status in location.getStatuses() %}
                 <tr>
                     <th scope="row">{{ status.getId() }}</th>
                     <td>{{ status.getStatus() }}</td>
@@ -34,7 +34,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for issue in issues %}
+            {% for issue in location.getIssues() %}
                 <tr>
                     <th scope="row">{{ issue.getId() }}</th>
                     <td>{{ issue.getProblem() }}</td>

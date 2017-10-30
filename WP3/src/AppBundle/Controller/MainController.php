@@ -98,12 +98,7 @@ class MainController extends Controller
         $locationId = $request->get('locatieId');
         $location = $this->getDoctrine()->getRepository('AppBundle:Location')->find($locationId);
 
-        $statuses = $this->getDoctrine()->getRepository('AppBundle:Status')->findBy(
-            array('location' => $location));
-        $issues = $this->getDoctrine()->getRepository('AppBundle:Issue')->findBy(
-            array('location' => $location));
-
-        return $this->render('default/overview.html.twig', array('issues' => $issues, 'statuses' => $statuses));
+        return $this->render('default/overview.html.twig', array('location' => $location));
     }
 
     /**
@@ -113,7 +108,7 @@ class MainController extends Controller
     public function assignedProblems(Request $request)
     {
         $user = $user = $this->get('security.token_storage')->getToken()->getUser();
-        $issues = $this->getDoctrine()->getRepository('AppBundle:Issue')->findBy(array('technician' => $user));
+        $issues = $user->getIssues();
 
         return $this->render('default/technician_issues.html.twig', array('issues' => $issues));
     }
@@ -125,8 +120,9 @@ class MainController extends Controller
     public function setHandled(Request $request)
     {
         $issueId = $request->get('issueId');
-        $handled = $request->get('handled');
         $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
+        $handled = $request->get('handled');
+
         if ($handled == 1) {
             $issue->setHandled(true);
         } else {
@@ -148,7 +144,6 @@ class MainController extends Controller
     {
         $issueId = $request->get('issueId');
         $technicianId = $request->get('technicianId');
-        $assign = $request->get('assign');
 
         $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
         $technician = $this->getDoctrine()->getRepository('AppBundle:User')->find($technicianId);
@@ -157,8 +152,7 @@ class MainController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
-        $locations = $this->getDoctrine()->getRepository('AppBundle:Location')->findAll();
-        return $this->render('default/index.html.twig', array('locations' => $locations));
+        return $this->redirectToRoute('welcome');
     }
 
     /**
@@ -233,7 +227,7 @@ class MainController extends Controller
             $file = $technician->getPhoto();
 
             // Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
             // Move the file to the directory where brochures are stored
             $file->move(
@@ -263,14 +257,9 @@ class MainController extends Controller
     public function removeTechnician(Request $request)
     {
         $technicianId = $request->get('technicianId');
-        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('role' => 'ROLE_TECHNICIAN', 'id' => $technicianId));
-        $issues = $this->getDoctrine()->getRepository('AppBundle:Issue')->findBy(array('technician' => $technicianId));
+        $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('id' => $technicianId));
 
         $em = $this->getDoctrine()->getManager();
-        foreach ($issues as $issue )
-        {
-            $issue->setTechnician();
-        }
         $em->remove($technician);
         $em->flush();
 
@@ -278,25 +267,22 @@ class MainController extends Controller
     }
 
     /**
-     * Export to PDF
-     *
      * @Route("/pdf", name="pdf")
+     * @Security("has_role('ROLE_TECHNICIAN')")
      */
     public function pdfAction()
     {
         $user = $user = $this->get('security.token_storage')->getToken()->getUser();
-        $issues = $this->getDoctrine()->getRepository('AppBundle:Issue')->findBy(array('technician' => $user));
 
-        $html = $this->renderView('default/pdf.html.twig', array('issues' => $issues, 'user' => $user));
+        $html = $this->renderView('default/pdf.html.twig', array('user' => $user));
 
         $filename = sprintf('list.pdf', date('Y-m-d'));
-
 
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
             200,
             [
-                'Content-Type'        => 'application/pdf',
+                'Content-Type' => 'application/pdf',
                 'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
             ]
         );
