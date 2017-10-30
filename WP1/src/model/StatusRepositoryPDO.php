@@ -13,6 +13,33 @@ class StatusRepositoryPDO implements StatusRepository
         $this->connection = $connection;
     }
 
+    public function getStatusesPercentage()
+    {
+        try {
+            $statement = $this->connection->prepare('SELECT * FROM status');
+            $statement->execute();
+            $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+            if (count($results)> 0) {
+                $total = count($results);
+                $numberHappy= 0;
+                foreach ($results as $status) {
+                    if ($status['status'] == 'HAPPY') {
+                        $numberHappy = $numberHappy + 1;
+                    }
+                }
+                $percentage = $numberHappy/$total;
+                return $percentage;
+            } else {
+                $percentage = null;
+                return $percentage;
+            }
+
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+
     public function getStatusesByLocationId($location_id)
     {
         try {
