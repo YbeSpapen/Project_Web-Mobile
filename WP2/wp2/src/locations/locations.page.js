@@ -17,17 +17,22 @@ class LocationsPage extends Component{
 
     constructor(){
         super();
-        this.state = { entries: []}
+        this.state = { entries: [],percentage : 0};
+
     }
     componentWillMount(){
-        HttpService.getLocations().then(fetchedEntries => this.setState({entries : fetchedEntries}))
+        HttpService.getLocations().then(fetchedEntries => this.setState({entries : fetchedEntries}));
+        const per = HttpService.getStatusPercentage();
+        this.setState({percentage:per});
     }
     render() {
         const fetchedEntries = this.state.entries || [];
         return (
             <div>
+                <p>{this.state.percentage}</p>
                 <LocationsTable entries={fetchedEntries}/>
                 <Link to="/overview"><RaisedButton label="Go to overview" primary={true} style={{margin: '10px'}}/></Link>
+                <Link to="/addLocation"><RaisedButton label="Add location" primary={true} style={{margin: '10px'}}/></Link>
             </div>
         );
     }

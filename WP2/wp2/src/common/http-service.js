@@ -4,10 +4,17 @@
 import axios from 'axios';
 
 class HttpService {
-    baseUrl = 'http://localhost/api';
+    baseUrl = 'http://localhost/WP1';
+    //baseUrl = 'http://192.168.33.11/WP1';
 
     getLocations() {
         return axios.get(`${this.baseUrl}/location`).then(r => r.data);
+    }
+
+    addLocation(location) {
+        return axios.post(`${this.baseUrl}/location/add`, {
+            name: location.name
+        });
     }
 
     getTechnicians() {
@@ -20,6 +27,10 @@ class HttpService {
 
     getStatusesOfLocation(id) {
         return axios.get(`${this.baseUrl}/status/location/${id}`).then(r => r.data);
+    }
+
+    getStatusPercentage() {
+        return axios.get(`${this.baseUrl}/status/percentage`).then(r => r.data);
     }
 
     addIssueEntry(issue) {
