@@ -16,7 +16,6 @@ class StatusesTable extends Component {
     render() {
         const rows = this.props.entries.map(e => (
             <TableRow key={e.id}>
-                <TableRowColumn>{e.id}</TableRowColumn>
                 <TableRowColumn>{e.status}</TableRowColumn>
                 <TableRowColumn>{e.date}</TableRowColumn>
             </TableRow>
@@ -25,7 +24,6 @@ class StatusesTable extends Component {
             <Table onRowSelection={this.handleRowSelection}>
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderColumn>#</TableHeaderColumn>
                         <TableHeaderColumn>Status</TableHeaderColumn>
                         <TableHeaderColumn>Date</TableHeaderColumn>
                     </TableRow>

@@ -16,7 +16,6 @@ class IssuesTable extends Component {
     render() {
         const rows = this.props.entries.map(e => (
             <TableRow key={e.id}>
-                <TableRowColumn>{e.id}</TableRowColumn>
                 <TableRowColumn>{e.problem}</TableRowColumn>
                 <TableRowColumn>{e.date}</TableRowColumn>
                 <TableRowColumn>{e.handled}</TableRowColumn>
@@ -26,7 +25,6 @@ class IssuesTable extends Component {
             <Table onRowSelection={this.handleRowSelection}>
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderColumn>#</TableHeaderColumn>
                         <TableHeaderColumn>Problem</TableHeaderColumn>
                         <TableHeaderColumn>Date</TableHeaderColumn>
                         <TableHeaderColumn>Handled</TableHeaderColumn>
