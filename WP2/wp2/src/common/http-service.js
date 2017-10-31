@@ -10,6 +10,12 @@ class HttpService {
         return axios.get(`${this.baseUrl}/location`).then(r => r.data);
     }
 
+    addLocation(location) {
+        return axios.post(`${this.baseUrl}/location/add`, {
+            name: location.name
+        });
+    }
+
     getTechnicians() {
         return axios.get(`${this.baseUrl}/technicians`).then(r => r.data);
     }
@@ -20,6 +26,10 @@ class HttpService {
 
     getStatusesOfLocation(id) {
         return axios.get(`${this.baseUrl}/status/location/${id}`).then(r => r.data);
+    }
+
+    getStatusPercentage() {
+        return axios.get(`${this.baseUrl}/status/percentage`).then(r => r.data);
     }
 
     addIssueEntry(issue) {

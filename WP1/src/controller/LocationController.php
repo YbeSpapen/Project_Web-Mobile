@@ -21,4 +21,9 @@ class LocationController
             $locations = $this->locationRepository->getLocations();
             $this->locationView->showLocations($locations);
     }
+
+    public function handleAddLocation($name) {
+        $returnCode =  $this->locationRepository->setLocation($name);
+        $this->locationView->showLocations($returnCode);
+    }
 }

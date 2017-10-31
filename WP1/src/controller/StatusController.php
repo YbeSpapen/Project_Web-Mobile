@@ -25,4 +25,9 @@ class StatusController
         $returnCode = $this->statusRepository->addStatus($location_id, $status, $date);
         $this->statusView->showStatuses($returnCode);
     }
+
+    public function handledGetPercentage() {
+        $percentage = $this->statusRepository->getStatusesPercentage();
+        $this->statusView->showStatuses($percentage);
+    }
 }

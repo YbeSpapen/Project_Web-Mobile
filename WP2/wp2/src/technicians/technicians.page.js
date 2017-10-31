@@ -29,8 +29,7 @@ class TechniciansPage extends Component {
         return (
             <div>
                 <TechniciansTable entries={fetchedEntries}/>
-                <Link to="/addTechnician"><RaisedButton label="Add technician" primary={true}
-                                                        style={{margin: '10px'}}></RaisedButton></Link>
+                <Link to="/addTechnician"><RaisedButton label="Add technician" primary={true} style={{margin: '10px'}}/></Link>
             </div>
         );
     }

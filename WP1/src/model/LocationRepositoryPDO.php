@@ -34,4 +34,17 @@ class LocationRepositoryPDO implements LocationRepository
             return $exception->getMessage();
         }
     }
+
+    public function setLocation($name)
+    {
+        try {
+            $statement = $this->connection->prepare('INSERT INTO location (name) VALUE (?)');
+            $statement->bindParam(1,$name,\PDO::PARAM_STR);
+            $statement-> execute();
+            $id = $this->connection->lastInsertId();
+            return new Location($id,$name);
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
 }

@@ -16,7 +16,6 @@ class TechniciansTable extends Component {
     render() {
         const rows = this.props.entries.map(e => (
             <TableRow key={e.id}>
-                <TableRowColumn>{e.id}</TableRowColumn>
                 <TableRowColumn>{e.email}</TableRowColumn>
                 <TableRowColumn>{e.name}</TableRowColumn>
             </TableRow>
@@ -25,7 +24,6 @@ class TechniciansTable extends Component {
             <Table>
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderColumn>#</TableHeaderColumn>
                         <TableHeaderColumn>Email</TableHeaderColumn>
                         <TableHeaderColumn>Name</TableHeaderColumn>
                     </TableRow>

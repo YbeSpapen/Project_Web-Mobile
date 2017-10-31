@@ -23,7 +23,6 @@ class LocationsTable extends Component {
     render() {
         const rows = this.props.entries.map(e => (
             <TableRow key={e.id}>
-                <TableRowColumn>{e.id}</TableRowColumn>
                 <TableRowColumn>{e.name}</TableRowColumn>
             </TableRow>
         ));
@@ -31,7 +30,6 @@ class LocationsTable extends Component {
             <Table onRowSelection={this.handleRowSelection}>
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderColumn>#</TableHeaderColumn>
                         <TableHeaderColumn>Name</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
