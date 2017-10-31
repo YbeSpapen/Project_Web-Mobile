@@ -28,7 +28,7 @@ class StatusRepositoryPDO implements StatusRepository
                         $numberHappy = $numberHappy + 1;
                     }
                 }
-                $percentage = $numberHappy/$total;
+                $percentage = ($numberHappy/$total)*100;
                 return $percentage;
             } else {
                 $percentage = null;
