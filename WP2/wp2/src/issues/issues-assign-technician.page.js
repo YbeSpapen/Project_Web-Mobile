@@ -43,7 +43,7 @@ class IssueAssignPage extends Component {
 
     save = (ev) => {
         ev.preventDefault();
-        const id = parseInt(this.props.selectedRow).id;
+        const id = parseInt(this.props.selectedIndex) || 0;
         const technician_id = parseInt(this.props.selectedRow);
         //issue_id!
         const issue = {
@@ -63,6 +63,7 @@ class IssueAssignPage extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         selectedRow: state.selectedRow,
+        selectedIndex: state.selectedIndex
     };
 };
 
