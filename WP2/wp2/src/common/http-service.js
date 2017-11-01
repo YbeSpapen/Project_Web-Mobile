@@ -53,6 +53,13 @@ Z
             password: technician.password
         });
     }
+
+    assignTechnician(issue) {
+        return axios.post(`${this.baseUrl}/issue/assignTechnician`, {
+            issue_id: issue.issue_id,
+            technician_id: issue.technician_id
+        });
+    }
 }
 
 const httpService = new HttpService();

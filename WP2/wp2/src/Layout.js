@@ -9,6 +9,7 @@ import HomePage from './home.page';
 import LocationsPage from './locations/locations.page';
 import OverviewPage from './locations/overview.page'
 import IssueAddPage from './issues/issues-add.page';
+import IssueAssignPage from './issues/issues-assign.page';
 import TechniciansPage from './technicians/technicians.page';
 import TechnicianAddPage from './technicians/technician-add.page';
 import TechnicianIssuesPage from './technicians/technician-issues.page';
@@ -55,6 +56,7 @@ class Layout extends Component {
                     <Route path="/addIssue" component={IssueAddPage}/>
                     <Route path="/addLocation" component={LocationAddPage}/>
                     <Route path="/technicianIssues" component={TechnicianIssuesPage}/>
+                    <Route path="/assignIssue" component={IssueAssignPage}/>
                 </div>
             </Router>
         );

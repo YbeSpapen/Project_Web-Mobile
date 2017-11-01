@@ -36,10 +36,11 @@ class OverviewPage extends Component {
             <div>
                 <h1>Issues</h1>
                 <IssuesTable entries={issues}/>
+                <Link to="/addIssue"><RaisedButton label="Add issue" primary={true} style={{margin: '10px'}}/></Link>
+                <Link to="/assignIssue"><RaisedButton label="Assign technician" primary={true} style={{margin: '10px'}}/></Link>
                 <h1>Statuses</h1>
                 <StatusesTable entries={statuses}/>
                 <Link to="/addStatus"><RaisedButton label="Add status" primary={true} style={{margin: '10px'}}/></Link>
-                <Link to="/addIssue"><RaisedButton label="Add issue" primary={true} style={{margin: '10px'}}/></Link>
             </div>
         );
     }

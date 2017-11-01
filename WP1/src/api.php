@@ -111,6 +111,7 @@ try {
             header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
+            $_POST = json_decode(file_get_contents('php://input'), true);
             $issueController->handleAssignIssue($_POST["issue_id"], $_POST["technician_id"]);
         }
     );
