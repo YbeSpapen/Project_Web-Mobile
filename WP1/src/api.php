@@ -19,7 +19,7 @@ try {
 
     $router->map('GET', 'location',
         function () use ($locationController) {
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $locationController->handleGetLocations();
@@ -39,7 +39,7 @@ try {
     //id = id of location
     $router->map('GET', 'status/location/[i:id]',
         function ($locationId) use ($statusController) {
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $statusController->handlegetStatusesByLocationId($locationId);
@@ -48,7 +48,7 @@ try {
 
     $router->map('GET', 'status/percentage',
         function () use ($statusController) {
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $statusController->handledGetPercentage();
@@ -58,7 +58,7 @@ try {
     //id = id of location
     $router->map('GET', 'issue/location/[i:id]',
         function ($locationId) use ($issueController) {
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $issueController->handlegetIssuesByLocationId($locationId);
@@ -68,7 +68,7 @@ try {
     //id = id of issue
     $router->map('GET', 'issue/[i:id]',
         function ($id) use ($issueController) {
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $issueController->handleGetIssueById($id);
@@ -78,7 +78,7 @@ try {
     //id = id of technician
     $router->map('GET', 'issue/technician/[i:id]',
         function ($technicianId) use ($issueController) {
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $issueController->handleGetIssueByTechnicianId($technicianId);
@@ -87,7 +87,7 @@ try {
 
     $router->map('POST', 'status/add',
         function () use ($statusController) {
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $_POST = json_decode(file_get_contents('php://input'), true);
@@ -97,7 +97,7 @@ try {
 
     $router->map('POST', 'issue/add',
         function () use ($issueController) {
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $_POST = json_decode(file_get_contents('php://input'), true);
@@ -108,7 +108,7 @@ try {
 
     $router->map('POST', 'issue/assignTechnician',
         function () use ($issueController) {
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $issueController->handleAssignIssue($_POST["issue_id"], $_POST["technician_id"]);
@@ -117,7 +117,7 @@ try {
 
     $router->map('GET', 'technicians',
         function () use ($userController) {
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $userController->handleGetTechnicians();
@@ -126,7 +126,7 @@ try {
 
     $router->map('POST', 'technician/add',
         function () use ($userController) {
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             #header("Access-Control-Allow-Origin: http://localhost:3000");
             header("Content-Type: application/json");
             $_POST = json_decode(file_get_contents('php://input'), true);
@@ -141,7 +141,7 @@ try {
     if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']) && $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] == 'GET') {
             #header("Access-Control-Allow-Origin: http://localhost:3000");
-            header("Access-Control-Allow-Origin: http://192.168.33.11:3000");
+            header("Access-Control-Allow-Origin: http://192.168.46.137:3000");
             header("Access-Control-Allow-Methods: GET, POST");
             header("Access-Control-Allow-Headers: Content-Type, Authorization");
         }

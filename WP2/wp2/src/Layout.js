@@ -11,6 +11,7 @@ import OverviewPage from './locations/overview.page'
 import IssueAddPage from './issues/issues-add.page';
 import TechniciansPage from './technicians/technicians.page';
 import TechnicianAddPage from './technicians/technician-add.page';
+import TechnicianIssuesPage from './technicians/technician-issues.page';
 import LocationAddPage from './locations/location-add.page';
 import {connect} from "react-redux";
 import {
@@ -53,6 +54,7 @@ class Layout extends Component {
                     <Route path="/overview" component={OverviewPage}/>
                     <Route path="/addIssue" component={IssueAddPage}/>
                     <Route path="/addLocation" component={LocationAddPage}/>
+                    <Route path="/technicianIssues" component={TechnicianIssuesPage}/>
                 </div>
             </Router>
         );

@@ -5,7 +5,6 @@ require_once "vendor/autoload.php";
 use controller\LocationController;
 use controller\StatusController;
 use controller\IssueController;
-
 use controller\UserController;
 use model\LocationRepositoryPDO;
 use model\StatusRepositoryPDO;
@@ -13,7 +12,7 @@ use model\IssueRepositoryPDO;
 use model\UserRepositoryPDO;
 
 $user = 'root';
-$password = 'root';
+$password = 'user';
 $database = 'WebAndMobile';
 $hostname = '127.0.0.1';
 

@@ -24,6 +24,10 @@ class HttpService {
         return axios.get(`${this.baseUrl}/issue/location/${id}`).then(r => r.data);
     }
 
+    getIssuesOfTechnician(id) {
+        return axios.get(`${this.baseUrl}/issue/technician/${id}`).then(r => r.data);
+    }
+Z
     getStatusesOfLocation(id) {
         return axios.get(`${this.baseUrl}/status/location/${id}`).then(r => r.data);
     }
