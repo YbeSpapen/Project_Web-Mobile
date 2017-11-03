@@ -2,7 +2,7 @@
  * Created by Spape on 22/10/2017.
  */
 const initialState = {
-    title: 'Home',
+    title: 'Locations',
     calorieEntries: [],
     selectedRow: 0
 };
