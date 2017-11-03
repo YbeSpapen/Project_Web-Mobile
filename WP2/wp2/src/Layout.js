@@ -14,6 +14,7 @@ import TechniciansPage from './technicians/technicians.page';
 import TechnicianAddPage from './technicians/technician-add.page';
 import TechnicianIssuesPage from './technicians/technician-issues.page';
 import LocationAddPage from './locations/location-add.page';
+import StatusAddPage from './statuses/status-add.page';
 import {connect} from "react-redux";
 import {
     BrowserRouter as Router,
@@ -57,6 +58,7 @@ class Layout extends Component {
                     <Route path="/addLocation" component={LocationAddPage}/>
                     <Route path="/technicianIssues" component={TechnicianIssuesPage}/>
                     <Route path="/assignTechnician" component={TechnicianAssignPage}/>
+                    <Route path="/addStatus" component={StatusAddPage}/>
                 </div>
             </Router>
         );
