@@ -23,6 +23,7 @@ import {
 
 
 class Layout extends Component {
+
     constructor() {
         super();
         this.state = {drawerOpen: false};
@@ -66,6 +67,6 @@ const mapStateToProps = (state, ownProps) => {
     return {
         title: state.title,
     }
-}
+};
 
 export default connect(mapStateToProps)(Layout);

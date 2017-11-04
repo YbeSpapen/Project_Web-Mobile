@@ -1,6 +1,3 @@
-/**
- * Created by Spape on 27/10/2017.
- */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -14,9 +11,12 @@ import {
 import {connect} from "react-redux";
 
 class TechniciansTable extends Component {
+
     handleRowSelection = (selectedRows) => {
-        const selectedRow = this.props.entries[selectedRows].id;
-        this.props.changeSelected(selectedRow);
+        if (selectedRows.length !== 0) {
+            const selectedRow = this.props.entries[selectedRows].id;
+            this.props.changeSelected(selectedRow);
+        }
     };
 
     render() {
@@ -44,7 +44,7 @@ class TechniciansTable extends Component {
 
 TechniciansTable.propTypes = {
     'entries': PropTypes.array.isRequired
-}
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
@@ -52,6 +52,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch({type: 'ASSIGN_TECHNICIAN_ID', payload: selectedRow});
         }
     }
-}
+};
 
 export default connect(undefined, mapDispatchToProps)(TechniciansTable)

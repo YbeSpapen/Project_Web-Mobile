@@ -1,6 +1,3 @@
-/**
- * Created by Spape on 24/10/2017.
- */
 import React, {Component} from 'react';
 import {Image} from 'material-ui-image'
 import HttpService from '../common/http-service';
@@ -30,7 +27,7 @@ class StatusAddPage extends Component {
     render() {
         return (
             <Grid>
-                <Row  style={{marginTop: '30px'}}>
+                <Row style={{marginTop: '30px'}}>
                     <Col md={4} lg={4}>
                         <Image src={imageGreen} alt="HAPPY" name={"HAPPY"}
                                onClick={this.save.bind(this, "HAPPY")} color="white" style={{cursor: 'pointer'}}/>
@@ -67,6 +64,7 @@ class StatusAddPage extends Component {
         this.props.setTitle('Add Status');
     }
 }
+
 const mapStateToProps = (state, ownProps) => {
     return {
         selectedRow: state.selectedRow,

@@ -1,6 +1,3 @@
-/**
- * Created by Spape on 27/10/2017.
- */
 import React, {Component} from 'react';
 import HttpService from '../common/http-service';
 import TechniciansTable from './technicians-table';
@@ -28,7 +25,8 @@ class TechniciansPage extends Component {
             <div>
                 <TechniciansTable entries={fetchedEntries}/>
                 <Link to="/addTechnician"><RaisedButton label="Add technician" primary={true} style={{margin: '10px'}}/></Link>
-                <Link to="/technicianIssues"><RaisedButton label="Issues" primary={true} style={{margin: '10px'}}/></Link>
+                <Link to="/technicianIssues"><RaisedButton label="Issues" primary={true}
+                                                           style={{margin: '10px'}}/></Link>
             </div>
         );
     }

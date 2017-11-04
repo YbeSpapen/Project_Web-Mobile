@@ -1,11 +1,8 @@
-/**
- * Created by Spape on 22/10/2017.
- */
 const initialState = {
     title: 'Home',
     selectedRow: 0,
     technician_id: 0
-}
+};
 
 const layoutreducer = (state = initialState, action) => {
     switch (action.type) {

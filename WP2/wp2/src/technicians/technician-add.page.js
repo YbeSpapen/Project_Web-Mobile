@@ -1,12 +1,8 @@
-/**
- * Created by Spape on 27/10/2017.
- */
 import React, {Component} from 'react';
 import {RaisedButton, Snackbar, TextField} from "material-ui";
 import HttpService from '../common/http-service';
 import mapDispatchToProps from '../common/title-dispatch-to-props';
 import {connect} from "react-redux";
-
 
 class TechnicianAddPage extends Component {
 

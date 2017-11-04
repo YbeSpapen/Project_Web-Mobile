@@ -1,6 +1,3 @@
-/**
- * Created by Spape on 21/10/2017.
- */
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import HttpService from '../common/http-service';
@@ -14,8 +11,8 @@ import {
     Link
 } from 'react-router-dom'
 
-
 class OverviewPage extends Component {
+
     constructor() {
         super();
         this.state = {
@@ -37,7 +34,8 @@ class OverviewPage extends Component {
                 <h1>Issues</h1>
                 <IssuesTable entries={issues}/>
                 <Link to="/addIssue"><RaisedButton label="Add issue" primary={true} style={{margin: '10px'}}/></Link>
-                <Link to="/assignTechnician"><RaisedButton label="Assign technician" primary={true} style={{margin: '10px'}}/></Link>
+                <Link to="/assignTechnician"><RaisedButton label="Assign technician" primary={true}
+                                                           style={{margin: '10px'}}/></Link>
                 <h1>Statuses</h1>
                 <StatusesTable entries={statuses}/>
                 <Link to="/addStatus"><RaisedButton label="Add status" primary={true} style={{margin: '10px'}}/></Link>

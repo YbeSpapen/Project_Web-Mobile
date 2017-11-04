@@ -1,6 +1,3 @@
-/**
- * Created by Spape on 21/10/2017.
- */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -38,6 +35,6 @@ class StatusesTable extends Component {
 
 StatusesTable.propTypes = {
     'entries': PropTypes.array.isRequired
-}
+};
 
 export default StatusesTable;

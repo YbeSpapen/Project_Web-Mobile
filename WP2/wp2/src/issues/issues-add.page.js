@@ -1,6 +1,3 @@
-/**
- * Created by Spape on 24/10/2017.
- */
 import React, {Component} from 'react';
 import {RaisedButton, TextField, Snackbar} from "material-ui";
 import HttpService from '../common/http-service';

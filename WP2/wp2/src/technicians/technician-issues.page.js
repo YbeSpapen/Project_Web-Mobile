@@ -4,13 +4,8 @@ import HttpService from '../common/http-service';
 import IssuesTable from '../issues/issues-table';
 import mapDispatchToProps from '../common/title-dispatch-to-props';
 
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-} from 'react-router-dom'
-
 class TechnicianIssuesPage extends Component {
+
     constructor() {
         super();
         this.state = {
@@ -19,7 +14,7 @@ class TechnicianIssuesPage extends Component {
     }
 
     componentWillMount() {
-        HttpService.getIssuesOfTechnician(this.props.selectedRow).then(fetchedIssues => this.setState({issues: fetchedIssues}));
+        HttpService.getIssuesOfTechnician(this.props.technician_id).then(fetchedIssues => this.setState({issues: fetchedIssues}));
     }
 
     render() {
@@ -39,7 +34,7 @@ class TechnicianIssuesPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        selectedRow: state.selectedRow,
+        technician_id: state.technician_id,
     };
 };
 

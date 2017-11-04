@@ -1,6 +1,3 @@
-/**
- * Created by Spape on 19/10/2017.
- */
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import PropTypes from 'prop-types';
@@ -16,8 +13,10 @@ import {
 class LocationsTable extends Component {
 
     handleRowSelection = (selectedRows) => {
-        const selectedRow = this.props.entries[selectedRows].id;
-        this.props.changeSelected(selectedRow);
+        if (selectedRows.length !== 0) {
+            const selectedRow = this.props.entries[selectedRows].id;
+            this.props.changeSelected(selectedRow);
+        }
     };
 
     render() {
@@ -44,7 +43,7 @@ class LocationsTable extends Component {
 
 LocationsTable.propTypes = {
     'entries': PropTypes.array.isRequired
-}
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
@@ -52,6 +51,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch({type: 'SET_SELECTION', payload: selectedRow});
         }
     }
-}
+};
 
 export default connect(undefined, mapDispatchToProps)(LocationsTable)

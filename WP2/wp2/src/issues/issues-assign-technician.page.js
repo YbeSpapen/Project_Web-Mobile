@@ -15,6 +15,12 @@ class IssueAssignPage extends Component {
         };
     }
 
+    handleRequestClose = () => {
+        this.setState({
+            open: false,
+        });
+    };
+
     componentWillMount() {
         HttpService.getTechnicians().then(fetchedEntries => this.setState({entries: fetchedEntries}))
     }
@@ -25,7 +31,8 @@ class IssueAssignPage extends Component {
             <div>
                 <TechniciansTable entries={fetchedEntries}/>
                 <RaisedButton label="Send" onClick={this.handleAssign} primary={true} style={{margin: "10px"}}/>
-                <Snackbar open={this.state.open} message="Issue assigned" autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
+                <Snackbar open={this.state.open} message="Issue assigned" autoHideDuration={4000}
+                          onRequestClose={this.handleRequestClose}/>
             </div>
         );
     }
@@ -36,9 +43,9 @@ class IssueAssignPage extends Component {
         const issue = {
             "issue_id": issue_id,
             "technician_id": technician_id
-        }
+        };
         HttpService.assignTechnician(issue);
-        this.setState({open: false});
+        this.setState({open: true});
     };
 
     componentDidMount() {

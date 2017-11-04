@@ -1,6 +1,3 @@
-/**
- * Created by Spape on 19/10/2017.
- */
 import React, {Component} from 'react';
 import HttpService from '../common/http-service';
 import LocationsTable from './locations-table';
@@ -29,10 +26,12 @@ class LocationsPage extends Component {
         const fetchedEntries = this.state.entries || [];
         return (
             <div>
-                <p>Average of happy status : {parseInt(this.state.percentage)}%</p>
+                <h3>Average of happy status : {parseInt(this.state.percentage)}%</h3>
                 <LocationsTable entries={fetchedEntries}/>
-                <Link to="/overview"><RaisedButton label="Go to overview" primary={true} style={{margin: '10px'}}/></Link>
-                <Link to="/addLocation"><RaisedButton label="Add location" primary={true} style={{margin: '10px'}}/></Link>
+                <Link to="/overview"><RaisedButton label="Go to overview" primary={true}
+                                                   style={{margin: '10px'}}/></Link>
+                <Link to="/addLocation"><RaisedButton label="Add location" primary={true}
+                                                      style={{margin: '10px'}}/></Link>
             </div>
         );
     }

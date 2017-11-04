@@ -1,8 +1,6 @@
-/**
- * Created by Spape on 21/10/2017.
- */
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from "react-redux";
 import {
     Table,
     TableBody,
@@ -11,12 +9,14 @@ import {
     TableRow,
     TableRowColumn,
 } from 'material-ui/Table';
-import {connect} from "react-redux";
 
 class IssuesTable extends Component {
+
     handleRowSelection = (selectedRows) => {
-      const selectedRow = this.props.entries[selectedRows].id;
-      this.props.changeSelected(selectedRow);
+        if (selectedRows.length !== 0) {
+            const selectedRow = this.props.entries[selectedRows].id;
+            this.props.changeSelected(selectedRow);
+        }
     };
 
     render() {
