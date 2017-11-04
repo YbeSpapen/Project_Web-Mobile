@@ -3,8 +3,8 @@
  */
 const initialState = {
     title: 'Home',
-    calorieEntries: [],
-    selectedRow: 0
+    selectedRow: 0,
+    technician_id: 0
 };
 
 const layoutreducer = (state = initialState, action) => {
@@ -13,9 +13,11 @@ const layoutreducer = (state = initialState, action) => {
             return {...state, ...{title: action.payload}};
         case 'SET_SELECTION':
             return {...state, selectedRow: action.payload};
+        case 'ASSIGN_TECHNICIAN_ID':
+            return {...state, technician_id: action.payload};
         default:
             return state;
     }
-}
+};
 
 export default layoutreducer;

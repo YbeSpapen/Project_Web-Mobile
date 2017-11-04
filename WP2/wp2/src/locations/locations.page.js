@@ -29,7 +29,7 @@ class LocationsPage extends Component {
         const fetchedEntries = this.state.entries || [];
         return (
             <div>
-                <p>Average of happy status : {this.state.percentage}%</p>
+                <p>Average of happy status : {parseInt(this.state.percentage)}%</p>
                 <LocationsTable entries={fetchedEntries}/>
                 <Link to="/overview"><RaisedButton label="Go to overview" primary={true} style={{margin: '10px'}}/></Link>
                 <Link to="/addLocation"><RaisedButton label="Add location" primary={true} style={{margin: '10px'}}/></Link>

@@ -4,66 +4,52 @@ import TechniciansTable from '../technicians/technicians-table';
 import mapDispatchToProps from '../common/title-dispatch-to-props';
 import {connect} from "react-redux";
 import {RaisedButton, Snackbar} from "material-ui";
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-} from 'react-router-dom'
 
 class IssueAssignPage extends Component {
 
     constructor() {
         super();
-        this.state = {entries: []}
+        this.state = {entries: []};
+        this.state = {
+            open: false
+        };
     }
 
     componentWillMount() {
         HttpService.getTechnicians().then(fetchedEntries => this.setState({entries: fetchedEntries}))
     }
 
-    handleRequestClose = () => {
-        this.setState({
-            open: false,
-        });
-    };
-
     render() {
         const fetchedEntries = this.state.entries || [];
         return (
-            <div className="wrapper">
-                <form onSubmit={this.save} className="marginTop" ref={(el) => this.form = el}>
-                    <TechniciansTable entries={fetchedEntries}/>
-                    <RaisedButton label="Send" type="submit" primary={true} style={{marginTop: '10px', width: '100%'}}/>
-                    <Snackbar open={this.state.open} message="Issue assigned!" autoHideDuration={4000}
-                              onRequestClose={this.handleRequestClose}/>
-                </form>
+            <div>
+                <TechniciansTable entries={fetchedEntries}/>
+                <RaisedButton label="Send" onClick={this.handleAssign} primary={true} style={{margin: "10px"}}/>
+                <Snackbar open={this.state.open} message="Issue assigned" autoHideDuration={4000} onRequestClose={this.handleRequestClose}/>
             </div>
         );
     }
 
-    save = (ev) => {
-        ev.preventDefault();
-        const id = parseInt(this.props.selectedIndex) || 0;
-        const technician_id = parseInt(this.props.selectedRow);
-        //issue_id!
+    handleAssign = (event) => {
+        const issue_id = parseInt(this.props.selectedRow);
+        const technician_id = parseInt(this.props.technician_id);
         const issue = {
-            "issue_id": id,
-            "technician_id" : technician_id
-        };
+            "issue_id": issue_id,
+            "technician_id": technician_id
+        }
         HttpService.assignTechnician(issue);
-        this.setState({open: true});
-        this.form.reset();
+        this.setState({open: false});
     };
 
     componentDidMount() {
-        this.props.setTitle('Assign issue');
+        this.props.setTitle('Assign technician');
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return {
         selectedRow: state.selectedRow,
-        selectedIndex: state.selectedIndex
+        technician_id: state.technician_id
     };
 };
 

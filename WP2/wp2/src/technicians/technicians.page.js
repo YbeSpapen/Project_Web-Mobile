@@ -6,10 +6,7 @@ import HttpService from '../common/http-service';
 import TechniciansTable from './technicians-table';
 import RaisedButton from 'material-ui/RaisedButton';
 import mapDispatchToProps from '../common/title-dispatch-to-props';
-//import {connect} from "react-redux";
 import {
-    BrowserRouter as Router,
-    Route,
     Link
 } from 'react-router-dom'
 import {connect} from "react-redux";

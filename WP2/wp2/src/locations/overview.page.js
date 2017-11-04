@@ -52,8 +52,7 @@ class OverviewPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        selectedRow: state.selectedRow,
-        selectedIndex: state.selectedIndex
+        selectedRow: state.selectedRow
     };
 };
 

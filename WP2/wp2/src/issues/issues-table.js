@@ -11,8 +11,14 @@ import {
     TableRow,
     TableRowColumn,
 } from 'material-ui/Table';
+import {connect} from "react-redux";
 
 class IssuesTable extends Component {
+    handleRowSelection = (selectedRows) => {
+      const selectedRow = this.props.entries[selectedRows].id;
+      this.props.changeSelected(selectedRow);
+    };
+
     render() {
         const rows = this.props.entries.map(e => (
             <TableRow key={e.id}>
@@ -30,7 +36,7 @@ class IssuesTable extends Component {
                         <TableHeaderColumn>Handled</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
-                <TableBody>
+                <TableBody deselectOnClickaway={false}>
                     {rows}
                 </TableBody>
             </Table>
@@ -40,6 +46,14 @@ class IssuesTable extends Component {
 
 IssuesTable.propTypes = {
     'entries': PropTypes.array.isRequired
-}
+};
 
-export default IssuesTable;
+const mapDispatchToProps = (dispath, ownProps) => {
+    return {
+        changeSelected: (selectedRow) => {
+            dispath({type: 'SET_SELECTION', payload: selectedRow});
+        }
+    }
+};
+
+export default connect(undefined, mapDispatchToProps)(IssuesTable);
