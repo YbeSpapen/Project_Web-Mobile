@@ -69,6 +69,21 @@ class LocationRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->assertEquals($actual£Location, '');
     }
 
+    public function testAddLocation_LocationObjectIsCorrect_ReturnsObject()
+    {
+        $location = new Location(null, "EB500");
+        $this->mockPDOStatement->expects($this->atLeastOnce())
+            ->method('bindParam');
+        $this->mockPDOStatement->expects($this->atLeastOnce())
+            ->method('execute')
+            ->will($this->returnValue($location));
+        $this->mockPDO->expects($this->atLeastOnce())
+            ->method('prepare')
+            ->will($this->returnValue($this->mockPDOStatement));
+        $actualLocation = $this->pdoRepository->setLocation($location->getName());
+        $this->assertEquals($location, $actualLocation);
+    }
+
     public function tearDown()
     {
         $this->mockPDO = null;

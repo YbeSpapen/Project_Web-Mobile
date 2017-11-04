@@ -95,6 +95,37 @@ class StatusRepositoryPDOTest extends PHPUnit\Framework\TestCase
         $this->assertEquals($status, $actualStatus);
     }
 
+    public function testGetPercentageStatus_ReturnsPercentage()
+    {
+        $status1 = new Status(1, 1, "HAPPY", "2017-10-08 00:00:00");
+        $status2 = new Status(2, 2, "bad", "2017-10-09 00:00:00");
+        $percentage = 50;
+
+        $this->mockPDOStatement->expects($this->atLeastOnce())
+            ->method('execute');
+        $this->mockPDOStatement->expects($this->atLeastOnce())
+            ->method('fetchAll')
+            ->will($this->returnValue(
+                [
+                    [ 'id' => $status1->getId(),
+                        'location_id' => $status1->getLocationId(),
+                        'status' => $status1->getStatus(),
+                        'date' => $status1->getDate()
+                    ],
+                    [ 'id' => $status2->getId(),
+                        'location_id' => $status2->getLocationId(),
+                        'status' => $status2->getStatus(),
+                        'date' => $status2->getDate()
+                    ]
+                ]));
+        $this->mockPDO->expects($this->atLeastOnce())
+            ->method('prepare')
+            ->will($this->returnValue($this->mockPDOStatement));
+        $actualPercentage =
+            $this->pdoRepository->getStatusesPercentage();
+        $this->assertEquals($percentage, strval($actualPercentage));
+    }
+
     public function tearDown()
     {
         $this->mockPDO = null;
