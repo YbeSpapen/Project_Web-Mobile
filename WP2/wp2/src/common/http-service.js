@@ -4,7 +4,7 @@
 import axios from 'axios';
 
 class HttpService {
-    baseUrl = 'http://192.168.46.137/api';
+    baseUrl = 'http://localhost/api';
 
     getLocations() {
         return axios.get(`${this.baseUrl}/location`).then(r => r.data);
@@ -58,6 +58,14 @@ class HttpService {
         return axios.post(`${this.baseUrl}/issue/assignTechnician`, {
             issue_id: issue.issue_id,
             technician_id: issue.technician_id
+        });
+    }
+
+    addStatus(status) {
+        return axios.post(`${this.baseUrl}/status/add`, {
+            location_id: status.location_id,
+            status: status.status,
+            date: status.date,
         });
     }
 }
