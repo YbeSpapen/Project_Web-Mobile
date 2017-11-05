@@ -30,14 +30,14 @@ class StatusAddPage extends Component {
                 <Row style={{marginTop: '30px'}}>
                     <Col md={4} lg={4}>
                         <Image src={imageGreen} alt="HAPPY" name={"HAPPY"}
-                               onClick={this.save("HAPPY")} color="white" style={{cursor: 'pointer'}}/>
+                               onClick={() => this.save("HAPPY")} color="white" style={{cursor: 'pointer'}}/>
                     </Col>
                     <Col md={4} lg={4}>
                         <Image src={imageLightRed} alt="MEDIUM" name={"MEDIUM"}
-                               onClick={this.save("MEDIUM")} color="white" style={{cursor: 'pointer'}}/>
+                               onClick={() => this.save("MEDIUM")} color="white" style={{cursor: 'pointer'}}/>
                     </Col>
                     <Col md={4} lg={4}>
-                        <Image src={imageRed} alt="MAD" name={"MAD"} onClick={this.save("MAD")}
+                        <Image src={imageRed} alt="MAD" name={"MAD"} onClick={() => this.save("MAD")}
                                color="white" style={{cursor: 'pointer'}}/>
                     </Col>
                 </Row>
