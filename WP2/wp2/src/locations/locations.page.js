@@ -4,11 +4,7 @@ import LocationsTable from './locations-table';
 import RaisedButton from 'material-ui/RaisedButton';
 import mapDispatchToProps from '../common/title-dispatch-to-props';
 import {connect} from "react-redux";
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 class LocationsPage extends Component {
 
@@ -26,7 +22,7 @@ class LocationsPage extends Component {
         const fetchedEntries = this.state.entries || [];
         return (
             <div>
-                <h3>Average of happy status : {parseInt(this.state.percentage)}%</h3>
+                <h3>Average of happy status : {parseInt(this.state.percentage, 10)}%</h3>
                 <LocationsTable entries={fetchedEntries}/>
                 <Link to="/overview"><RaisedButton label="Go to overview" primary={true}
                                                    style={{margin: '10px'}}/></Link>

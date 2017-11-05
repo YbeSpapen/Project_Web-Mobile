@@ -5,11 +5,7 @@ import IssuesTable from '../issues/issues-table';
 import StatusesTable from '../statuses/status-table';
 import {RaisedButton} from "material-ui";
 import mapDispatchToProps from '../common/title-dispatch-to-props';
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 class OverviewPage extends Component {
 

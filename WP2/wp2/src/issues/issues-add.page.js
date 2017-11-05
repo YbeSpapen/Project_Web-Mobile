@@ -37,7 +37,7 @@ class IssuesAddPage extends Component {
         const problem = ev.target['problem'].value;
         const offset = (new Date()).getTimezoneOffset() * 60000;
         const date = new Date(Date.now() - offset).toISOString().slice(0, 19).replace('T', ' ');
-        const location_id = parseInt(this.props.selectedRow);
+        const location_id = parseInt(this.props.selectedRow, 10);
         const issue = {
             "problem": problem,
             "date": date,

@@ -10,6 +10,7 @@ import {
 } from 'material-ui/Table';
 
 class StatusesTable extends Component {
+
     render() {
         const rows = this.props.entries.map(e => (
             <TableRow key={e.id}>

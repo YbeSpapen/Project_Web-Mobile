@@ -49,7 +49,7 @@ class StatusAddPage extends Component {
 
     save = (text) => {
         const mood = text;
-        const location_id = parseInt(this.props.selectedRow);
+        const location_id = parseInt(this.props.selectedRow, 10);
         const offset = (new Date()).getTimezoneOffset() * 60000;
         const date = new Date(Date.now() - offset).toISOString().slice(0, 19).replace('T', ' ');
         const status = {
