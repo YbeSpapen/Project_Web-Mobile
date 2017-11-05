@@ -30,14 +30,14 @@ class StatusAddPage extends Component {
                 <Row style={{marginTop: '30px'}}>
                     <Col md={4} lg={4}>
                         <Image src={imageGreen} alt="HAPPY" name={"HAPPY"}
-                               onClick={this.save.bind(this, "HAPPY")} color="white" style={{cursor: 'pointer'}}/>
+                               onClick={this.save("HAPPY")} color="white" style={{cursor: 'pointer'}}/>
                     </Col>
                     <Col md={4} lg={4}>
                         <Image src={imageLightRed} alt="MEDIUM" name={"MEDIUM"}
-                               onClick={this.save.bind(this, "MEDIUM")} color="white" style={{cursor: 'pointer'}}/>
+                               onClick={this.save("MEDIUM")} color="white" style={{cursor: 'pointer'}}/>
                     </Col>
                     <Col md={4} lg={4}>
-                        <Image src={imageRed} alt="MAD" name={"MAD"} onClick={this.save.bind(this, "MAD")}
+                        <Image src={imageRed} alt="MAD" name={"MAD"} onClick={this.save("MAD")}
                                color="white" style={{cursor: 'pointer'}}/>
                     </Col>
                 </Row>
@@ -47,10 +47,11 @@ class StatusAddPage extends Component {
         );
     }
 
-    save = function (text, e) {
+    save = (text) => {
         const mood = text;
         const location_id = parseInt(this.props.selectedRow);
-        const date = new Date(Date.now()).toISOString().slice(0, 19).replace('T', ' ');
+        const offset = (new Date()).getTimezoneOffset() * 60000;
+        const date = new Date(Date.now() - offset).toISOString().slice(0, 19).replace('T', ' ');
         const status = {
             "location_id": location_id,
             "status": mood,

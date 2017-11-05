@@ -24,7 +24,8 @@ class IssuesTable extends Component {
             <TableRow key={e.id}>
                 <TableRowColumn>{e.problem}</TableRowColumn>
                 <TableRowColumn>{e.date}</TableRowColumn>
-                <TableRowColumn>{e.handled}</TableRowColumn>
+                <TableRowColumn>{e.handled == 1 ? "Yes" : "No"}</TableRowColumn>
+                <TableRowColumn>{e.technician_id > 0 ? "Yes" : "No"}</TableRowColumn>
             </TableRow>
         ));
         return (
@@ -34,6 +35,7 @@ class IssuesTable extends Component {
                         <TableHeaderColumn>Problem</TableHeaderColumn>
                         <TableHeaderColumn>Date</TableHeaderColumn>
                         <TableHeaderColumn>Handled</TableHeaderColumn>
+                        <TableHeaderColumn>Technician assigned</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
                 <TableBody deselectOnClickaway={false}>
