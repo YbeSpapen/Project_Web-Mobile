@@ -24,7 +24,7 @@ class TechnicianType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('email', EmailType::class)
-            ->add('photo',FileType::class,array('label' => 'Photo (PNG file)','data_class'=> null))
+            ->add('photo', FileType::class, array('label' => 'Photo (PNG file)', 'data_class' => null, 'required' => false))
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Password'],

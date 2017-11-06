@@ -35,7 +35,7 @@ class IssueController extends Controller
             $em->persist($issue);
             $em->flush();
 
-            return $this->redirectToRoute('welcome');
+            return $this->redirectToRoute('locations');
         }
 
         return $this->render('issue/issue.html.twig', [
@@ -88,7 +88,7 @@ class IssueController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
-        return $this->redirectToRoute('assignedProblems');
+        return $this->redirectToRoute('assignedIssues');
     }
 
     /**
@@ -107,7 +107,7 @@ class IssueController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
-        return $this->redirectToRoute('welcome');
+        return $this->redirectToRoute('locations');
     }
 
     /**

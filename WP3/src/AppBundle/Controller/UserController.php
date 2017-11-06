@@ -44,7 +44,6 @@ class UserController extends Controller
             $password = $encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
-
             $user->setRole('ROLE_MANAGER');
 
             $em = $this->getDoctrine()->getManager();
@@ -54,7 +53,7 @@ class UserController extends Controller
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('auth/register.html.twig', [
+        return $this->render('auth/register_manager.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -97,7 +96,7 @@ class UserController extends Controller
             return $this->redirectToRoute('getTechniciansAdmin');
         }
 
-        return $this->render('auth/register.html.twig', [
+        return $this->render('auth/register_edit_technician.html.twig', [
             'form' => $form->createView(),
         ]);
     }
