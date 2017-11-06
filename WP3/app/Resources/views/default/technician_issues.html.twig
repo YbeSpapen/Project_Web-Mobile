@@ -6,9 +6,9 @@
         <li class="nav-item">
             <a href="/" class="nav-link">Home</a>
         </li>
-        {% if app.user != null and app.user.getRole() == 'ROLE_TECHNICIAN' %}
+        {% if app.user and is_granted('ROLE_TECHNICIAN') %}
             <li class="nav-item active">
-                <a href="/assignedProblems" class="nav-link">My assigned problems</a>
+                <a href="{{ path('assignedIssues') }}" class="nav-link">My assigned issues</a>
             </li>
         {% endif %}
     </ul>
@@ -28,15 +28,16 @@
             <tbody>
             {% for issue in issues %}
                 <tr>
-                    <th scope="row">{{ issue.getId() }}</th>
-                    <td>{{ issue.getProblem() }}</td>
-                    <td>{{ issue.getDate()|date('Y-m-d') }}</td>
-                    <td>{{ issue.getLocation().getName() }}</td>
-                    <td>{% if issue.getHandled() == true %}
-                            <a href="/setHandled?issueId={{ issue.getId() }}&handled=0"
+                    <th scope="row">{{ issue.id }}</th>
+                    <td>{{ issue.problem }}</td>
+                    <td>{{ issue.date|date('Y-m-d') }}</td>
+                    <td>{{ issue.location.name }}</td>
+                    <td>
+                        {% if issue.handled %}
+                            <a href="{{ path('setHandled', {'issueId': issue.id, 'handled': 0}) }}"
                                class="btn btn-sm btn-space btn-danger pull-right" role="button">Set unhandled</a>
                         {% else %}
-                            <a href="/setHandled?issueId={{ issue.getId() }}&handled=1"
+                            <a href="{{ path('setHandled', {'issueId': issue.id, 'handled': 1}) }}"
                                class="btn btn-sm btn-space btn-success pull-right" role="button">Set handled</a>
                         {% endif %}
                     </td>
@@ -44,6 +45,6 @@
             {% endfor %}
             </tbody>
         </table>
-        <a href="/pdf" class="btn btn-space btn-primary" role="button">Export list to pdf</a>
+        <a href="{{ path('pdf') }}" class="btn btn-space btn-primary" role="button">Export list to pdf</a>
     </div>
 {% endblock %}

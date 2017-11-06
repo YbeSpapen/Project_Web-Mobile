@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1>Issues</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Problem</th>
+                <th>Date</th>
+                <th>Handled</th>
+                <th>Technician</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for issue in issues %}
+                <tr>
+                    <th scope="row">{{ issue.id }}</th>
+                    <td>{{ issue.problem }}</td>
+                    <td>{{ issue.date|date('Y-m-d') }}</td>
+                    <td>{{ issue.handled ? 'Yes' : 'No' }}</td>
+                    <td>{{ issue.technician.name | default("Not assigned") }}</td>
+                    <td>
+                        {% if app.user and is_granted('ROLE_TECHNICIAN') %}
+                            {% if not issue.technician %}
+                                <a href="{{ path('setTechnicianToIssue', {'issueId': issue.id, 'technicianId': app.user.id,'assign': 1 }) }}"
+                                   class="btn btn-space btn-sm btn-primary" role="button">Set</a>
+                            {% endif %}
+                        {% elseif app.user and is_granted('ROLE_MANAGER') %}
+                            <a href="{{ path('getTechnicians', {'issueId': issue.id}) }}"
+                               class="btn btn-sm btn-space btn-primary pull-right" role="button">Set technician</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

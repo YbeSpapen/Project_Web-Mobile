@@ -1,33 +1,26 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
-
     <div class="container-fluid">
         <h1>Give status</h1>
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 
-                <a href="/handleStatus?locatieId={{ app.request.query.get("locatieId") }}&status=1"><img
-                            class="img-responsive center-block" src="{{ asset('images/green-smiley.png') }}"
-                            border="0"></a>
-
+                <a href="{{ path('handleStatus', {'locationId': app.request.query.get('locationId'), 'status':1}) }}"><img
+                            class="img-responsive center-block" src="{{ asset('images/green-smiley.png') }}" border="0"></a>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 
-                <a href="/handleStatus?locatieId={{ app.request.query.get("locatieId") }}&status=2"><img
+                <a href="{{ path('handleStatus', {'locationId': app.request.query.get('locationId'), 'status':2}) }}"><img
                             class="img-responsive center-block" src="{{ asset('images/lightred-smiley.png') }}"
                             border="0"></a>
-
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 
-                <a href="/handleStatus?locatieId={{ app.request.query.get("locatieId") }}&status=3"><img
+                <a href="{{ path('handleStatus', {'locationId': app.request.query.get('locationId'), 'status':3}) }}"><img
                             class="img-responsive center-block" src="{{ asset('images/red-smiley.png') }}"
                             border="0"></a>
-
             </div>
         </div>
     </div>
-
 {% endblock %}

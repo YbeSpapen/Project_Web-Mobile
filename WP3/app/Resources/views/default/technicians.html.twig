@@ -15,15 +15,15 @@
             <tbody>
             {% for technician in technicians %}
                 <tr>
-                    <th scope="row">{{ technician.getId() }}</th>
-                    <td>{{ technician.getName() }}</td>
-                    <td>{{ technician.getEmail() }}</td>
+                    <th scope="row">{{ technician.id }}</th>
+                    <td>{{ technician.name }}</td>
+                    <td>{{ technician.email }}</td>
                     <td>
-                        {% if issue.getTechnician() != null and issue.getTechnician().getId() == technician.getId() %}
-                            <a href="/setTechnician?issueId={{ app.request.query.get("issueId") }}&technicianId={{ technician.getId() }}&assign=0"
+                        {% if issue.technician and issue.technician.id == technician.id %}
+                            <a href="{{ path('setTechnician', {'issueId': app.request.query.get("issueId"), 'technicianId': technician.id, 'assign': 0}) }}"
                                class="btn btn-sm btn-space btn-danger pull-right" role="button">Unset</a>
                         {% else %}
-                            <a href="/setTechnician?issueId={{ app.request.query.get("issueId") }}&technicianId={{ technician.getId() }}&assign=1"
+                            <a href="{{ path('setTechnician', {'issueId': app.request.query.get("issueId"), 'technicianId': technician.id, 'assign': 1}) }}"
                                class="btn btn-sm btn-space btn-success pull-right" role="button">Set</a>
                         {% endif %}
                     </td>

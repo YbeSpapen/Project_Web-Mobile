@@ -15,14 +15,14 @@
             <tbody>
             {% for technician in technicians %}
                 <tr>
-                    <th scope="row">{{ technician.getId() }}</th>
-                    <td>{{ technician.getName() }}</td>
-                    <td>{{ technician.getEmail() }}</td>
+                    <th scope="row">{{ technician.id }}</th>
+                    <td>{{ technician.name }}</td>
+                    <td>{{ technician.email }}</td>
                     <td>
                         <div>
-                            <a href="/editTechnician?technicianId={{ technician.getId() }}"
+                            <a href="{{ path('editTechnician', {'technicianId': location.id}) }}"
                                class="btn btn-sm btn-space btn-primary pull-right" role="button">Edit</a>
-                            <a href="/removeTechnician?technicianId={{ technician.getId() }}"
+                            <a href="{{ path('removeTechnician', {'technicianId': location.id}) }}"
                                class="btn btn-sm btn-space btn-danger pull-right" role="button">Delete</a>
                         </div>
                     </td>
@@ -30,7 +30,7 @@
             {% endfor %}
             </tbody>
         </table>
-        <a href="/registerTechnicianAdmin"
+        <a href="{{ path('registerTechnicianAdmin') }}"
            class="btn btn-sm btn-space btn-primary" role="button">Create technician</a>
     </div>
 {% endblock %}

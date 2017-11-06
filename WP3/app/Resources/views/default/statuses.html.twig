@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1>Statuses</h1>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for status in statuses %}
+                <tr>
+                    <th scope="row">{{ status.id }}</th>
+                    <td>{{ status.status }}</td>
+                    <td>{{ status.date|date('Y-m-d') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -6,7 +6,7 @@
         <h1>Welcome
             {% if app.user != null %}
                 {{ app.user.name }}
-                {% if app.user.getRole() == 'ROLE_TECHNICIAN' %}
+                {% if is_granted('ROLE_TECHNICIAN') %}
                     <br><br><img class="img-circle" src="{{ asset('uploads/technicianPhotos/'~app.user.getPhoto) }}">
                 {% endif %}
             {% endif %}
@@ -21,25 +21,23 @@
             <tbody>
             {% for location in locations %}
                 <tr>
-                    <th scope="row">{{ location.getId() }}</th>
-                    <td>{{ location.getName() }}</td>
+                    <th scope="row">{{ location.id }}</th>
+                    <td>{{ location.name }}</td>
                     <td class="pull-right">
                         <div>
-                            {% if app.user != null and app.user.getRole() == 'ROLE_TECHNICIAN' %}
-                                <a href="/overview?locatieId={{ location.getId }}"
-                                   class="btn btn-space btn-sm btn-primary"
-                                   role="button">Overview</a>
-                            {% else %}
-                                <a href="/giveStatus?locatieId={{ location.getId }}"
+                            {% if app.user == null %}
+                                <a href="{{ path('giveStatus', {'locationId': location.getId}) }}"
                                    class="btn btn-sm btn-space btn-primary" role="button">Give status</a>
-                                <a href="/giveIssue?locatieId={{ location.getId }}"
+                                <a href="{{ path('giveIssue', {'locationId': location.getId}) }}"
                                    class="btn btn-space btn-sm btn-primary"
                                    role="button">Rate</a>
-                                <a href="/overview?locatieId={{ location.getId }}"
-                                   class="btn btn-space btn-sm btn-primary"
-                                   role="button">Overview</a>
                             {% endif %}
-
+                            <a href="{{ path('issues', {'locationId': location.getId}) }}"
+                               class="btn btn-space btn-sm btn-primary"
+                               role="button">Issues</a>
+                            <a href="{{ path('statuses', {'locationId': location.getId}) }}"
+                               class="btn btn-space btn-sm btn-primary"
+                               role="button">Statuses</a>
                         </div>
                     </td>
                 </tr>

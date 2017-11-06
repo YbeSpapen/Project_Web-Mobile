@@ -24,13 +24,13 @@
         </tr>
         </thead>
         <tbody>
-        {% for issue in user.getIssues() %}
+        {% for issue in user.issues %}
             <tr>
-                <th scope="row">{{ issue.getId() }}</th>
-                <td>{{ issue.getProblem() }}</td>
-                <td>{{ issue.getDate()|date('Y-m-d') }}</td>
-                <td>{{ issue.getLocation().getName() }}</td>
-                <td>{{ issue.getHandled()?"Yes":"No" }}
+                <th scope="row">{{ issue.id }}</th>
+                <td>{{ issue.problem }}</td>
+                <td>{{ issue.date|date('Y-m-d') }}</td>
+                <td>{{ issue.location.name }}</td>
+                <td>{{ issue.handled?"Yes":"No" }}
                 </td>
             </tr>
         {% endfor %}
