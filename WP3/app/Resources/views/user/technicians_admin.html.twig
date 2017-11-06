@@ -19,18 +19,18 @@
                     <td>{{ technician.name }}</td>
                     <td>{{ technician.email }}</td>
                     <td>
-                        <div>
-                            <a href="{{ path('editTechnician', {'technicianId': location.id}) }}"
-                               class="btn btn-sm btn-space btn-primary pull-right" role="button">Edit</a>
-                            <a href="{{ path('removeTechnician', {'technicianId': location.id}) }}"
-                               class="btn btn-sm btn-space btn-danger pull-right" role="button">Delete</a>
+                        <div class="pull-right">
+                            <a href="{{ path('editTechnician', {'technicianId': technician.id}) }}"
+                               class="btn btn-space btn-sm btn-primary" role="button">Edit</a>
+                            <a href="{{ path('removeTechnician', {'technicianId': technician.id}) }}"
+                               class="btn btn-space btn-sm btn-danger" role="button">Delete</a>
                         </div>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-        <a href="{{ path('registerTechnicianAdmin') }}"
+        <a href="{{ path('adminRegisterTechnician') }}"
            class="btn btn-sm btn-space btn-primary" role="button">Create technician</a>
     </div>
 {% endblock %}

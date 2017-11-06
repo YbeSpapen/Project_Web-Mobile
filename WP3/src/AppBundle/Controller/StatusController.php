@@ -50,7 +50,7 @@ class StatusController extends Controller
 
         $statuses = $location->getStatuses();
 
-        return $this->render('default/statuses.html.twig', array('statuses' => $statuses));
+        return $this->render('status/statuses.html.twig', array('statuses' => $statuses));
     }
 
     private function getStatus($code)

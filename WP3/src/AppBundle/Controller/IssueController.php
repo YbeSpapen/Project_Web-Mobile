@@ -38,7 +38,7 @@ class IssueController extends Controller
             return $this->redirectToRoute('welcome');
         }
 
-        return $this->render('default/issue.html.twig', [
+        return $this->render('issue/issue.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -53,7 +53,7 @@ class IssueController extends Controller
 
         $issues = $location->getIssues();
 
-        return $this->render('default/issues.html.twig', array('issues' => $issues));
+        return $this->render('issue/issues.html.twig', array('issues' => $issues));
     }
 
 
@@ -66,7 +66,7 @@ class IssueController extends Controller
         $user = $user = $this->get('security.token_storage')->getToken()->getUser();
         $issues = $user->getIssues();
 
-        return $this->render('default/technician_issues.html.twig', array('issues' => $issues));
+        return $this->render('issue/technician_issues.html.twig', array('issues' => $issues));
     }
 
     /**

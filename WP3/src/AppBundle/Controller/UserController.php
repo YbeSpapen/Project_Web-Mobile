@@ -60,9 +60,9 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/registerTechnicianAdmin", name="registerTechnicianAdmin")
+     * @Route("/adminRegisterTechnician", name="adminRegisterTechnician")
      */
-    public function registerTechnicanAdmin(Request $request)
+    public function adminRegisterTechnician(Request $request)
     {
         $user = new User();
         $form = $this->createForm(TechnicianType::class, $user);
@@ -76,22 +76,19 @@ class UserController extends Controller
 
             $user->setRole('ROLE_TECHNICIAN');
 
-            // $file stores the uploaded PDF file
             /** @var UploadedFile $file */
             $file = $user->getPhoto();
 
-            // Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            if ($file != null) {
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
-            // Move the file to the directory where brochures are stored
-            $file->move(
-                $this->getParameter('photo_directory'),
-                $fileName
-            );
+                $file->move(
+                    $this->getParameter('photo_directory'),
+                    $fileName
+                );
 
-            // Update the 'brochure' property to store the PDF file name
-            // instead of its contents
-            $user->setPhoto($fileName);
+                $user->setPhoto($fileName);
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -132,7 +129,7 @@ class UserController extends Controller
         $technicians = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN'));
         $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
 
-        return $this->render('default/technicians.html.twig', array('technicians' => $technicians, 'issue' => $issue));
+        return $this->render('user/technicians.html.twig', array('technicians' => $technicians, 'issue' => $issue));
     }
 
     /**
@@ -143,7 +140,7 @@ class UserController extends Controller
     {
         $technicians = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN'));
 
-        return $this->render('default/technicians_admin.html.twig', array('technicians' => $technicians));
+        return $this->render('user/technicians_admin.html.twig', array('technicians' => $technicians));
     }
 
 
@@ -155,7 +152,7 @@ class UserController extends Controller
     {
         $technicianId = $request->get('technicianId');
         $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('role' => 'ROLE_TECHNICIAN', 'id' => $technicianId));
-
+        $oldPhoto = $technician->getPhoto();
 
         $form = $this->createForm(TechnicianType::class, $technician);
         $form->handleRequest($request);
@@ -165,22 +162,21 @@ class UserController extends Controller
             $password = $encoder->encodePassword($technician, $technician->getPlainPassword());
             $technician->setPassword($password);
 
-            // $file stores the uploaded PDF file
             /** @var UploadedFile $file */
             $file = $technician->getPhoto();
 
-            // Generate a unique name for the file before saving it
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            if ($file != null) {
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
-            // Move the file to the directory where brochures are stored
-            $file->move(
-                $this->getParameter('photo_directory'),
-                $fileName
-            );
+                $file->move(
+                    $this->getParameter('photo_directory'),
+                    $fileName
+                );
 
-            // Update the 'brochure' property to store the PDF file name
-            // instead of its contents
-            $technician->setPhoto($fileName);
+                $technician->setPhoto($fileName);
+            } else {
+                $technician->setPhoto($oldPhoto);
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
@@ -188,7 +184,7 @@ class UserController extends Controller
             return $this->redirectToRoute('getTechniciansAdmin');
         }
 
-        return $this->render('default/technician_edit_form.html.twig', [
+        return $this->render('user/technician_edit_form.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -217,7 +213,7 @@ class UserController extends Controller
     {
         $user = $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $html = $this->renderView('default/pdf.html.twig', array('user' => $user));
+        $html = $this->renderView('user/pdf.html.twig', array('user' => $user));
 
         $filename = sprintf('list.pdf', date('Y-m-d'));
 
@@ -230,5 +226,4 @@ class UserController extends Controller
             ]
         );
     }
-
 }
