@@ -147,4 +147,9 @@ class Location
     {
         return $this->statuses;
     }
+
+    function __toString()
+    {
+        return $this->name;
+    }
 }

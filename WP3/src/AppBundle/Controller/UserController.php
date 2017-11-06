@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Form\TechnicianType;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class UserController extends Controller
 {
@@ -45,6 +46,7 @@ class UserController extends Controller
             $user->setPassword($password);
 
             $user->setRole('ROLE_MANAGER');
+            //$user->setRole('ROLE_ADMIN');
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -205,9 +207,9 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/pdf", name="pdf")
-     * @Security("has_role('ROLE_TECHNICIAN')")
-     */
+ * @Route("/pdf", name="pdf")
+ * @Security("has_role('ROLE_TECHNICIAN')")
+ */
     public function pdfAction()
     {
         $user = $user = $this->get('security.token_storage')->getToken()->getUser();
@@ -224,5 +226,39 @@ class UserController extends Controller
                 'Content-Disposition' => sprintf('attachment; filename="%s"', $filename),
             ]
         );
+    }
+
+    /**
+     * @Route("/csv", name="csv")
+     * @Security("has_role('ROLE_TECHNICIAN')")
+     */
+    public function csvAction()
+    {
+        $user = $user = $this->get('security.token_storage')->getToken()->getUser();
+        $results = $user->getIssues();
+
+        $response = new StreamedResponse();
+        $response->setCallback(
+            function () use ($results) {
+                $handle = fopen('php://output', 'r+');
+                fputcsv($handle, array("Problem", "Since", "Location"),';', '"');
+                foreach ($results as $row) {
+                    //array list fields you need to export
+                    if ($row->getHandled() == 0) {
+                        $data = array(
+                            $row->getProblem(),
+                            $row->getDate()->format('Y-m-d'),
+                            $row->getLocation()
+                        );
+                        fputcsv($handle, $data, ';', '"');
+                    }
+                }
+                fclose($handle);
+            }
+        );
+        $response->headers->set('Content-Type', 'application/force-download');
+        $response->headers->set('Content-Disposition', 'attachment; filename="tasks.csv"');
+
+        return $response;
     }
 }
