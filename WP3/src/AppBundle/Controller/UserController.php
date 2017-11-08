@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Form\TechnicianType;
+use AppBundle\Form\TechnicianEditType;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -98,7 +99,7 @@ class UserController extends Controller
             return $this->redirectToRoute('getTechniciansAdmin');
         }
 
-        return $this->render('auth/register_edit_technician.html.twig', [
+        return $this->render('auth/register_technician.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -130,7 +131,10 @@ class UserController extends Controller
         $technicians = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN'));
         $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->find($issueId);
 
-        return $this->render('user/technicians.html.twig', array('technicians' => $technicians, 'issue' => $issue));
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($technicians, $request->query->getInt('page', 1), 5);
+
+        return $this->render('user/technicians.html.twig', array('technicians' => $pagination, 'issue' => $issue));
     }
 
     /**
@@ -141,7 +145,10 @@ class UserController extends Controller
     {
         $technicians = $this->getDoctrine()->getRepository('AppBundle:User')->findBy(array('role' => 'ROLE_TECHNICIAN'));
 
-        return $this->render('user/technicians_admin.html.twig', array('technicians' => $technicians));
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($technicians, $request->query->getInt('page', 1), 5);
+
+        return $this->render('user/technicians_admin.html.twig', array('technicians' => $pagination));
     }
 
 
@@ -155,13 +162,10 @@ class UserController extends Controller
         $technician = $this->getDoctrine()->getRepository('AppBundle:User')->findOneBy(array('role' => 'ROLE_TECHNICIAN', 'id' => $technicianId));
         $oldPhoto = $technician->getPhoto();
 
-        $form = $this->createForm(TechnicianType::class, $technician);
+        $form = $this->createForm(TechnicianEditType::class, $technician);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $encoder = $this->get('security.password_encoder');
-            $password = $encoder->encodePassword($technician, $technician->getPlainPassword());
-            $technician->setPassword($password);
 
             /** @var UploadedFile $file */
             $file = $technician->getPhoto();
@@ -185,7 +189,7 @@ class UserController extends Controller
             return $this->redirectToRoute('getTechniciansAdmin');
         }
 
-        return $this->render('user/technician_edit_form.html.twig', [
+        return $this->render('auth/edit_technician.html.twig', [
             'form' => $form->createView(),
         ]);
     }

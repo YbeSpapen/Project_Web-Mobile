@@ -36,5 +36,8 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation pull-right">
+            {{ knp_pagination_render(issues) }}
+        </div>
     </div>
 {% endblock %}

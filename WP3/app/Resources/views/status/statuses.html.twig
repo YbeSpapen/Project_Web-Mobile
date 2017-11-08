@@ -21,5 +21,8 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation pull-right">
+            {{ knp_pagination_render(statuses) }}
+        </div>
     </div>
 {% endblock %}

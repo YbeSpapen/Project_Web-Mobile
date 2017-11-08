@@ -53,7 +53,10 @@ class IssueController extends Controller
 
         $issues = $location->getIssues();
 
-        return $this->render('issue/issues.html.twig', array('issues' => $issues));
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($issues, $request->query->getInt('page', 1), 5);
+
+        return $this->render('issue/issues.html.twig', array('issues' => $pagination));
     }
 
 
@@ -66,7 +69,10 @@ class IssueController extends Controller
         $user = $user = $this->get('security.token_storage')->getToken()->getUser();
         $issues = $user->getIssues();
 
-        return $this->render('issue/technician_issues.html.twig', array('issues' => $issues));
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($issues, $request->query->getInt('page', 1), 5);
+
+        return $this->render('issue/technician_issues.html.twig', array('issues' => $pagination));
     }
 
     /**
