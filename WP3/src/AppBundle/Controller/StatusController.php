@@ -16,7 +16,7 @@ class StatusController extends Controller
      */
     public function giveStatus()
     {
-        return $this->render('default/status.html.twig');
+        return $this->render('status/status.html.twig');
     }
 
     /**
