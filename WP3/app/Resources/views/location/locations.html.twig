@@ -21,7 +21,7 @@
             <tbody>
             {% for location in locations %}
                 <tr>
-                    <th scope="row">{{ location.id }}</th>
+                    <th scope="row">{{ loop.index }}</th>
                     <td>{{ location.name }}</td>
                     <td class="pull-right">
                         <div>
@@ -30,7 +30,7 @@
                                    class="btn btn-sm btn-space btn-primary" role="button">Give status</a>
                                 <a href="{{ path('giveIssue', {'locationId': location.getId}) }}"
                                    class="btn btn-space btn-sm btn-primary"
-                                   role="button">Rate</a>
+                                   role="button">Give issue</a>
                             {% endif %}
                             <a href="{{ path('issues', {'locationId': location.getId}) }}"
                                class="btn btn-space btn-sm btn-primary"

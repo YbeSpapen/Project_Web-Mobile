@@ -14,9 +14,9 @@
             <tbody>
             {% for status in statuses %}
                 <tr>
-                    <th scope="row">{{ status.id }}</th>
+                    <th scope="row">{{ loop.index }}</th>
                     <td>{{ status.status }}</td>
-                    <td>{{ status.date|date('Y-m-d') }}</td>
+                    <td>{{ status.date|date('d-m-Y H:i:s') }}</td>
                 </tr>
             {% endfor %}
             </tbody>

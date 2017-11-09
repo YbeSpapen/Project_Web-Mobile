@@ -13,7 +13,7 @@ class LocationController extends Controller
      */
     public function showLocations(Request $request)
     {
-        $locations = $this->getDoctrine()->getRepository('AppBundle:Location')->findAll();
+        $locations = $this->getDoctrine()->getRepository('AppBundle:Location')->findBy(array(),array('name' => 'ASC'));
 
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate($locations, $request->query->getInt('page', 1), 5);

@@ -54,7 +54,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="Issue", mappedBy="technician")
-     *
+     * @ORM\OrderBy({"date" = "DESC"})
      */
     private $issues;
 

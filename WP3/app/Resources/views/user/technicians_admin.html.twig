@@ -15,7 +15,7 @@
             <tbody>
             {% for technician in technicians %}
                 <tr>
-                    <th scope="row">{{ technician.id }}</th>
+                    <th scope="row">{{ loop.index }}</th>
                     <td>{{ technician.name }}</td>
                     <td>{{ technician.email }}</td>
                     <td>

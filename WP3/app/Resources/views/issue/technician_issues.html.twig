@@ -30,7 +30,7 @@
                 <tr>
                     <th scope="row">{{ issue.id }}</th>
                     <td>{{ issue.problem }}</td>
-                    <td>{{ issue.date|date('Y-m-d') }}</td>
+                    <td>{{ issue.date|date('d-m-Y H:i:s') }}</td>
                     <td>{{ issue.location.name }}</td>
                     <td>
                         {% if issue.handled %}
