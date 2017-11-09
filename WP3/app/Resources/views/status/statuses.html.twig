@@ -1,26 +1,28 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Statuses {% endblock %}
 {% block body %}
     <div class="container-fluid">
         <h1>Statuses</h1>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Status</th>
-                <th>Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for status in statuses %}
+        <div style="overflow-x:auto;">
+            <table class="table table-striped">
+                <thead>
                 <tr>
-                    <th scope="row">{{ loop.index }}</th>
-                    <td>{{ status.status }}</td>
-                    <td>{{ status.date|date('d-m-Y H:i:s') }}</td>
+                    <th>#</th>
+                    <th>Status</th>
+                    <th>Date</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for status in statuses %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ status.status }}</td>
+                        <td>{{ status.date|date('d-m-Y H:i:s') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div class="navigation pull-right">
             {{ knp_pagination_render(statuses) }}
         </div>

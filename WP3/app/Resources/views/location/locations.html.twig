@@ -7,10 +7,11 @@
             {% if app.user != null %}
                 {{ app.user.name }}
                 {% if is_granted('ROLE_TECHNICIAN') %}
-                    <br><br><img class="img-circle" src="{{ asset('uploads/technicianPhotos/'~app.user.getPhoto) }}">
+                    <br><br><img class="img-responsive" src="{{ asset('uploads/technicianPhotos/'~app.user.getPhoto) }}">
                 {% endif %}
             {% endif %}
         </h1>
+    <div style="overflow-x:auto;">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -44,6 +45,7 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
         <div class="navigation pull-right">
             {{ knp_pagination_render(locations) }}
         </div>
