@@ -31,12 +31,14 @@ class Location
     /**
      * @ORM\OneToMany(targetEntity="Issue",
      *                        mappedBy="location")
+     * @ORM\OrderBy({"date" = "DESC"})
      */
     private $issues;
 
     /**
      * @ORM\OneToMany(targetEntity="Status",
      *                        mappedBy="location")
+     * @ORM\OrderBy({"date" = "DESC"})
      */
     private $statuses;
 

@@ -16,7 +16,7 @@ class StatusController extends Controller
      */
     public function giveStatus()
     {
-        return $this->render('default/status.html.twig');
+        return $this->render('status/status.html.twig');
     }
 
     /**
@@ -50,7 +50,11 @@ class StatusController extends Controller
 
         $statuses = $location->getStatuses();
 
-        return $this->render('status/statuses.html.twig', array('statuses' => $statuses));
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($statuses, $request->query->getInt('page', 1), 5);
+
+
+        return $this->render('status/statuses.html.twig', array('statuses' => $pagination));
     }
 
     private function getStatus($code)

@@ -7,10 +7,11 @@
             {% if app.user != null %}
                 {{ app.user.name }}
                 {% if is_granted('ROLE_TECHNICIAN') %}
-                    <br><br><img class="img-circle" src="{{ asset('uploads/technicianPhotos/'~app.user.getPhoto) }}">
+                    <br><br><img class="img-responsive" src="{{ asset('uploads/technicianPhotos/'~app.user.getPhoto) }}">
                 {% endif %}
             {% endif %}
         </h1>
+    <div style="overflow-x:auto;">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -21,7 +22,7 @@
             <tbody>
             {% for location in locations %}
                 <tr>
-                    <th scope="row">{{ location.id }}</th>
+                    <th scope="row">{{ loop.index }}</th>
                     <td>{{ location.name }}</td>
                     <td class="pull-right">
                         <div>
@@ -30,7 +31,7 @@
                                    class="btn btn-sm btn-space btn-primary" role="button">Give status</a>
                                 <a href="{{ path('giveIssue', {'locationId': location.getId}) }}"
                                    class="btn btn-space btn-sm btn-primary"
-                                   role="button">Rate</a>
+                                   role="button">Give issue</a>
                             {% endif %}
                             <a href="{{ path('issues', {'locationId': location.getId}) }}"
                                class="btn btn-space btn-sm btn-primary"
@@ -44,6 +45,10 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+        <div class="navigation pull-right">
+            {{ knp_pagination_render(locations) }}
+        </div>
     </div>
 
 {% endblock %}

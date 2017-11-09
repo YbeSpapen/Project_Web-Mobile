@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Technician issues{% endblock %}
 
 {% block navbarItems %}
     <ul class="nav navbar-nav mr-auto">
@@ -30,7 +30,7 @@
                 <tr>
                     <th scope="row">{{ issue.id }}</th>
                     <td>{{ issue.problem }}</td>
-                    <td>{{ issue.date|date('Y-m-d') }}</td>
+                    <td>{{ issue.date|date('d-m-Y H:i:s') }}</td>
                     <td>{{ issue.location.name }}</td>
                     <td>
                         {% if issue.handled %}
@@ -45,6 +45,9 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation pull-right">
+            {{ knp_pagination_render(issues) }}
+        </div>
         <a href="{{ path('pdf') }}" class="btn btn-space btn-primary" role="button">Export list to pdf</a>
 
         <a href="{{ path('csv') }}" class="btn btn-space btn-primary" role="button">Export list to csv</a>

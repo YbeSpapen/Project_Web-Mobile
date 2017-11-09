@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Issues {% endblock %}
 {% block body %}
     <div class="container-fluid">
         <h1>Issues</h1>
+    <div style="overflow-x:auto;">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -16,9 +17,9 @@
             <tbody>
             {% for issue in issues %}
                 <tr>
-                    <th scope="row">{{ issue.id }}</th>
+                    <th scope="row">{{ loop.index }}</th>
                     <td>{{ issue.problem }}</td>
-                    <td>{{ issue.date|date('Y-m-d') }}</td>
+                    <td>{{ issue.date|date('d-m-Y H:i:s') }}</td>
                     <td>{{ issue.handled ? 'Yes' : 'No' }}</td>
                     <td>{{ issue.technician.name | default("Not assigned") }}</td>
                     <td>
@@ -36,5 +37,9 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+        <div class="navigation pull-right">
+            {{ knp_pagination_render(issues) }}
+        </div>
     </div>
 {% endblock %}
