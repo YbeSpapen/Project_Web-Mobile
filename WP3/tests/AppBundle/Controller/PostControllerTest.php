@@ -31,53 +31,126 @@ class PostControllerTest extends WebTestCase
         $this->client = static::createClient();
     }
 
-    public function testShowIndex()
+    public function testHome()
     {
         $crawler = $this->client->request('GET','/');
-
+        $heading = $crawler->filter('h1')->eq(0)->text();
         $this->assertEquals(
             1,
             $crawler->filter('h1:contains("Welcome")')->count()
         );
     }
 
-    public function testButtonCountAnonymous()
+    public function testRowCount()
+    {
+        $crawler = $this->client->request('GET','/');
+        $rows = $crawler->filter('tr')->count();
+        $this->assertEquals(6,$rows);
+    }
+
+    public function testClickIssuesButton()
     {
         $crawler = $this->client->request('GET','/');
 
-        $this->assertEquals(3,$crawler->filterXPath('descendant::td/div/a')->count());
+        $link = $crawler->filter('a:contains("Issues")')->first()->link();
 
+        $crawler = $this->client->click($link);
+
+        $this->assertEquals('Issues', $crawler->filter('h1')->first()->text());
     }
 
-    public function testOverviewButton()
+    public function testClickStatusButton()
     {
         $crawler = $this->client->request('GET','/');
 
-        $link = $crawler->filter('a:contains("Overview")')->link();
-        $overViewPage = $this->client->click($link);
+        $link = $crawler->filter('a:contains("Statuses")')->first()->link();
 
-        $this->assertEquals('http://localhost/overview?locatieId=1',$overViewPage->getUri());
+        $crawler = $this->client->click($link);
 
-
+        $this->assertEquals('Statuses', $crawler->filter('h1')->first()->text());
     }
-    public function testRateButton()
+
+    public function testClickGiveIssueButton()
     {
         $crawler = $this->client->request('GET','/');
 
-        $link = $crawler->filter('a:contains("Rate")')->link();
-        $overViewPage = $this->client->click($link);
+        $link = $crawler->filter('a:contains("Give issue")')->first()->link();
 
-        $this->assertEquals('http://localhost/giveIssue?locatieId=1',$overViewPage->getUri());
+        $crawler = $this->client->click($link);
 
+        $form = $crawler->selectButton('Send')->form();
+
+        $form['form[problem]'] = 'Beamer lamp is kapot';
+
+        $crawler = $this->client->submit($form);
+
+        $this->assertTrue($this->client->getResponse()->isRedirect());
+        $this->client->followRedirect();
+        $this->assertContains('Welcome',$this->client->getResponse()->getContent());
 
     }
-    public function testStatusButton()
+
+    public function testClickGiveStatusButton()
     {
         $crawler = $this->client->request('GET','/');
 
-        $link = $crawler->filter('a:contains("status")')->link();
-        $overViewPage = $this->client->click($link);
+        $link = $crawler->filter('a:contains("Give status")')->first()->link();
 
-        $this->assertEquals('http://localhost/giveStatus?locatieId=1',$overViewPage->getUri());
+        $crawler = $this->client->click($link);
+
+        $images = $crawler->filter('img')->count();
+        $this->assertEquals(3,$images);
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+    /*
+    public function testClickGiveIssueButton()
+    {
+        $crawler = $this->client->request('GET','/');
+
+        $link = $crawler->filter('a:contains("Give issue")')->link();
+        $issuePage = $this->client->click($link);
+
+        $this->assertEquals('http://localhost/giveIssue?locationId=7',$issuePage->getUri());
+    }
+
+    public function testClickGiveStatusButton()
+    {
+        $crawler = $this->client->request('GET','/');
+
+        $link = $crawler->filter('a:contains("Give status")')->link();
+        $statusPage = $this->client->click($link);
+
+        $this->assertEquals('http://localhost/giveStatus?locationId=7',$statusPage->getUri());
+    }
+
+    public function testClickIssueButton()
+    {
+        $crawler = $this->client->request('GET','/');
+
+        $link = $crawler->filter('a:contains("Issues")')->link();
+        $issuePage = $this->client->click($link);
+
+        $issuePageCrawler = $this->client->request('GET',$link);
+
+        $this->assertEquals(
+            1,
+            $issuePageCrawler->filter('h1:contains("Issues")')->count()
+        );
+    }
+    */
+
+
+
 }

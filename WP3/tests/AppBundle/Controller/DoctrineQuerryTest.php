@@ -8,6 +8,7 @@
 
 namespace AppBundle\Tests\Controller;
 
+use AppBundle\Entity\Issue;
 use AppBundle\Entity\Location;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -26,7 +27,8 @@ class DoctrineQuerryTest extends KernelTestCase
             ->getManager();
     }
 
-    public function testFindAll()
+    //LOCATIONS
+    public function testFindAllLocations()
     {
         $this->em = static::$kernel->getContainer()
             ->get('doctrine')
@@ -35,5 +37,17 @@ class DoctrineQuerryTest extends KernelTestCase
         $locations = $this->em->getRepository(Location::class)->findAll();
 
         $this->assertContainsOnlyInstancesOf(Location::class,$locations);
+    }
+
+
+    public function testFindAllIssues()
+    {
+        $this->em = static::$kernel->getContainer()
+            ->get('doctrine')
+            ->getManager();
+
+        $issues = $this->em->getRepository(Issue::class)->findAll();
+
+        $this->assertContainsOnlyInstancesOf(Issue::class,$issues);
     }
 }
