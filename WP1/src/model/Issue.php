@@ -81,7 +81,7 @@ class Issue implements \JsonSerializable
         $this->technician_id = $technician_id;
     }
 
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return get_object_vars($this);
     }

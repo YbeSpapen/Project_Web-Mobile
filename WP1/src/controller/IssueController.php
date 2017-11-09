@@ -16,28 +16,39 @@ class IssueController
         $this->issueView = new IssueView();
     }
 
-    public function handleGetIssuesByLocationId($location_id) {
+    public function handleGetIssuesByLocationId($location_id)
+    {
         $issues = $this->issueRepository->getIssuesByLocationId($location_id);
         $this->issueView->showIssues($issues);
     }
 
-    public function handleGetIssueById($id) {
+    public function handleGetIssueById($id)
+    {
         $issue = $this->issueRepository->getIssueById($id);
         $this->issueView->showIssues($issue);
     }
 
-    public function handleGetIssueByTechnicianId($technician_id){
+    public function handleGetIssueByTechnicianId($technician_id)
+    {
         $issues = $this->issueRepository->getIssuesBytechnicianId($technician_id);
         $this->issueView->showIssues($issues);
     }
 
-    public function handleAddIssue($location_id, $problem, $date, $handled) {
+    public function handleAddIssue($location_id, $problem, $date, $handled)
+    {
         $returnCode = $this->issueRepository->addIssue($location_id, $problem, $date, $handled);
         $this->issueView->showIssues($returnCode);
     }
 
-    public function handleAssignIssue($issue_id, $technician_id) {
+    public function handleAssignIssue($issue_id, $technician_id)
+    {
         $returnCode = $this->issueRepository->assignIssue($issue_id, $technician_id);
+        $this->issueView->showIssues($returnCode);
+    }
+
+    public function handleChangeIssueState($issue_id, $handled)
+    {
+        $returnCode = $this->issueRepository->changeIssueState($issue_id, $handled);
         $this->issueView->showIssues($returnCode);
     }
 }

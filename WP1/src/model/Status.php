@@ -57,7 +57,7 @@ class Status implements \JsonSerializable
         $this->date = $date;
     }
 
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return get_object_vars($this);
     }

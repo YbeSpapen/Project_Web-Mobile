@@ -9,4 +9,5 @@ interface IssueRepository
     public function getIssuesByTechnicianId($technician_id);
     public function addIssue($location_id, $problem, $date, $handled);
     public function assignIssue($issue_id, $technician_id);
+    public function changeIssueState($issue_id, $handled);
 }

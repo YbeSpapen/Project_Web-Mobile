@@ -24,7 +24,8 @@ class IssueRepositoryPDO implements IssueRepository
 
             if (count($results) > 0) {
                 foreach ($results as $issue) {
-                    $iss = new Issue($issue['id'], $issue['location_id'], $issue['problem'], $issue['date'], $issue['handled'], $issue['technician_id']);
+                    $iss = new Issue($issue['id'], $issue['location_id'], $issue['problem'],
+                        $issue['date'], $issue['handled'], $issue['technician_id']);
                     array_push($arrayResults, $iss);
                 }
                 return $arrayResults;
@@ -46,7 +47,8 @@ class IssueRepositoryPDO implements IssueRepository
 
             if (count($result) > 0) {
                 foreach ($result as $issue) {
-                    $iss = new Issue($issue['id'], $issue['location_id'], $issue['problem'], $issue['date'], $issue['handled'], $issue['technician_id']);
+                    $iss = new Issue($issue['id'], $issue['location_id'],
+                        $issue['problem'], $issue['date'], $issue['handled'], $issue['technician_id']);
                     return $iss;
                 }
             } else {
@@ -68,7 +70,8 @@ class IssueRepositoryPDO implements IssueRepository
 
             if (count($results) > 0) {
                 foreach ($results as $issue) {
-                    $iss = new Issue($issue['id'], $issue['location_id'], $issue['problem'], $issue['date'], $issue['handled'], $issue['technician_id']);
+                    $iss = new Issue($issue['id'], $issue['location_id'],
+                        $issue['problem'], $issue['date'], $issue['handled'], $issue['technician_id']);
                     array_push($arrayResults, $iss);
                 }
                 return $arrayResults;
@@ -83,7 +86,8 @@ class IssueRepositoryPDO implements IssueRepository
     public function addIssue($location_id, $problem, $date, $handled)
     {
         try {
-            $statement = $this->connection->prepare('INSERT INTO issue (location_id, problem, date, handled) VALUES(?, ?, ?, ?)');
+            $statement = $this->connection->
+                prepare('INSERT INTO issue (location_id, problem, date, handled) VALUES(?, ?, ?, ?)');
             $statement->bindParam(1, $location_id, \PDO::PARAM_INT);
             $statement->bindParam(2, $problem, \PDO::PARAM_STR);
             $statement->bindParam(3, $date, \PDO::PARAM_STR);
@@ -101,6 +105,19 @@ class IssueRepositoryPDO implements IssueRepository
         try {
             $statement = $this->connection->prepare('UPDATE issue SET technician_id = ? WHERE id = ?');
             $statement->bindParam(1, $technician_id, \PDO::PARAM_INT);
+            $statement->bindParam(2, $issue_id, \PDO::PARAM_INT);
+            $statement->execute();
+            return $this->getIssueById($issue_id);
+        } catch (\Exception $exception) {
+            return $exception->getMessage();
+        }
+    }
+
+    public function changeIssueState($issue_id, $handled)
+    {
+        try {
+            $statement = $this->connection->prepare('UPDATE issue SET handled = ? WHERE id = ?');
+            $statement->bindParam(1, $handled, \PDO::PARAM_INT);
             $statement->bindParam(2, $issue_id, \PDO::PARAM_INT);
             $statement->execute();
             return $this->getIssueById($issue_id);

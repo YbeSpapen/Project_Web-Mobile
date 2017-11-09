@@ -37,7 +37,8 @@ class UserRepositoryPDO implements UserRepository
     public function addTechnician($email, $name, $role, $password)
     {
         try {
-            $statement = $this->connection->prepare('INSERT INTO user (email, name, role, password) VALUES(?, ?, ?, ?)');
+            $statement = $this->connection->
+                prepare('INSERT INTO user (email, name, role, password) VALUES(?, ?, ?, ?)');
             $statement->bindParam(1, $email, \PDO::PARAM_STR);
             $statement->bindParam(2, $name, \PDO::PARAM_STR);
             $statement->bindParam(3, $role, \PDO::PARAM_STR);

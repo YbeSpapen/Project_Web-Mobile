@@ -17,12 +17,14 @@ class LocationController
         $this->locationView = new LocationView();
     }
 
-    public function handleGetLocations() {
+    public function handleGetLocations()
+    {
             $locations = $this->locationRepository->getLocations();
             $this->locationView->showLocations($locations);
     }
 
-    public function handleAddLocation($name) {
+    public function handleAddLocation($name)
+    {
         $returnCode =  $this->locationRepository->setLocation($name);
         $this->locationView->showLocations($returnCode);
     }

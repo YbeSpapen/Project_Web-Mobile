@@ -69,7 +69,7 @@ class User implements \JsonSerializable
         $this->password = $password;
     }
 
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return get_object_vars($this);
     }

@@ -33,7 +33,7 @@ class Location implements \JsonSerializable {
         $this->name = $name;
     }
 
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return get_object_vars($this);
     }
