@@ -188,8 +188,8 @@ class GuzzleTests extends PHPUnit\Framework\TestCase
     }
 
     /**
- * Add technician API call
- */
+    * Add technician API call
+    */
     public function testAddTechnician_shouldReturnJSONWithAddedTechnician() {
         $response = $this->http->request('POST', 'technician/add', [
             'form_params'=> [
@@ -207,6 +207,46 @@ class GuzzleTests extends PHPUnit\Framework\TestCase
 
         $decodedJson = json_decode($response->getBody());
         $this->assertEquals($decodedJson->email, "robbekimpen@hotmail.com");
+    }
+
+    /**
+     * Assign technician to issue API call
+     */
+    public function testAssignTechnician_shouldReturnJSONWithUpdatedIssue() {
+        $response = $this->http->request('POST', 'issue/assignTechnician', [
+            'form_params'=> [
+                "issue_id" => "4",
+                "technician_id" => "1"
+            ]
+        ]);
+
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $contentType = $response->getHeaders()["Content-Type"][0];
+        $this->assertEquals("application/json", $contentType);
+
+        $decodedJson = json_decode($response->getBody());
+        $this->assertEquals($decodedJson->technician_id, "1");
+    }
+
+    /**
+     * Update issue state API call
+     */
+    public function testUpdateIssueState_shouldReturnJSONWithUpdatedIssue() {
+        $response = $this->http->request('POST', 'issue/updateState', [
+            'form_params'=> [
+                "issue_id" => "4",
+                "handled" => "1"
+            ]
+        ]);
+
+        $this->assertEquals(200, $response->getStatusCode());
+
+        $contentType = $response->getHeaders()["Content-Type"][0];
+        $this->assertEquals("application/json", $contentType);
+
+        $decodedJson = json_decode($response->getBody());
+        $this->assertEquals($decodedJson->handled, "1");
     }
 
     public function tearDown()
