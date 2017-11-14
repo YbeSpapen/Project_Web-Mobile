@@ -73,4 +73,12 @@ class User implements \JsonSerializable
     {
         return get_object_vars($this);
     }
+
+    function __toString()
+    {
+        return "id: " . $this->getId() . ", email: " . $this->getEmail() . ", name: " . $this->name .
+            ", role: " . $this->getRole() . ", password: " . $this->getPassword();
+    }
+
+
 }

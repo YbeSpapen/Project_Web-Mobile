@@ -25,11 +25,14 @@ class UserRepositoryPDO implements UserRepository
                     $tech = new User($technician['id'], $technician['email'], $technician['name'], null, null);
                     array_push($arrayResults, $tech);
                 }
+                http_response_code(200);
                 return $arrayResults;
             } else {
+                http_response_code(204);
                 return null;
             }
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }
@@ -45,8 +48,10 @@ class UserRepositoryPDO implements UserRepository
             $statement->bindParam(4, $password, \PDO::PARAM_STR);
             $statement->execute();
             $id = $this->connection->lastInsertId();
+            http_response_code(201);
             return new User($id, $email, $name, $role, $password);
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }

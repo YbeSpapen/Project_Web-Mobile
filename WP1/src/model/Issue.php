@@ -85,4 +85,13 @@ class Issue implements \JsonSerializable
     {
         return get_object_vars($this);
     }
+
+    function __toString()
+    {
+        return "id: " . $this->getId() . ", location_id: " . $this->getLocationId() . ", problem: " .
+            $this->getProblem() . ", date: " . $this->getDate() . ", handled: " . $this->getHandled() .
+            ", technician_id: " . $this->getTechnicianId();
+    }
+
+
 }

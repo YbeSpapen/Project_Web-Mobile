@@ -61,4 +61,12 @@ class Status implements \JsonSerializable
     {
         return get_object_vars($this);
     }
+
+    function __toString()
+    {
+        return "id: " . $this->getId() . ", location_id: " . $this->getLocationId() . ", status: " .
+            $this->getStatus() . ", date: " . $this->getDate();
+    }
+
+
 }

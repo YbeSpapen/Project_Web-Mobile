@@ -26,11 +26,13 @@ class LocationRepositoryPDO implements LocationRepository
                     $loc = new Location($location['id'], $location['name']);
                     array_push($arrayResults, $loc);
                 }
+                http_response_code(200);
                 return $arrayResults;
             } else {
                 return null;
             }
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }
@@ -42,8 +44,10 @@ class LocationRepositoryPDO implements LocationRepository
             $statement->bindParam(1,$name,\PDO::PARAM_STR);
             $statement-> execute();
             $id = $this->connection->lastInsertId();
+            http_response_code(200);
             return new Location($id,$name);
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }

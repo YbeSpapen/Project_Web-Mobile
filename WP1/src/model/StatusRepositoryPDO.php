@@ -29,13 +29,16 @@ class StatusRepositoryPDO implements StatusRepository
                     }
                 }
                 $percentage = ($numberHappy/$total)*100;
+                http_response_code(200);
                 return $percentage;
             } else {
+                http_response_code(204);
                 $percentage = null;
                 return $percentage;
             }
 
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }
@@ -54,11 +57,14 @@ class StatusRepositoryPDO implements StatusRepository
                     $stat = new Status($status['id'], $status['location_id'], $status['status'], $status['date']);
                     array_push($arrayResults, $stat);
                 }
+                http_response_code(200);
                 return $arrayResults;
             } else {
+                http_response_code(204);
                 return null;
             }
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }
@@ -72,8 +78,10 @@ class StatusRepositoryPDO implements StatusRepository
             $statement->bindParam(3, $date, \PDO::PARAM_STR);
             $statement->execute();
             $id = $this->connection->lastInsertId();
+            http_response_code(201);
             return new Status($id, $location_id, $status, $date);
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getCode();
         }
     }

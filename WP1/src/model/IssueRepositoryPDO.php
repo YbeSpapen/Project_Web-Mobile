@@ -28,11 +28,14 @@ class IssueRepositoryPDO implements IssueRepository
                         $issue['date'], $issue['handled'], $issue['technician_id']);
                     array_push($arrayResults, $iss);
                 }
+                http_response_code(200);
                 return $arrayResults;
             } else {
+                http_response_code(204);
                 return null;
             }
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }
@@ -49,12 +52,15 @@ class IssueRepositoryPDO implements IssueRepository
                 foreach ($result as $issue) {
                     $iss = new Issue($issue['id'], $issue['location_id'],
                         $issue['problem'], $issue['date'], $issue['handled'], $issue['technician_id']);
+                    http_response_code(200);
                     return $iss;
                 }
             } else {
+                http_response_code(204);
                 return null;
             }
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }
@@ -74,11 +80,14 @@ class IssueRepositoryPDO implements IssueRepository
                         $issue['problem'], $issue['date'], $issue['handled'], $issue['technician_id']);
                     array_push($arrayResults, $iss);
                 }
+                http_response_code(200);
                 return $arrayResults;
             } else {
+                http_response_code(204);
                 return null;
             }
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }
@@ -94,8 +103,10 @@ class IssueRepositoryPDO implements IssueRepository
             $statement->bindParam(4, $handled, \PDO::PARAM_INT);
             $statement->execute();
             $id = $this->connection->lastInsertId();
+            http_response_code(201);
             return new Issue($id, $location_id, $problem, $date, $handled, null);
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }
@@ -107,8 +118,10 @@ class IssueRepositoryPDO implements IssueRepository
             $statement->bindParam(1, $technician_id, \PDO::PARAM_INT);
             $statement->bindParam(2, $issue_id, \PDO::PARAM_INT);
             $statement->execute();
+            http_response_code(200);
             return $this->getIssueById($issue_id);
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }
@@ -120,8 +133,10 @@ class IssueRepositoryPDO implements IssueRepository
             $statement->bindParam(1, $handled, \PDO::PARAM_INT);
             $statement->bindParam(2, $issue_id, \PDO::PARAM_INT);
             $statement->execute();
+            http_response_code(200);
             return $this->getIssueById($issue_id);
         } catch (\Exception $exception) {
+            http_response_code(400);
             return $exception->getMessage();
         }
     }
