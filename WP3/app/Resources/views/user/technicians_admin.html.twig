@@ -4,34 +4,34 @@
 {% block body %}
     <div class="container-fluid">
         <h1>Technicians</h1>
-    <div style="overflow-x:auto;">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Email</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for technician in technicians %}
+        <div style="overflow-x:auto;">
+            <table class="table table-striped">
+                <thead>
                 <tr>
-                    <th scope="row">{{ loop.index }}</th>
-                    <td>{{ technician.name }}</td>
-                    <td>{{ technician.email }}</td>
-                    <td>
-                        <div class="pull-right">
-                            <a href="{{ path('editTechnician', {'technicianId': technician.id}) }}"
-                               class="btn btn-space btn-sm btn-primary" role="button">Edit</a>
-                            <a href="{{ path('removeTechnician', {'technicianId': technician.id}) }}"
-                               class="btn btn-space btn-sm btn-danger" role="button">Delete</a>
-                        </div>
-                    </td>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                {% for technician in technicians %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ technician.name }}</td>
+                        <td>{{ technician.email }}</td>
+                        <td>
+                            <div class="pull-right">
+                                <a href="{{ path('editTechnician', {'technicianId': technician.id}) }}"
+                                   class="btn btn-space btn-sm btn-primary" role="button">Edit</a>
+                                <a href="{{ path('removeTechnician', {'technicianId': technician.id}) }}"
+                                   class="btn btn-space btn-sm btn-danger" role="button">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div class="navigation pull-right">
             {{ knp_pagination_render(technicians) }}
         </div>

@@ -2,16 +2,16 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\User;
+use AppBundle\Form\TechnicianEditType;
+use AppBundle\Form\TechnicianType;
+use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Form\TechnicianType;
-use AppBundle\Form\TechnicianEditType;
-use AppBundle\Entity\User;
-use AppBundle\Form\UserType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class UserController extends Controller
@@ -211,16 +211,18 @@ class UserController extends Controller
     }
 
     /**
- * @Route("/pdf", name="pdf")
- * @Security("has_role('ROLE_TECHNICIAN')")
- */
+     * @Route("/pdf", name="pdf")
+     * @Security("has_role('ROLE_TECHNICIAN')")
+     */
     public function pdfAction()
     {
         $user = $user = $this->get('security.token_storage')->getToken()->getUser();
 
         $html = $this->renderView('user/pdf.html.twig', array('user' => $user));
 
-        $filename = sprintf('list.pdf', date('Y-m-d'));
+        $name = $user->getName();
+        $date = date('d-m-Y');
+        $filename = sprintf("%s - %s.pdf", $name, $date);
 
         return new Response(
             $this->get('knp_snappy.pdf')->getOutputFromHtml($html),
@@ -245,7 +247,7 @@ class UserController extends Controller
         $response->setCallback(
             function () use ($results) {
                 $handle = fopen('php://output', 'r+');
-                fputcsv($handle, array("Problem", "Since", "Location"),';', '"');
+                fputcsv($handle, array("Problem", "Since", "Location"), ';', '"');
                 foreach ($results as $row) {
                     //array list fields you need to export
                     if ($row->getHandled() == 0) {

@@ -10,7 +10,6 @@ namespace AppBundle\Tests\Controller;
 
 use AppBundle\Entity\Issue;
 use AppBundle\Entity\Location;
-use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class DoctrineQuerryTest extends KernelTestCase
@@ -36,7 +35,7 @@ class DoctrineQuerryTest extends KernelTestCase
 
         $locations = $this->em->getRepository(Location::class)->findAll();
 
-        $this->assertContainsOnlyInstancesOf(Location::class,$locations);
+        $this->assertContainsOnlyInstancesOf(Location::class, $locations);
     }
 
 
@@ -48,6 +47,6 @@ class DoctrineQuerryTest extends KernelTestCase
 
         $issues = $this->em->getRepository(Issue::class)->findAll();
 
-        $this->assertContainsOnlyInstancesOf(Issue::class,$issues);
+        $this->assertContainsOnlyInstancesOf(Issue::class, $issues);
     }
 }

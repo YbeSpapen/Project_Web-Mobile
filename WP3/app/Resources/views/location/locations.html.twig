@@ -7,45 +7,46 @@
             {% if app.user != null %}
                 {{ app.user.name }}
                 {% if is_granted('ROLE_TECHNICIAN') %}
-                    <br><br><img class="img-responsive" src="{{ asset('uploads/technicianPhotos/'~app.user.getPhoto) }}">
+                    <br><br><img class="img-responsive"
+                                 src="{{ asset('uploads/technicianPhotos/'~app.user.getPhoto) }}">
                 {% endif %}
             {% endif %}
         </h1>
-    <div style="overflow-x:auto;">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Location</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for location in locations %}
+        <div style="overflow-x:auto;">
+            <table class="table table-striped">
+                <thead>
                 <tr>
-                    <th scope="row">{{ loop.index }}</th>
-                    <td>{{ location.name }}</td>
-                    <td class="pull-right">
-                        <div>
-                            {% if app.user == null %}
-                                <a href="{{ path('giveStatus', {'locationId': location.getId}) }}"
-                                   class="btn btn-sm btn-space btn-primary" role="button">Give status</a>
-                                <a href="{{ path('giveIssue', {'locationId': location.getId}) }}"
-                                   class="btn btn-space btn-sm btn-primary"
-                                   role="button">Give issue</a>
-                            {% endif %}
-                            <a href="{{ path('issues', {'locationId': location.getId}) }}"
-                               class="btn btn-space btn-sm btn-primary"
-                               role="button">Issues</a>
-                            <a href="{{ path('statuses', {'locationId': location.getId}) }}"
-                               class="btn btn-space btn-sm btn-primary"
-                               role="button">Statuses</a>
-                        </div>
-                    </td>
+                    <th>#</th>
+                    <th>Location</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                {% for location in locations %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ location.name }}</td>
+                        <td class="pull-right">
+                            <div>
+                                {% if app.user == null %}
+                                    <a href="{{ path('giveStatus', {'locationId': location.getId}) }}"
+                                       class="btn btn-sm btn-space btn-primary" role="button">Give status</a>
+                                    <a href="{{ path('giveIssue', {'locationId': location.getId}) }}"
+                                       class="btn btn-space btn-sm btn-primary"
+                                       role="button">Give issue</a>
+                                {% endif %}
+                                <a href="{{ path('issues', {'locationId': location.getId}) }}"
+                                   class="btn btn-space btn-sm btn-primary"
+                                   role="button">Issues</a>
+                                <a href="{{ path('statuses', {'locationId': location.getId}) }}"
+                                   class="btn btn-space btn-sm btn-primary"
+                                   role="button">Statuses</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div class="navigation pull-right">
             {{ knp_pagination_render(locations) }}
         </div>

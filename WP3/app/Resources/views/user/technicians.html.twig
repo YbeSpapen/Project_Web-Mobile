@@ -4,35 +4,35 @@
 {% block body %}
     <div class="container-fluid">
         <h1>Technicians</h1>
-    <div style="overflow-x:auto;">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Email</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for technician in technicians %}
+        <div style="overflow-x:auto;">
+            <table class="table table-striped">
+                <thead>
                 <tr>
-                    <th scope="row">{{ loop.index }}</th>
-                    <td>{{ technician.name }}</td>
-                    <td>{{ technician.email }}</td>
-                    <td>
-                        {% if issue.technician and issue.technician.id == technician.id %}
-                            <a href="{{ path('setTechnician', {'issueId': app.request.query.get("issueId"), 'technicianId': technician.id, 'assign': 0}) }}"
-                               class="btn btn-sm btn-space btn-danger pull-right" role="button">Unset</a>
-                        {% else %}
-                            <a href="{{ path('setTechnician', {'issueId': app.request.query.get("issueId"), 'technicianId': technician.id, 'assign': 1}) }}"
-                               class="btn btn-sm btn-space btn-success pull-right" role="button">Set</a>
-                        {% endif %}
-                    </td>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                {% for technician in technicians %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ technician.name }}</td>
+                        <td>{{ technician.email }}</td>
+                        <td>
+                            {% if issue.technician and issue.technician.id == technician.id %}
+                                <a href="{{ path('setTechnician', {'issueId': app.request.query.get("issueId"), 'technicianId': technician.id, 'assign': 0}) }}"
+                                   class="btn btn-sm btn-space btn-danger pull-right" role="button">Unset</a>
+                            {% else %}
+                                <a href="{{ path('setTechnician', {'issueId': app.request.query.get("issueId"), 'technicianId': technician.id, 'assign': 1}) }}"
+                                   class="btn btn-sm btn-space btn-success pull-right" role="button">Set</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <div class="navigation pull-right">
             {{ knp_pagination_render(technicians) }}
         </div>

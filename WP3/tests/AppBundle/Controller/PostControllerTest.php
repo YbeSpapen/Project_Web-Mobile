@@ -9,8 +9,6 @@
 namespace AppBundle\Tests\Controller;
 
 use AppBundle\Controller\MainController;
-use AppBundle\Entity\Location;
-use AppBundle\Repository\LocatieRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 
@@ -22,6 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
  * Test the response;
  * Rinse and repeat.
  */
+
 class PostControllerTest extends WebTestCase
 {
     private $client = null;
@@ -33,7 +32,7 @@ class PostControllerTest extends WebTestCase
 
     public function testHome()
     {
-        $crawler = $this->client->request('GET','/');
+        $crawler = $this->client->request('GET', '/');
         $heading = $crawler->filter('h1')->eq(0)->text();
         $this->assertEquals(
             1,
@@ -43,14 +42,14 @@ class PostControllerTest extends WebTestCase
 
     public function testRowCount()
     {
-        $crawler = $this->client->request('GET','/');
+        $crawler = $this->client->request('GET', '/');
         $rows = $crawler->filter('tr')->count();
-        $this->assertEquals(6,$rows);
+        $this->assertEquals(6, $rows);
     }
 
     public function testClickIssuesButton()
     {
-        $crawler = $this->client->request('GET','/');
+        $crawler = $this->client->request('GET', '/');
 
         $link = $crawler->filter('a:contains("Issues")')->first()->link();
 
@@ -61,7 +60,7 @@ class PostControllerTest extends WebTestCase
 
     public function testClickStatusButton()
     {
-        $crawler = $this->client->request('GET','/');
+        $crawler = $this->client->request('GET', '/');
 
         $link = $crawler->filter('a:contains("Statuses")')->first()->link();
 
@@ -72,7 +71,7 @@ class PostControllerTest extends WebTestCase
 
     public function testClickGiveIssueButton()
     {
-        $crawler = $this->client->request('GET','/');
+        $crawler = $this->client->request('GET', '/');
 
         $link = $crawler->filter('a:contains("Give issue")')->first()->link();
 
@@ -86,32 +85,23 @@ class PostControllerTest extends WebTestCase
 
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->followRedirect();
-        $this->assertContains('Welcome',$this->client->getResponse()->getContent());
+        $this->assertContains('Welcome', $this->client->getResponse()->getContent());
 
     }
 
     public function testClickGiveStatusButton()
     {
-        $crawler = $this->client->request('GET','/');
+        $crawler = $this->client->request('GET', '/');
 
         $link = $crawler->filter('a:contains("Give status")')->first()->link();
 
         $crawler = $this->client->click($link);
 
         $images = $crawler->filter('img')->count();
-        $this->assertEquals(3,$images);
-
+        $this->assertEquals(3, $images);
 
 
     }
-
-
-
-
-
-
-
-
 
 
     /*
@@ -150,7 +140,6 @@ class PostControllerTest extends WebTestCase
         );
     }
     */
-
 
 
 }
