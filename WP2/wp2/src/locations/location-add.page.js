@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {RaisedButton, TextField, Snackbar} from "material-ui";
-import HttpService from '../common/http-service';
+import React, {Component} from "react";
+import {RaisedButton, Snackbar, TextField} from "material-ui";
+import HttpService from "../common/http-service";
 import {connect} from "react-redux";
-import mapDispatchToProps from '../common/title-dispatch-to-props';
+import mapDispatchToProps from "../common/title-dispatch-to-props";
 
 class LocationAddPage extends Component {
 

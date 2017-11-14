@@ -1,14 +1,7 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import {connect} from "react-redux";
-import PropTypes from 'prop-types';
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    TableHeaderColumn,
-    TableRow,
-    TableRowColumn,
-} from 'material-ui/Table';
+import PropTypes from "prop-types";
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
 
 class LocationsTable extends Component {
 
@@ -48,7 +41,7 @@ LocationsTable.propTypes = {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         changeSelected: (selectedRow) => {
-            dispatch({type: 'SET_SELECTION', payload: selectedRow});
+            dispatch({type: 'SET_SELECTED', payload: selectedRow});
         }
     }
 };

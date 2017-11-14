@@ -1,14 +1,7 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    TableHeaderColumn,
-    TableRow,
-    TableRowColumn,
-} from 'material-ui/Table';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
 
 class IssuesTable extends Component {
 
@@ -53,7 +46,7 @@ IssuesTable.propTypes = {
 const mapDispatchToProps = (dispath, ownProps) => {
     return {
         changeSelected: (selectedRow) => {
-            dispath({type: 'SET_SELECTION', payload: selectedRow});
+            dispath({type: 'SET_SELECTED', payload: selectedRow});
         }
     }
 };

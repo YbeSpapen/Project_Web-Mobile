@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 import {connect} from "react-redux";
-import HttpService from '../common/http-service';
-import IssuesTable from '../issues/issues-table';
-import mapDispatchToProps from '../common/title-dispatch-to-props';
+import HttpService from "../common/http-service";
+import IssuesTable from "../issues/issues-table";
+import mapDispatchToProps from "../common/title-dispatch-to-props";
 
 class TechnicianIssuesPage extends Component {
 

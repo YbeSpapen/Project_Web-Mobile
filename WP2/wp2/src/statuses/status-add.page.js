@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {Image} from 'material-ui-image'
-import HttpService from '../common/http-service';
+import React, {Component} from "react";
+import {Image} from "material-ui-image";
+import HttpService from "../common/http-service";
 import {connect} from "react-redux";
-import mapDispatchToProps from '../common/title-dispatch-to-props';
-import imageGreen from '../images/green-smiley.png';
-import imageRed from '../images/red-smiley.png';
-import imageLightRed from '../images/lightred-smiley.png';
+import mapDispatchToProps from "../common/title-dispatch-to-props";
+import imageGreen from "../images/green-smiley.png";
+import imageRed from "../images/red-smiley.png";
+import imageLightRed from "../images/lightred-smiley.png";
 import {Col, Grid, Row} from "react-bootstrap";
 import {Snackbar} from "material-ui";
 

@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import MultiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Layout from './Layout';
-import {Provider} from 'react-redux';
-import store from './common/store';
+import React, {Component} from "react";
+import MultiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import Layout from "./layout";
+import {Provider} from "react-redux";
+import store from "./common/store";
 
 class App extends Component {
     render() {

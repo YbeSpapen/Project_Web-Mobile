@@ -1,25 +1,21 @@
 /**
  * Created by Spape on 19/10/2017.
  */
-import React, {Component} from 'react';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-import LocationsPage from './locations/locations.page';
-import OverviewPage from './locations/overview.page'
-import IssueAddPage from './issues/issues-add.page';
-import TechnicianAssignPage from './issues/issues-assign-technician.page';
-import TechniciansPage from './technicians/technicians.page';
-import TechnicianAddPage from './technicians/technician-add.page';
-import TechnicianIssuesPage from './technicians/technician-issues.page';
-import LocationAddPage from './locations/location-add.page';
-import StatusAddPage from './statuses/status-add.page';
+import React, {Component} from "react";
+import AppBar from "material-ui/AppBar";
+import Drawer from "material-ui/Drawer";
+import MenuItem from "material-ui/MenuItem";
+import LocationsPage from "./locations/locations.page";
+import OverviewPage from "./locations/overview.page";
+import IssueAddPage from "./issues/issues-add.page";
+import TechnicianAssignPage from "./issues/issues-assign-technician.page";
+import TechniciansPage from "./technicians/technicians.page";
+import TechnicianAddPage from "./technicians/technician-add.page";
+import TechnicianIssuesPage from "./technicians/technician-issues.page";
+import LocationAddPage from "./locations/location-add.page";
+import StatusAddPage from "./statuses/status-add.page";
 import {connect} from "react-redux";
-import {
-    BrowserRouter as Router,
-    Route,
-    Link
-} from 'react-router-dom';
+import {BrowserRouter as Router, Link, Route} from "react-router-dom";
 
 
 class Layout extends Component {

@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import HttpService from '../common/http-service';
-import LocationsTable from './locations-table';
-import RaisedButton from 'material-ui/RaisedButton';
-import mapDispatchToProps from '../common/title-dispatch-to-props';
+import React, {Component} from "react";
+import HttpService from "../common/http-service";
+import LocationsTable from "./locations-table";
+import RaisedButton from "material-ui/RaisedButton";
+import mapDispatchToProps from "../common/title-dispatch-to-props";
 import {connect} from "react-redux";
-import {Link} from 'react-router-dom'
+import {Link} from "react-router-dom";
 
 class LocationsPage extends Component {
 

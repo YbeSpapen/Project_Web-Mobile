@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import HttpService from '../common/http-service';
-import TechniciansTable from '../technicians/technicians-table';
-import mapDispatchToProps from '../common/title-dispatch-to-props';
+import React, {Component} from "react";
+import HttpService from "../common/http-service";
+import TechniciansTable from "../technicians/technicians-table";
+import mapDispatchToProps from "../common/title-dispatch-to-props";
 import {connect} from "react-redux";
 import {RaisedButton, Snackbar} from "material-ui";
 

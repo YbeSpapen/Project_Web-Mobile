@@ -1,59 +1,76 @@
-import React, {Component} from 'react';
-import {RaisedButton, Snackbar, TextField} from "material-ui";
-import HttpService from '../common/http-service';
-import mapDispatchToProps from '../common/title-dispatch-to-props';
+import React, {Component} from "react";
+import {RaisedButton, TextField} from "material-ui";
+import HttpService from "../common/http-service";
+import mapDispatchToPropsTitle from "../common/title-dispatch-to-props";
 import {connect} from "react-redux";
+import {Redirect} from "react-router";
 
 class TechnicianAddPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            open: false,
+            submit: false,
+            email: "",
+            name: "",
+            password: ""
         };
     }
 
-    handleRequestClose = () => {
-        this.setState({
-            open: false,
-        });
-    };
-
     render() {
-        return (
-            <div className="wrapper">
-                <form onSubmit={this.save} style={{marginTop: '10px'}} ref={(el) => this.form = el}>
-                    <TextField hintText="email" name="email" type="email"/><br />
-                    <TextField hintText="name" name="name" type="name"/><br />
-                    <TextField hintText="password" name="password" type="password"/><br />
-                    <RaisedButton label="Send" type="submit" primary={true} style={{marginTop: '10px', width: '100%'}}/>
-                    <Snackbar open={this.state.open} message="Technician added!" autoHideDuration={4000}
-                              onRequestClose={this.handleRequestClose}/>
-                </form>
-            </div>
-        );
+        if (this.state.submit === true) {
+            return (<Redirect to="/technicians"/>);
+        } else {
+            return (
+                <div className="wrapper">
+                    <form onSubmit={this.save} style={{marginTop: '10px'}} ref={(el) => this.form = el}>
+                        <TextField type="email" value={this.state.email}
+                                   onChange={(event) => this.setState({email: event.target.value})}
+                                   hintText="email"/><br />
+                        <TextField type="text" value={this.state.name}
+                                   onChange={(event) => this.setState({name: event.target.value})}
+                                   hintText="name"/><br />
+                        <TextField type="password" value={this.state.password}
+                                   onChange={(event) => this.setState({password: event.target.value})}
+                                   hintText="password"/><br />
+                        <RaisedButton label="Send" type="submit" primary={true}
+                                      style={{marginTop: '10px', width: '100%'}}/>
+                    </form>
+                </div>
+            );
+        }
     }
 
     save = (ev) => {
         ev.preventDefault();
-        const email = ev.target['email'].value;
-        const name = ev.target['name'].value;
+        const email = this.state.email;
+        const name = this.state.name;
         const role = "ROLE_TECHNICIAN";
-        const password = ev.target['password'].value;
+        const password = this.state.password;
         const technician = {
             "email": email,
             "name": name,
             "role": role,
             "password": password,
         };
-        HttpService.addTechnicianEntry(technician);
-        this.setState({open: true});
-        this.form.reset();
+        HttpService.addTechnicianEntry(technician).then(() => {
+            this.props.addTechnician(technician);
+        });
+        this.setState({submit: true});
     };
 
     componentDidMount() {
         this.props.setTitle('Add technician');
     }
 }
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        ...mapDispatchToPropsTitle(dispatch, ownProps),
+        addTechnician: (entry) => {
+            dispatch({type: 'ADD_TECHNICIANENTRY', payload: entry});
+        }
+    }
+};
 
 export default connect(undefined, mapDispatchToProps)(TechnicianAddPage)

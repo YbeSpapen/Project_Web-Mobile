@@ -1,13 +1,6 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    TableHeaderColumn,
-    TableRow,
-    TableRowColumn,
-} from 'material-ui/Table';
+import React, {Component} from "react";
+import PropTypes from "prop-types";
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
 import {connect} from "react-redux";
 
 class TechniciansTable extends Component {
@@ -49,7 +42,7 @@ TechniciansTable.propTypes = {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         changeSelected: (selectedRow) => {
-            dispatch({type: 'ASSIGN_TECHNICIAN_ID', payload: selectedRow});
+            dispatch({type: 'SET_SELECTEDTECHNICIAN', payload: selectedRow});
         }
     }
 };
