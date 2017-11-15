@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import HttpService from "../common/http-service";
 import TechniciansTable from "../technicians/technicians-table";
-import mapDispatchToProps from "../common/title-dispatch-to-props";
 import {connect} from "react-redux";
-import {RaisedButton, Snackbar} from "material-ui";
+import {RaisedButton} from "material-ui";
 import {Redirect} from "react-router";
+import mapDispatchToPropsTitle from "../common/title-dispatch-to-props";
 
 class IssueAssignPage extends Component {
 
@@ -16,12 +16,6 @@ class IssueAssignPage extends Component {
             entries:[]
         };
     }
-
-    handleRequestClose = () => {
-        this.setState({
-            open: false,
-        });
-    };
 
     componentWillMount() {
         HttpService.getTechnicians().then(fetchedEntries => this.setState({entries: fetchedEntries}))
@@ -36,8 +30,6 @@ class IssueAssignPage extends Component {
                 <div>
                     <TechniciansTable entries={fetchedEntries}/>
                     <RaisedButton label="Send" onClick={this.handleAssign} primary={true} style={{margin: "10px"}}/>
-                    <Snackbar open={this.state.open} message="Issue assigned" autoHideDuration={4000}
-                              onRequestClose={this.handleRequestClose}/>
                 </div>
             );
         }
@@ -50,8 +42,9 @@ class IssueAssignPage extends Component {
             "issue_id": issue_id,
             "technician_id": technician_id
         };
-        HttpService.assignTechnician(issue);
-        //this.setState({open: true});
+        HttpService.assignTechnician(issue).then(() => {
+            this.props.assignTechnician(issue)
+        });
         this.setState({submit: true});
     };
 
@@ -65,6 +58,15 @@ const mapStateToProps = (state, ownProps) => {
         selectedRow: state.selectedRow,
         technician_id: state.technician_id
     };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        ...mapDispatchToPropsTitle(dispatch, ownProps),
+        assignTechnician: (entry) => {
+            dispatch({type: 'ASSIGN_TECHNICIANENTRY', payload: entry});
+        }
+    }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssueAssignPage)

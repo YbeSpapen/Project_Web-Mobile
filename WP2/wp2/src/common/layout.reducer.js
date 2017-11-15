@@ -4,7 +4,8 @@ const initialState = {
     technician_id: 0,
     technicians: [],
     locations: [],
-    location_id:0
+    location_id:0,
+    issues: []
 };
 
 const layoutreducer = (state = initialState, action) => {
@@ -25,7 +26,8 @@ const layoutreducer = (state = initialState, action) => {
             return {...state, ...{locations: action.payload}};
         case 'SET_SELECTEDLOCATION':
             return {...state, location_id: action.payload};
-
+        case 'ASSIGN_TECHNICIANENTRY':
+            return {...state, ...{issues: [...state.issues, action.payload]}};
         default:
             return state;
     }
