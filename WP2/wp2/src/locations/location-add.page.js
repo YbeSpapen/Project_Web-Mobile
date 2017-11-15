@@ -1,51 +1,60 @@
 import React, {Component} from "react";
-import {RaisedButton, Snackbar, TextField} from "material-ui";
+import {RaisedButton, TextField} from "material-ui";
 import HttpService from "../common/http-service";
 import {connect} from "react-redux";
-import mapDispatchToProps from "../common/title-dispatch-to-props";
+import {Redirect} from "react-router";
+import mapDispatchToPropsTitle from "../common/title-dispatch-to-props";
 
 class LocationAddPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            open: false,
+            submit: false,
+            name: "",
         };
     }
 
-    handleRequestClose = () => {
-        this.setState({
-            open: false,
-        });
-    };
-
     render() {
-        return (
-            <div className="wrapper">
-                <form onSubmit={this.save} className="marginTop" ref={(el) => this.form = el}>
-                    <TextField hintText="name" name="name" type="text"/><br/>
-                    <RaisedButton label="Send" type="submit" primary={true} style={{marginTop: '10px', width: '100%'}}/>
-                    <Snackbar open={this.state.open} message="Location added!" autoHideDuration={4000}
-                              onRequestClose={this.handleRequestClose}/>
-                </form>
-            </div>
-        );
+        if (this.state.submit === true) {
+            return (<Redirect to="/locations"/>);
+        } else {
+            return (
+                <div className="wrapper">
+                    <form onSubmit={this.save} className="marginTop" ref={(el) => this.form = el}>
+                        <TextField type="text" value={this.state.name}
+                                   onChange={(event) => this.setState({name: event.target.value})}
+                                   hintText="name"/><br/>
+                        <RaisedButton label="Send" type="submit" primary={true} style={{marginTop: '10px', width: '100%'}}/>
+                    </form>
+                </div>
+            );
+        }
     }
 
     save = (ev) => {
         ev.preventDefault();
-        const name = ev.target['name'].value;
+        const name = this.state.name;
         const location = {
             "name": name,
         };
-        HttpService.addLocation(location);
-        this.setState({open: true});
-        this.form.reset();
+        HttpService.addLocation(location).then(()=>{
+            this.props.addLocation(location);
+        });
+        this.setState({submit: true});
     };
 
     componentDidMount() {
         this.props.setTitle('Add Location');
     }
 }
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        ...mapDispatchToPropsTitle(dispatch, ownProps),
+        addLocation: (entry) => {
+            dispatch({type: 'ADD_LOCATIONENTRY', payload: entry});
+        }
+    }
+};
 
 export default connect(undefined, mapDispatchToProps)(LocationAddPage)

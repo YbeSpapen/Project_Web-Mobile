@@ -41,7 +41,7 @@ LocationsTable.propTypes = {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         changeSelected: (selectedRow) => {
-            dispatch({type: 'SET_SELECTED', payload: selectedRow});
+            dispatch({type: 'SET_SELECTEDLOCATION', payload: selectedRow});
         }
     }
 };

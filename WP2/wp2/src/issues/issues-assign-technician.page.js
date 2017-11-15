@@ -10,9 +10,10 @@ class IssueAssignPage extends Component {
 
     constructor() {
         super();
-        this.state = {entries: []};
         this.state = {
-            open: false
+            open: false,
+            submit : false,
+            entries:[]
         };
     }
 
@@ -43,8 +44,8 @@ class IssueAssignPage extends Component {
     }
 
     handleAssign = () => {
-        const issue_id = parseInt(this.props.selectedRow, 10);
-        const technician_id = parseInt(this.props.technician_id, 10);
+        const issue_id = parseInt(this.props.selectedRow,10);
+        const technician_id = parseInt(this.props.technician_id,10);
         const issue = {
             "issue_id": issue_id,
             "technician_id": technician_id
