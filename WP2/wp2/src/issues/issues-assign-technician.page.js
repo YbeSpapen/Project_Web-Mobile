@@ -29,7 +29,7 @@ class IssueAssignPage extends Component {
     render() {
         const fetchedEntries = this.state.entries || [];
         if (this.state.submit === true) {
-            return (<Redirect to="/overview"/>);
+            return (<Redirect to="/overview" />);
         } else {
             return (
                 <div>
