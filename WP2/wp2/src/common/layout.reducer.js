@@ -3,7 +3,8 @@ const initialState = {
     selectedRow: 0,
     technician_id: 0,
     technicians: [],
-    locations: []
+    locations: [],
+    location_id:0
 };
 
 const layoutreducer = (state = initialState, action) => {
@@ -22,6 +23,9 @@ const layoutreducer = (state = initialState, action) => {
             return {...state, ...{locations: [...state.locations, action.payload]}};
         case 'SET_LOCATIONENTRIES':
             return {...state, ...{locations: action.payload}};
+        case 'SET_SELECTEDLOCATION':
+            return {...state, location_id: action.payload};
+
         default:
             return state;
     }

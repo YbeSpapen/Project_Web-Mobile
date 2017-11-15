@@ -10,10 +10,10 @@ class IssueAssignPage extends Component {
 
     constructor() {
         super();
-        this.state = {entries: []};
         this.state = {
             open: false,
-            submit : false
+            submit : false,
+            entries:[]
         };
     }
 
