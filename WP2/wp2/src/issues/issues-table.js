@@ -17,7 +17,7 @@ class IssuesTable extends Component {
             <TableRow key={e.id}>
                 <TableRowColumn>{e.problem}</TableRowColumn>
                 <TableRowColumn>{e.date}</TableRowColumn>
-                <TableRowColumn>{e.handled == 1 ? "Yes" : "No"}</TableRowColumn>
+                <TableRowColumn>{e.handled === 1 ? "Yes" : "No"}</TableRowColumn>
                 <TableRowColumn>{e.technician_id > 0 ? "Yes" : "No"}</TableRowColumn>
             </TableRow>
         ));

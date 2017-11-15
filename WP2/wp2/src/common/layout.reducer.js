@@ -2,7 +2,8 @@ const initialState = {
     title: 'Home',
     selectedRow: 0,
     technician_id: 0,
-    technicians: []
+    technicians: [],
+    locations: []
 };
 
 const layoutreducer = (state = initialState, action) => {
@@ -17,6 +18,10 @@ const layoutreducer = (state = initialState, action) => {
             return {...state, ...{technicians: action.payload}};
         case 'ADD_TECHNICIANENTRY':
             return {...state, ...{technicians: [...state.technicians, action.payload]}};
+        case 'ADD_LOCATIONENTRY':
+            return {...state, ...{locations: [...state.locations, action.payload]}};
+        case 'SET_LOCATIONENTRIES':
+            return {...state, ...{locations: action.payload}};
         default:
             return state;
     }
