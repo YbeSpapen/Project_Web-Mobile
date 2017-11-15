@@ -18,8 +18,8 @@ class OverviewPage extends Component {
     }
 
     componentWillMount() {
-        HttpService.getIssuesOfLocatiton(this.props.selectedRow).then(fetchedEntries => this.setState({issues: fetchedEntries}));
-        HttpService.getStatusesOfLocation(this.props.selectedRow).then(fetchedEntries => this.setState({statuses: fetchedEntries}));
+        HttpService.getIssuesOfLocatiton(this.props.location_id).then(fetchedEntries => this.setState({issues: fetchedEntries}));
+        HttpService.getStatusesOfLocation(this.props.location_id).then(fetchedEntries => this.setState({statuses: fetchedEntries}));
     }
 
     render() {
@@ -46,7 +46,7 @@ class OverviewPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        selectedRow: state.selectedRow
+        location_id: state.location_id
     };
 };
 
