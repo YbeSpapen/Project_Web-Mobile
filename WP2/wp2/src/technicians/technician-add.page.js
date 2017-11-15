@@ -53,8 +53,8 @@ class TechnicianAddPage extends Component {
             "role": role,
             "password": password,
         };
-        HttpService.addTechnicianEntry(technician).then(() => {
-            this.props.addTechnician(technician);
+        HttpService.addTechnicianEntry(technician).then((response) => {
+            this.props.addTechnician(response.data);
         });
         this.setState({submit: true});
     };

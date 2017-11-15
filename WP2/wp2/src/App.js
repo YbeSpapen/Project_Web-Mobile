@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import MultiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import Layout from "./Layout";
+import Layout from "./layout";
 import {Provider} from "react-redux";
 import store from "./common/store";
 
