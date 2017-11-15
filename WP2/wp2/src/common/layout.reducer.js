@@ -26,8 +26,6 @@ const layoutreducer = (state = initialState, action) => {
             return {...state, ...{locations: action.payload}};
         case 'SET_SELECTEDLOCATION':
             return {...state, location_id: action.payload};
-        case 'ASSIGN_TECHNICIANENTRY':
-            return {...state, ...{issues: [...state.issues, action.payload]}};
         default:
             return state;
     }

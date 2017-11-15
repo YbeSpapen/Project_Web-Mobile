@@ -24,7 +24,7 @@ class IssueAssignPage extends Component {
     render() {
         const fetchedEntries = this.state.entries || [];
         if (this.state.submit === true) {
-            return (<Redirect to="/overview" />);
+            return (<Redirect to="/locations" />);
         } else {
             return (
                 <div>
@@ -42,9 +42,7 @@ class IssueAssignPage extends Component {
             "issue_id": issue_id,
             "technician_id": technician_id
         };
-        HttpService.assignTechnician(issue).then(() => {
-            this.props.assignTechnician(issue)
-        });
+        HttpService.assignTechnician(issue);
         this.setState({submit: true});
     };
 
@@ -62,10 +60,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        ...mapDispatchToPropsTitle(dispatch, ownProps),
-        assignTechnician: (entry) => {
-            dispatch({type: 'ASSIGN_TECHNICIANENTRY', payload: entry});
-        }
+        ...mapDispatchToPropsTitle(dispatch, ownProps)
     }
 };
 
