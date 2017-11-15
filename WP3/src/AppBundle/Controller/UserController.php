@@ -240,8 +240,9 @@ class UserController extends Controller
      */
     public function csvAction()
     {
-        $user = $user = $this->get('security.token_storage')->getToken()->getUser();
-        $results = $user->getIssues();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+        $results = $em->getRepository('AppBundle:Issue')->findAllUnhandledIssuesByUser($user);
 
         $response = new StreamedResponse();
         $response->setCallback(
@@ -249,15 +250,8 @@ class UserController extends Controller
                 $handle = fopen('php://output', 'r+');
                 fputcsv($handle, array("Problem", "Since", "Location"), ';', '"');
                 foreach ($results as $row) {
-                    //array list fields you need to export
-                    if ($row->getHandled() == 0) {
-                        $data = array(
-                            $row->getProblem(),
-                            $row->getDate()->format('Y-m-d'),
-                            $row->getLocation()
-                        );
+                        $data = array($row->getProblem(), $row->getDate()->format('Y-m-d'), $row->getLocation());
                         fputcsv($handle, $data, ';', '"');
-                    }
                 }
                 fclose($handle);
             }

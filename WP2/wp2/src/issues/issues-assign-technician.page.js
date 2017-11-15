@@ -4,6 +4,7 @@ import TechniciansTable from "../technicians/technicians-table";
 import mapDispatchToProps from "../common/title-dispatch-to-props";
 import {connect} from "react-redux";
 import {RaisedButton, Snackbar} from "material-ui";
+import {Redirect} from "react-router";
 
 class IssueAssignPage extends Component {
 
@@ -27,14 +28,18 @@ class IssueAssignPage extends Component {
 
     render() {
         const fetchedEntries = this.state.entries || [];
-        return (
-            <div>
-                <TechniciansTable entries={fetchedEntries}/>
-                <RaisedButton label="Send" onClick={this.handleAssign} primary={true} style={{margin: "10px"}}/>
-                <Snackbar open={this.state.open} message="Issue assigned" autoHideDuration={4000}
-                          onRequestClose={this.handleRequestClose}/>
-            </div>
-        );
+        if (this.state.submit === true) {
+            return (<Redirect to="/overview"/>);
+        } else {
+            return (
+                <div>
+                    <TechniciansTable entries={fetchedEntries}/>
+                    <RaisedButton label="Send" onClick={this.handleAssign} primary={true} style={{margin: "10px"}}/>
+                    <Snackbar open={this.state.open} message="Issue assigned" autoHideDuration={4000}
+                              onRequestClose={this.handleRequestClose}/>
+                </div>
+            );
+        }
     }
 
     handleAssign = () => {
@@ -45,7 +50,8 @@ class IssueAssignPage extends Component {
             "technician_id": technician_id
         };
         HttpService.assignTechnician(issue);
-        this.setState({open: true});
+        //this.setState({open: true});
+        this.setState({submit: true});
     };
 
     componentDidMount() {

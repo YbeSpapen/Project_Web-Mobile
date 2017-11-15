@@ -25,7 +25,7 @@ try {
 
     $router->map('POST', 'location/add',
         function () use ($locationController) {
-            //$_POST = json_decode(file_get_contents('php://input'), true);
+            $_POST = json_decode(file_get_contents('php://input'), true);
 
             $locationController->handleAddLocation($_POST["name"]);
         }
@@ -67,7 +67,7 @@ try {
 
     $router->map('POST', 'status/add',
         function () use ($statusController) {
-            //$_POST = json_decode(file_get_contents('php://input'), true);
+            $_POST = json_decode(file_get_contents('php://input'), true);
 
             $statusController->handleAddStatus($_POST["location_id"], $_POST["status"], $_POST["date"]);
         }
@@ -75,7 +75,7 @@ try {
 
     $router->map('POST', 'issue/add',
         function () use ($issueController) {
-            //$_POST = json_decode(file_get_contents('php://input'), true);
+            $_POST = json_decode(file_get_contents('php://input'), true);
 
             $issueController->
                 handleAddIssue($_POST["location_id"], $_POST["problem"], $_POST["date"], $_POST["handled"]);
@@ -84,7 +84,7 @@ try {
 
     $router->map('POST', 'issue/assignTechnician',
         function () use ($issueController) {
-            //$_POST = json_decode(file_get_contents('php://input'), true);
+            $_POST = json_decode(file_get_contents('php://input'), true);
 
             $issueController->handleAssignIssue($_POST["issue_id"], $_POST["technician_id"]);
         }
@@ -92,7 +92,7 @@ try {
 
     $router->map('POST', 'issue/updateState',
         function () use ($issueController) {
-            //$_POST = json_decode(file_get_contents('php://input'), true);
+            $_POST = json_decode(file_get_contents('php://input'), true);
 
             $issueController->handleChangeIssueState($_POST["issue_id"], $_POST["handled"]);
         }
@@ -106,7 +106,7 @@ try {
 
     $router->map('POST', 'technician/add',
         function () use ($userController) {
-            //$_POST = json_decode(file_get_contents('php://input'), true);
+            $_POST = json_decode(file_get_contents('php://input'), true);
 
             $userController->
                 handleAddTechnician($_POST["email"], $_POST["name"], "ROLE_TECHNICIAN", $_POST["password"]);

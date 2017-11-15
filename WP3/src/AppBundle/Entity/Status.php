@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Status
@@ -31,6 +32,7 @@ class Status
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $status;
 

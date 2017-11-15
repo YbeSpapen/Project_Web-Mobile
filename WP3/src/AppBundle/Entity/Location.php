@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Location
@@ -25,6 +26,7 @@ class Location
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=100)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -32,6 +34,7 @@ class Location
      * @ORM\OneToMany(targetEntity="Issue",
      *                        mappedBy="location")
      * @ORM\OrderBy({"date" = "DESC"})
+     *
      */
     private $issues;
 
