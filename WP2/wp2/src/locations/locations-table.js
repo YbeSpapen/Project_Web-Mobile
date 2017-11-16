@@ -3,23 +3,23 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table";
 
-class LocationsTable extends Component {
+const LocationsTable = (props) => {
 
-    handleRowSelection = (selectedRows) => {
+    const handleRowSelection = (selectedRows) => {
         if (selectedRows.length !== 0) {
-            const selectedRow = this.props.entries[selectedRows].id;
-            this.props.changeSelected(selectedRow);
+            const selectedRow = props.entries[selectedRows].id;
+            props.changeSelected(selectedRow);
         }
     };
 
-    render() {
-        const rows = this.props.entries.map(e => (
+
+        const rows = props.entries.map(e => (
             <TableRow key={e.id}>
                 <TableRowColumn>{e.name}</TableRowColumn>
             </TableRow>
         ));
         return (
-            <Table onRowSelection={this.handleRowSelection}>
+            <Table onRowSelection={handleRowSelection}>
                 <TableHeader>
                     <TableRow>
                         <TableHeaderColumn>Name</TableHeaderColumn>
@@ -30,8 +30,7 @@ class LocationsTable extends Component {
                 </TableBody>
             </Table>
         )
-    }
-}
+};
 
 
 LocationsTable.propTypes = {

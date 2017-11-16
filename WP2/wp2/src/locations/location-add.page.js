@@ -38,8 +38,8 @@ class LocationAddPage extends Component {
         const location = {
             "name": name,
         };
-        HttpService.addLocation(location).then(()=>{
-            this.props.addLocation(location);
+        HttpService.addLocation(location).then((response)=>{
+            this.props.addLocation(response.data);
         });
         this.setState({submit: true});
     };
