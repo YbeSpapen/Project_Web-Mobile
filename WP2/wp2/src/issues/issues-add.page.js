@@ -3,33 +3,31 @@ import {RaisedButton, Snackbar, TextField} from "material-ui";
 import HttpService from "../common/http-service";
 import {connect} from "react-redux";
 import mapDispatchToProps from "../common/title-dispatch-to-props";
+import {Redirect} from "react-router";
 
 class IssuesAddPage extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            open: false,
+            submit : false,
         };
     }
 
-    handleRequestClose = () => {
-        this.setState({
-            open: false,
-        });
-    };
-
     render() {
-        return (
-            <div className="wrapper">
-                <form onSubmit={this.save} className="marginTop" ref={(el) => this.form = el}>
-                    <TextField hintText="problem" name="problem" type="text"/><br/>
-                    <RaisedButton label="Send" type="submit" primary={true} style={{marginTop: '10px', width: '100%'}}/>
-                    <Snackbar open={this.state.open} message="Issue added!" autoHideDuration={4000}
-                              onRequestClose={this.handleRequestClose}/>
-                </form>
-            </div>
-        );
+        if (this.state.submit === true) {
+            return (<Redirect to="/"/>);
+        } else {
+            return (
+                <div className="wrapper">
+                    <form onSubmit={this.save} className="marginTop" ref={(el) => this.form = el}>
+                        <TextField hintText="problem" name="problem" type="text"/><br/>
+                        <RaisedButton label="Send" type="submit" primary={true}
+                                      style={{marginTop: '10px', width: '100%'}}/>
+                    </form>
+                </div>
+            );
+        }
     }
 
     save = (ev) => {
@@ -45,8 +43,7 @@ class IssuesAddPage extends Component {
             "location_id": location_id
         };
         HttpService.addIssueEntry(issue);
-        this.setState({open: true});
-        this.form.reset();
+        this.setState({submit: true});
     };
 
     componentDidMount() {
