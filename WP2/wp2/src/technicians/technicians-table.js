@@ -8,7 +8,7 @@ const TechniciansTable = (props) => {
     const handleRowSelection = (selectedRows) => {
         if (selectedRows.length !== 0) {
             const selectedRow = props.entries[selectedRows].id;
-            this.props.changeSelected(selectedRow);
+            props.changeSelected(selectedRow);
         }
     };
 
