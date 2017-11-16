@@ -26,13 +26,13 @@ class TechnicianAddPage extends Component {
                     <form onSubmit={this.save} style={{marginTop: '10px'}} ref={(el) => this.form = el}>
                         <TextField type="email" value={this.state.email}
                                    onChange={(event) => this.setState({email: event.target.value})}
-                                   hintText="email"/><br />
+                                   floatingLabelText="Email"/><br />
                         <TextField type="text" value={this.state.name}
                                    onChange={(event) => this.setState({name: event.target.value})}
-                                   hintText="name"/><br />
+                                   floatingLabelText="Name"/><br />
                         <TextField type="password" value={this.state.password}
                                    onChange={(event) => this.setState({password: event.target.value})}
-                                   hintText="password"/><br />
+                                   floatingLabelText="Password"/><br />
                         <RaisedButton label="Send" type="submit" primary={true}
                                       style={{marginTop: '10px', width: '100%'}}/>
                     </form>

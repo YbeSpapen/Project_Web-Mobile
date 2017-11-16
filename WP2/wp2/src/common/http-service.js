@@ -1,7 +1,9 @@
 import axios from "axios";
 
 class HttpService {
-    baseUrl = 'http://192.168.33.11/WP1';
+
+    baseUrl = 'http://localhost/api';
+
 
     getLocations() {
         return axios.get(`${this.baseUrl}/location`).then(r => r.data);
