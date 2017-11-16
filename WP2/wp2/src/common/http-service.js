@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class HttpService {
-    baseUrl = 'http://192.168.46.137/api';
+    baseUrl = 'http://localhost/api';
 
     getLocations() {
         return axios.get(`${this.baseUrl}/location`).then(r => r.data);
